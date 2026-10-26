@@ -1,0 +1,397 @@
+/* Prestige Marine — EXPLORE C · "The Showroom" (26 Oct 2026).
+   Boats presented the way Prestige presents supercars: one object, a strong grid, big type, and the
+   water shown in framed windows rather than as one continuous ground.
+   Grounds from the subject only (color I8, Alex 26 Oct): shallows-white #EEFAF9 (the sand seen through
+   the lagoon, h≈193°), asphalt #1E252B (the road under the Revuelto), azure only inside footage.
+   No beige, cream, sand or camel anywhere. Primary button: graphite with white type.
+
+   Base CSS = the static composition (no scripts, reduced motion). html.fx adds the pinned showroom. */
+
+:root {
+  --ground: #EEFAF9;        /* shallows-white: OKLCH .975/.012/193 */
+  --field: #E0F3F2;
+  --asphalt: #1E252B;       /* road under the Revuelto, sampled */
+  --asphalt-2: #262F36;     /* one step up on asphalt: card plane (ground type on it 12.9:1) */
+  --ink: #2A2627;           /* graphite: 14.0:1 on ground */
+  --ink-2: #5A5153;         /* 7.2:1 on ground; never on water */
+  --on-dark: #EEFAF9;       /* 14.0:1 on asphalt */
+  --on-dark-2: rgba(238, 250, 249, .74);   /* ≈8.6:1 on asphalt */
+  --line: rgba(42, 38, 39, .22);
+  --line-dark: rgba(238, 250, 249, .18);
+  --lagoon: #0B6A70;        /* deep channel, darkened for white type (6.3:1) */
+  --white: #FFFFFF;
+  /* ice: shallows-white frosted over the azure. Composited it lands at L≈.62–.86, ink ≥ 9:1 (measured in shots) */
+  --ice: rgba(238, 250, 249, .68);
+  --ice-edge: rgba(255, 255, 255, .7);
+
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --wide: 118%;
+  --wider: 125%;
+
+  --t-14: .875rem; --t-16: 1rem; --t-18: 1.125rem; --t-20: 1.25rem; --t-22: 1.375rem;
+  --t-h3: clamp(1.5rem, 1.1rem + 1.3vw, 2.25rem);
+  --t-h2: clamp(2.25rem, 1.4rem + 2.8vw, 4rem);
+  --t-h1: min(5.4vw, 8.6svh);
+  --t-paint: clamp(3rem, 1rem + 7.4vw, 9.5rem);
+  --t-price: clamp(1.75rem, 1.3rem + 1.2vw, 2.5rem);
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --gutter: clamp(16px, 4.45vw, 64px);
+  --col-gap: var(--s-5);
+  --max: 1440px;
+  --hdr-h: 72px;
+  --step: 28px;             /* the rise of each card over the one before it: the "steps" */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --ease-soft: cubic-bezier(.16, 1, .3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--font); font-size: var(--t-18); line-height: 1.55; font-stretch: 100%;
+  overflow-x: clip; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img, video, canvas { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+p, h1, h2, h3, figure, ol, ul { margin: 0; }
+.skip { position: absolute; left: var(--s-4); top: -60px; z-index: 100; background: var(--ink); color: var(--ground); padding: var(--s-2) var(--s-4); }
+.skip:focus { top: var(--s-4); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.floor :focus-visible, .hdr[data-tone="asphalt"] :focus-visible { outline-color: var(--on-dark); }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: 48px; padding: 0 var(--s-5); border: 1px solid transparent; border-radius: 0;
+  font-size: var(--t-16); font-weight: 600; letter-spacing: .01em; text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.btn--solid { background: var(--ink); color: var(--white); }
+.btn--solid:hover { background: var(--lagoon); }
+.btn--line { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn--line:hover { background: var(--ink); color: var(--white); }
+.btn--light { background: var(--on-dark); color: var(--ink); }
+.btn--light:hover { background: var(--white); }
+.btn--ghost { border-color: var(--on-dark-2); color: var(--on-dark); }
+.btn--ghost:hover { background: var(--on-dark); color: var(--ink); }
+
+/* ── header: always on screen, a solid bar; only its tone changes ─────────── */
+.hdr {
+  position: fixed; inset: 0 0 auto; z-index: 50; height: var(--hdr-h);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-5);
+  padding-inline: var(--gutter); background: var(--ground); color: var(--ink);
+  box-shadow: 0 1px 0 var(--line);
+  transition: background-color .35s var(--ease), color .35s var(--ease), box-shadow .35s var(--ease);
+}
+.hdr[data-tone="asphalt"] { background: var(--asphalt); color: var(--on-dark); box-shadow: 0 1px 0 var(--line-dark); }
+.hdr[data-tone="asphalt"] .btn--solid { background: var(--on-dark); color: var(--ink); }
+.hdr__brand { display: grid; text-decoration: none; line-height: 1.15; }
+.hdr__name { font-size: var(--t-22); font-weight: 600; font-stretch: var(--wider); }
+.hdr__div { font-size: var(--t-14); }
+.hdr__right { display: flex; align-items: center; gap: var(--s-5); }
+.hdr__tel { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2); min-width: 44px; min-height: 44px; font-size: var(--t-16); font-weight: 600; text-decoration: none; }
+.hdr__cta { min-height: 44px; }
+.hdr__menu { display: inline-flex; align-items: center; gap: var(--s-3); min-height: 44px; background: none; border: 0; cursor: pointer; font-size: var(--t-16); font-weight: 600; padding: 0; }
+.hdr__burger { display: grid; gap: 6px; width: 22px; }
+.hdr__burger i { display: block; height: 1.5px; background: currentColor; transition: transform .3s var(--ease); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:first-child { transform: translateY(3.75px) rotate(45deg); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+.menu-open .hdr { background: var(--ground); color: var(--ink); }
+
+.menu { position: fixed; inset: 0; z-index: 40; background: var(--ground); overflow-y: auto; padding: calc(var(--hdr-h) + var(--s-7)) var(--gutter) var(--s-7); }
+.menu__inner { max-width: var(--max); margin-inline: auto; display: grid; gap: var(--s-6); }
+.menu__label { font-size: var(--t-14); color: var(--ink-2); }
+.menu__list { list-style: none; padding: 0; display: grid; gap: var(--s-2); }
+.menu__list a { display: inline-block; padding-block: var(--s-2); text-decoration: none; font-size: var(--t-22); }
+.menu__list--big a { font-size: var(--t-h3); font-stretch: var(--wide); font-weight: 500; line-height: 1.2; }
+.menu__list a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.menu__foot { color: var(--ink-2); }
+
+/* ── THE SHOWROOM ─────────────────────────────────────────────────────────── */
+/* geometry, shared by CSS (static) and c.js (motion), which writes the same variables in px */
+.show__first {
+  --wt0: max(40svh, calc(var(--hdr-h) + 250px));    /* window top at rest: never closer than 250px under the header */
+  --wt: var(--wt0);                 /* window top (animated) */
+  --ws: var(--gutter);              /* window right */
+  --wl: calc(var(--gutter) + (100vw - 2 * var(--gutter) + 24px) / 4);   /* window left: column 4 */
+  --wb: var(--s-5);                 /* window bottom */
+  --my: calc((var(--wt0) + 100svh - 24px) / 2 - 44svh);   /* lift the loop's deep channel (44% of frame) into the window */
+  --bw: min(70vw, 1000px, calc((60svh - 24px) * 2.2));  /* the yacht's length */
+  --by: calc((var(--wt0) + 100svh - 24px) / 2);
+  --dx: calc(var(--wl) + .37 * var(--bw) - 50vw);   /* the stern breaks out of the window by 13% of the hull */
+  --br: -3deg;
+  --bs: 1;
+  --sx: 36px; --sy: 52px;           /* shadow offset: light from the upper left */
+  position: relative; height: 100svh; min-height: 600px; overflow: hidden;
+}
+.show__water { position: absolute; inset: 0; clip-path: inset(var(--wt) var(--ws) var(--wb) var(--wl)); }
+.show__media { position: absolute; inset: 0; transform: translate3d(0, var(--my), 0); will-change: transform; }
+.show__poster, .show__poster img, .show__video, .water__fx { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.show__video { z-index: 1; }
+.water__fx { z-index: 2; pointer-events: none; opacity: 0; transition: opacity .4s var(--ease); }
+.water__fx.is-live { opacity: 1; }
+.show__shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+.rig {
+  position: absolute; left: 50%; top: 0; width: var(--bw); margin: 0;
+  transform: translate(-50%, -50%) translate3d(var(--dx), var(--by), 0) rotate(var(--br)) scale(var(--bs));
+  will-change: transform;
+}
+.rig img { width: 100%; height: auto; }
+.rig--boat { z-index: 4; pointer-events: none; }
+.rig--shade {
+  transform: translate(-50%, -50%) translate3d(calc(var(--dx) + var(--sx)), calc(var(--by) + var(--sy)), 0) rotate(var(--br)) scale(var(--bs));
+}
+/* darker shadow (Alex's note 6): a black silhouette, blurred, laid on the water inside the window only */
+.rig--shade img { filter: brightness(0) blur(18px); opacity: .82; }
+
+.show__head {
+  position: absolute; z-index: 5; left: 0; right: 0; top: var(--hdr-h); height: calc(var(--wt0) - var(--hdr-h));
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap);
+  align-content: end; row-gap: var(--s-4); padding-bottom: var(--s-6);
+}
+.show__head.wrap { max-width: none; }   /* the head shares the window's viewport grid, not the 1440 content box */
+.show__eyebrow { grid-column: 1 / 10; font-size: 1.1875rem; font-weight: 600; letter-spacing: .01em; }
+.show__h1 { grid-column: 1 / 10; font-size: var(--t-h1); line-height: .98; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.025em; }
+.show__h1 .ln { display: block; }
+.show__intro { grid-column: 10 / 13; grid-row: 1 / 3; align-self: end; display: grid; gap: var(--s-4); }
+.show__intro p { font-size: var(--t-16); line-height: 1.5; max-width: 34ch; }
+.show__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.show__cta .btn { padding-inline: var(--s-4); }
+[data-split] { will-change: transform, opacity; }
+/* the placard: the object named on the floor beside it, as a car is in a showroom */
+.show__placard {
+  position: absolute; z-index: 5; left: var(--gutter); top: var(--wt0); width: calc((100vw - 2 * var(--gutter) + 24px) / 4 - var(--s-6));
+  display: grid; gap: var(--s-1); padding-top: var(--s-3); border-top: 1px solid var(--ink);
+}
+.show__placard b { font-size: var(--t-18); font-weight: 600; font-stretch: var(--wide); line-height: 1.25; }
+.show__placard span { font-size: var(--t-14); color: var(--ink-2); }
+
+/* the Tecnomar's cards — static: their own framed water panel below the first screen */
+.show__spec {
+  position: relative; margin: 0 var(--gutter) var(--s-9); padding: var(--s-9) var(--s-7) var(--s-7);
+  background: url("../../../assets/img/gen-azure-topdown-poster.jpg") center / cover;
+  display: grid; gap: var(--s-8);
+}
+.show__title {
+  display: grid; gap: var(--s-2); justify-self: start; padding: var(--s-5) var(--s-6);
+  background: var(--ice); -webkit-backdrop-filter: blur(22px) saturate(1.15); backdrop-filter: blur(22px) saturate(1.15);
+  box-shadow: inset 0 1px 0 var(--ice-edge);
+}
+.show__h2 { font-size: clamp(2.25rem, 1rem + 3.4vw, 4.25rem); line-height: 1; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.02em; }
+.show__sub { font-size: var(--t-18); font-weight: 600; }
+.cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); align-items: end; }
+.card {
+  position: relative; display: grid; align-content: start; gap: var(--s-2);
+  padding: var(--s-5) var(--s-5) var(--s-5);
+  background: var(--ice); color: var(--ink);
+  -webkit-backdrop-filter: blur(22px) saturate(1.15); backdrop-filter: blur(22px) saturate(1.15);
+  box-shadow: inset 0 1px 0 var(--ice-edge), 0 18px 40px -24px rgba(6, 58, 64, .45);
+}
+.card__k { font-size: var(--t-14); font-weight: 700; letter-spacing: .01em; }
+.card__v { font-size: var(--t-18); line-height: 1.42; font-weight: 500; }
+.card__v--big { font-size: var(--t-h3); line-height: 1.05; font-stretch: var(--wide); }
+.card__links { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-5); margin-top: var(--s-1); font-size: var(--t-16); font-weight: 600; }
+.card__links a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
+
+/* ── motion: one pinned stage holds the first screen and the cards ──────── */
+.fx .show { height: calc(100svh + 300svh); }
+.fx .show__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.fx .show__first { position: absolute; inset: 0; height: auto; min-height: 0; }
+.fx .show__spec { position: absolute; inset: 0; z-index: 6; margin: 0; padding: 0; background: none; display: block; pointer-events: none; }
+.fx .show__title { position: absolute; left: var(--gutter); right: var(--gutter); top: calc(var(--hdr-h) + var(--s-6)); padding: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; opacity: 0; will-change: transform, opacity; }
+.fx .cards { position: absolute; left: var(--gutter); right: var(--gutter); bottom: var(--s-5); }
+.fx .card { pointer-events: auto; opacity: 0; will-change: transform, opacity; }
+/* desktop stair: each card stands one step higher than the one before, rising toward the bow */
+.fx .card:nth-child(2) { margin-bottom: var(--step); }
+.fx .card:nth-child(3) { margin-bottom: calc(var(--step) * 2); }
+.fx .card:nth-child(4) { margin-bottom: calc(var(--step) * 3); }
+
+/* ── THE FLOOR: inventory on asphalt ──────────────────────────────────────── */
+.floor { position: relative; background: var(--asphalt); color: var(--on-dark); padding: var(--s-10) 0 var(--s-10); overflow: clip; }
+.floor__head {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap);
+  align-items: end; padding-bottom: var(--s-9); border-bottom: 1px solid var(--line-dark); margin-bottom: var(--s-9);
+}
+.floor__h2 { grid-column: 1 / 8; font-size: clamp(3rem, 1rem + 6vw, 7.5rem); line-height: .92; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.03em; }
+.floor__lede { grid-column: 8 / 11; font-size: var(--t-20); line-height: 1.4; color: var(--on-dark-2); padding-bottom: var(--s-2); }
+.floor__aside { grid-column: 11 / 13; display: grid; justify-items: end; gap: var(--s-3); text-align: right; }
+.floor__note { font-size: var(--t-14); color: var(--on-dark-2); }
+
+.lot {
+  --dir: 1;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap);
+  align-items: start; margin-bottom: var(--s-10);
+}
+.lot:last-child { margin-bottom: 0; }
+.lot__paint {
+  grid-column: 1 / -1; grid-row: 1; position: relative; z-index: 0;
+  font-size: var(--t-paint); line-height: .86; font-weight: 500; font-stretch: var(--wider); letter-spacing: -.035em;
+  color: var(--on-dark); white-space: nowrap; margin-bottom: var(--s-5);
+  transform: translate3d(var(--px, 0px), 0, 0); will-change: transform;
+}
+.lot__media { grid-column: 1 / 8; grid-row: 2; position: relative; z-index: 1; padding-bottom: 14%; }
+.lot__plan { display: block; aspect-ratio: 3 / 2; overflow: hidden; background: var(--asphalt-2); transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+.lot__plan img, .lot__side img { width: 100%; height: 100%; object-fit: cover; }
+.lot__side {
+  position: absolute; right: -8%; bottom: 0; width: 46%; aspect-ratio: 3 / 2; overflow: hidden;
+  background: var(--asphalt-2); box-shadow: 0 0 0 8px var(--asphalt);
+  transform: translate3d(var(--sx, 0px), var(--sy, 0px), 0); will-change: transform;
+}
+.lot__info { grid-column: 9 / 13; grid-row: 2; display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-7); position: relative; z-index: 1; }
+.lot__year { font-size: var(--t-16); color: var(--on-dark-2); }
+.lot__name { font-size: var(--t-h3); line-height: 1.1; font-weight: 500; font-stretch: var(--wide); }
+.lot__name a { text-decoration: none; }
+.lot__name a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+.lot__boat { font-size: var(--t-18); font-weight: 400; font-stretch: 100%; color: var(--on-dark-2); }
+.lot__line { font-size: var(--t-18); color: var(--on-dark); }
+.lot__price { font-size: var(--t-price); font-weight: 500; font-stretch: var(--wide); line-height: 1.1; margin-top: var(--s-2); }
+.lot__spec { list-style: none; padding: 0; display: grid; gap: var(--s-2); margin-top: var(--s-3); }
+.lot__spec li {
+  display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--s-4); align-items: baseline;
+  padding: var(--s-3) var(--s-4); background: var(--asphalt-2); box-shadow: inset 0 1px 0 var(--line-dark);
+}
+.lot__spec .k { font-size: var(--t-14); color: var(--on-dark-2); }
+.lot__spec .v { font-size: var(--t-16); }
+.lot__act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-5); margin-top: var(--s-4); }
+.lot__enq { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--t-16); font-weight: 600; text-underline-offset: 4px; }
+
+.lot--flip { --dir: -1; }
+.lot--flip .lot__paint { text-align: right; }
+.lot--flip .lot__media { grid-column: 6 / 13; }
+.lot--flip .lot__side { right: auto; left: -8%; }
+.lot--flip .lot__info { grid-column: 1 / 5; grid-row: 2; }
+
+/* the spec cards rise one after another when the lot arrives (motion only) */
+.fx .lot__spec li { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity .7s var(--ease-soft), transform .9s var(--ease-soft); transition-delay: calc(var(--i, 0) * 110ms); }
+.fx .lot.is-in .lot__spec li { opacity: 1; transform: none; }
+.lot__spec li:nth-child(2) { --i: 1; }
+.lot__spec li:nth-child(3) { --i: 2; }
+
+/* ── surf footer ──────────────────────────────────────────────────────────── */
+.foot { position: relative; isolation: isolate; min-height: max(810px, 90vh); overflow: hidden; }
+.foot__water { position: absolute; inset: 0; z-index: -2; }
+.foot__surf { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
+.foot__water .water__fx { object-fit: initial; }
+.foot__ground { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(var(--ground) 46%, rgba(238, 250, 249, 0) 62%); }
+.foot__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--s-6); padding-top: var(--s-9); }
+.foot__name { margin: 0 0 var(--s-2); font-size: var(--t-h3); font-weight: 600; font-stretch: var(--wider); }
+.foot__brand p, .foot__col p { color: var(--ink-2); font-size: var(--t-16); }
+.foot__tel { margin-top: var(--s-4) !important; }
+.foot__tel a { color: var(--ink); font-size: var(--t-22); font-weight: 600; text-decoration: none; }
+.foot__col { display: grid; gap: var(--s-1); align-content: start; font-size: var(--t-16); }
+.foot__col a { display: inline-flex; align-items: center; min-height: 36px; text-decoration: none; }
+.foot__col a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot__k { font-weight: 700; color: var(--ink) !important; margin-bottom: var(--s-1) !important; }
+.foot__col p + p { margin-top: var(--s-2); }
+.foot__legal { grid-column: 1 / -1; margin-top: var(--s-5); font-size: var(--t-14); color: var(--ink); }   /* ink: on the phone it can sit over the surf fade */
+
+/* ── short desktop screens: a shallower stair and compact cards, so the yacht keeps its size ── */
+@media (max-height: 820px) and (min-width: 721px) {
+  :root { --step: 16px; }
+  .fx .card { padding: var(--s-4) var(--s-5); }
+  .fx .card__v { font-size: var(--t-16); }
+  .fx .card__v--big { font-size: var(--t-22); }
+  .fx .show__h2 { font-size: clamp(2.25rem, 1rem + 2.8vw, 3.5rem); }
+}
+
+/* ── laptop: the intro takes four columns so its two buttons stay on one line ── */
+@media (max-width: 1300px) and (min-width: 1101px) {
+  .show__eyebrow, .show__h1 { grid-column: 1 / 9; }
+  .show__intro { grid-column: 9 / 13; }
+}
+
+/* ── tablet ───────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .hdr__tel-num { display: none; }
+  .show__eyebrow, .show__h1 { grid-column: 1 / -1; }
+  .show__intro { grid-column: 1 / -1; grid-row: auto; display: flex; align-items: end; justify-content: space-between; gap: var(--s-5); }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fx .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fx .card { padding: var(--s-4); }
+  .fx .card__v { font-size: var(--t-16); }
+  .floor__head { grid-template-columns: 1fr; row-gap: var(--s-5); }
+  .floor__h2, .floor__lede, .floor__aside { grid-column: 1; }
+  .floor__aside { justify-items: start; text-align: left; }
+  .lot__media, .lot--flip .lot__media { grid-column: 1 / -1; }
+  .lot__info, .lot--flip .lot__info { grid-column: 1 / -1; grid-row: 3; padding-top: var(--s-6); }
+  .lot__side { right: 0; } .lot--flip .lot__side { left: 0; }
+  .foot__grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── phone: separately authored ───────────────────────────────────────────── */
+@media (max-width: 720px) {
+  :root { --hdr-h: 64px; --step: 0px; }
+  body { font-size: var(--t-16); }
+  .hdr__div, .hdr__cta { display: none; }
+  .hdr__name { font-size: var(--t-18); }
+  .hdr__right { gap: var(--s-3); }
+
+  /* the yacht stands bow-up in a tall window (the phone loop's channel sits at 18–50%) */
+  .show__first {
+    --wt0: max(42svh, 304px); --wb: var(--s-4); --wl: var(--gutter);
+    --my: calc((var(--wt0) + 100svh - 16px) / 2 - 34svh);
+    --bw: min(36vw, calc((58svh - 16px) * .29));
+    --by: calc((var(--wt0) + 100svh - 16px) / 2);
+    --dx: 0px;
+    --br: -4deg; --sx: 18px; --sy: 28px;
+  }
+  .show__placard { display: none; }
+  .rig--shade img { filter: brightness(0) blur(9px); }
+  .show__head { height: calc(var(--wt0) - var(--hdr-h)); grid-template-columns: 1fr; padding-bottom: var(--s-5); row-gap: var(--s-3); }
+  .show__eyebrow { font-size: var(--t-16); }
+  .show__h1 { font-size: clamp(2.125rem, min(10.4vw, 5.2svh), 2.75rem); line-height: 1; }
+  .show__h1 .ln { text-wrap: balance; }
+  .show__intro { display: block; }
+  .show__intro p { display: none; }   /* the same line closes the page in the footer */
+  .show__cta .btn { flex: 1 1 auto; }
+
+  .show__spec { margin-inline: 0; padding: var(--s-8) var(--gutter) var(--s-7); background-image: url("../../../assets/img/gen-azure-topdown-m2-poster.jpg"); }
+  .cards { grid-template-columns: 1fr; gap: var(--s-3); }
+  /* motion: the cards arrive as a deck, each new one rising in front and lifting the last a step */
+  .fx .show { height: calc(100svh + 280svh); }
+  /* the model's name: a small ice plate at the top left; the yacht moves right to make room */
+  .fx .show__title {
+    left: var(--gutter); right: auto; top: calc(var(--hdr-h) + var(--s-4)); max-width: 44vw;
+    padding: var(--s-3) var(--s-4); background: var(--ice);
+    -webkit-backdrop-filter: blur(22px) saturate(1.15); backdrop-filter: blur(22px) saturate(1.15);
+    box-shadow: inset 0 1px 0 var(--ice-edge);
+  }
+  .fx .show__h2 { font-size: var(--t-22); line-height: 1.15; }
+  .fx .show__sub { font-size: var(--t-14); }
+  .fx .cards { display: block; left: var(--gutter); right: var(--gutter); bottom: var(--s-4); height: 0; }
+  .fx .card { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 !important; padding: var(--s-4) var(--s-5); }
+  .fx .card__v { font-size: var(--t-16); }
+  .fx .card__v--big { font-size: var(--t-22); }
+  .fx .card > :not(.card__k) { transition: none; }
+
+  .floor { padding: var(--s-9) 0; }
+  .floor__head { padding-bottom: var(--s-7); margin-bottom: var(--s-8); }
+  .lot { margin-bottom: var(--s-9); }
+  .lot__paint { font-size: clamp(2.75rem, 14.5vw, 4rem); margin-bottom: var(--s-3); white-space: normal; }
+  .lot--flip .lot__paint { text-align: left; }
+  .lot__media { padding-bottom: 18%; }
+  .lot__side { width: 52%; }
+  .lot__info, .lot--flip .lot__info { padding-top: var(--s-5); }
+  .lot__spec li { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+
+  .foot { min-height: 1100px; }
+  .foot__ground { background: linear-gradient(var(--ground) 72%, rgba(238, 250, 249, 0) 86%); }
+  .foot__grid { grid-template-columns: 1fr 1fr; padding-top: var(--s-8); gap: var(--s-6) var(--s-5); }
+  .foot__brand { grid-column: 1 / -1; }
+  .foot__col a { min-height: 44px; }
+}
+
+/* ── reduced motion: the static composition, authored (no pin, no ripple, no travel) ── */
+@media (prefers-reduced-motion: reduce) {
+  .hdr, .btn, .water__fx, .hdr__burger i { transition: none; }
+  .show__video { display: none; }
+}

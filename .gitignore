@@ -1,0 +1,6 @@
+# sources and working files stay local (brand media ~600 MB, generation masters)
+research/
+_work/
+.DS_Store
+.playwright-mcp/
+node_modules/

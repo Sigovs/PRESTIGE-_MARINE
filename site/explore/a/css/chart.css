@@ -1,0 +1,381 @@
+/* Prestige Marine — EXPLORE A · "The Chart" (26 Oct 2026).
+   The homepage is a nautical chart of the water seen from above. One fixed sea under the whole page;
+   the content sits on it as chart notes (frosted "ice" cards) beside a plotted course the yacht sails.
+   Grounds come from the subject only (color I8): the azure sea, cool white #EEFAF9 (the sand under it),
+   graphite ink #2A2627, lagoon #0B6A70. No warm neutral anywhere. */
+
+:root {
+  --ground: #EEFAF9;           /* cool white: the sand bars of gen-azure-topdown */
+  --field: #E0F3F2;            /* form fields on ice */
+  --ink: #2A2627;              /* graphite */
+  --ink-2: #4B4446;            /* secondary text, ice only */
+  --lagoon: #0B6A70;           /* labels on ice, hover on graphite */
+  --white: #FFFFFF;
+  --line: rgba(42, 38, 39, .2);
+
+  /* ice: frosted glass over the water. Opacity is set by the AA measurement on the darkest water
+     the card can cross (see NOTES.md), not by taste. */
+  --ice: rgba(241, 252, 252, .80);
+  --ice-hud: rgba(241, 252, 252, .84);
+  --ice-edge: rgba(255, 255, 255, .78);
+  --ice-blur: blur(22px) saturate(1.35);
+  --lift: 0 22px 48px -30px rgba(3, 52, 62, .55);
+
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --wide: 118%;
+
+  --t-14: .875rem; --t-16: 1rem; --t-17: 1.0625rem; --t-18: 1.125rem; --t-20: 1.25rem; --t-22: 1.375rem;
+  --t-h3: clamp(1.375rem, 1.1rem + .7vw, 1.75rem);
+  --t-big: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+  --t-h2: clamp(2.25rem, 1.4rem + 2.4vw, 3.5rem);
+  --t-h1: clamp(2.75rem, 1.2rem + 4.4vw, 5.5rem);
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --gutter: clamp(16px, 4.4vw, 64px);
+  --hud-w: 232px;                    /* the chart's left margin: the HUD lives here, content never does */
+  --area-l: calc(var(--hud-w) + 40px);
+  --hdr-h: 72px;
+  --max: 1440px;
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --rise: 820ms;                     /* motion scale: 200 (UI) · 480 (state) · 820 (arrival) */
+  --step: 130ms;                     /* stagger between the lines of one note */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+body {
+  margin: 0; background: #0E8E9C; color: var(--ink);
+  font-family: var(--font); font-size: var(--t-18); line-height: 1.55; font-stretch: 100%;
+  overflow-x: clip; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+p { margin: 0; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nb { white-space: nowrap; }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+.skip { position: absolute; left: var(--s-4); top: -60px; z-index: 100; background: var(--ink); color: var(--white); padding: var(--s-2) var(--s-4); }
+.skip:focus { top: var(--s-4); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.hero :focus-visible { outline-color: var(--white); }
+.ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: 48px; padding: 0 var(--s-5); border: 1px solid transparent; border-radius: 0;
+  font-size: var(--t-16); font-weight: 600; letter-spacing: .01em; text-decoration: none; cursor: pointer;
+  transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.btn--solid { background: var(--ink); color: var(--white); }
+.btn--solid:hover { background: var(--lagoon); }
+.btn--line { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn--line:hover { background: var(--ink); color: var(--white); }
+.btn--line-w { border-color: var(--white); color: var(--white); background: transparent; }
+.btn--line-w:hover { background: var(--white); color: var(--ink); }
+.link-btn { display: inline-flex; align-items: center; min-height: 44px; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; font-weight: 600; font-size: var(--t-16); }
+
+/* ── the sea ─────────────────────────────────────────── */
+.sea { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #0E8E9C; }
+.sea__poster, .sea__poster img, .sea__gl { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* the poster is the no-WebGL sea: saturated, so the shallows never wash out */
+.sea__poster img { filter: saturate(1.35) contrast(1.06) brightness(.94); }
+.sea__gl { opacity: 0; transition: opacity .6s var(--ease); }
+.gl-on .sea__gl { opacity: 1; }
+.sea__src { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
+
+/* the neatline: the chart sheet's frame */
+.neatline { position: fixed; z-index: 1; inset: calc(var(--hdr-h) + 12px) 12px 12px; border: 1px solid rgba(255, 255, 255, .55); pointer-events: none; }
+.neatline::after { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(255, 255, 255, .22); }
+
+/* ── the vessel ──────────────────────────────────────── */
+/* static (no JS, reduced motion): moored in the hero; with JS it is fixed and sails the course */
+.vessel { position: absolute; z-index: 3; left: 64%; top: 54vh; height: 74vh; width: auto; pointer-events: none; transform: translate(-50%, -50%) rotate(191deg); --len: 74vh; }
+.vessel__shadow { height: 100%; filter: drop-shadow(calc(var(--len) * .045) calc(var(--len) * .055) calc(var(--len) * .018) rgba(2, 34, 44, .62)) drop-shadow(calc(var(--len) * .012) calc(var(--len) * .016) calc(var(--len) * .006) rgba(2, 30, 40, .45)); }
+.vessel__img { height: 100%; width: auto; max-width: none; }
+.sail .vessel { position: fixed; left: 0; top: 0; height: auto; transform: none; will-change: transform; }
+.sail .vessel__shadow { height: auto; }
+.sail .vessel__img { width: calc(var(--len) * .3001); height: var(--len); }
+/* the shadow sits in screen space (sun fixed): the wrapper is not rotated, the hull inside it is */
+.sail .vessel__shadow { transform: none; }
+
+/* ── header: always on screen; an ice bar over the sea, cool white at the shore ── */
+.hdr {
+  position: fixed; inset: 0 0 auto; z-index: 50; min-height: var(--hdr-h);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--s-5);
+  padding-inline: var(--gutter); color: var(--ink);
+  background: var(--ice-hud); -webkit-backdrop-filter: var(--ice-blur); backdrop-filter: var(--ice-blur);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+  transition: background-color .48s var(--ease);
+}
+.hdr[data-tone="shore"] { background: var(--ground); box-shadow: 0 1px 0 var(--line); }
+.hdr__brand { display: grid; text-decoration: none; line-height: 1.15; min-height: var(--hdr-h); align-content: center; }
+.hdr__name { font-size: var(--t-22); font-weight: 600; font-stretch: 125%; }
+.hdr__div { font-size: var(--t-14); }
+.hdr__right { display: flex; align-items: center; gap: var(--s-5); }
+.hdr__tel { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2); min-width: 44px; min-height: 44px; font-size: var(--t-16); font-weight: 600; text-decoration: none; }
+.hdr__cta { min-height: 44px; }
+.hdr__menu { display: inline-flex; align-items: center; gap: var(--s-3); min-height: 44px; background: none; border: 0; cursor: pointer; font-size: var(--t-16); font-weight: 600; padding: 0; }
+.hdr__burger { display: grid; gap: 6px; width: 22px; }
+.hdr__burger i { display: block; height: 1.5px; background: currentColor; transition: transform .3s var(--ease); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:first-child { transform: translateY(3.75px) rotate(45deg); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+.hdr__hud { display: none; }
+.menu-open .hdr { background: var(--ground); }
+
+.menu { position: fixed; inset: 0; z-index: 40; background: var(--ground); overflow-y: auto; padding: calc(var(--hdr-h) + var(--s-7)) var(--gutter) var(--s-7); }
+.menu__inner { max-width: var(--max); margin-inline: auto; display: grid; gap: var(--s-6); }
+.menu__label { margin: 0; font-size: var(--t-14); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--lagoon); }
+.menu__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+.menu__list a { display: inline-flex; gap: var(--s-4); align-items: baseline; padding-block: var(--s-2); text-decoration: none; font-size: var(--t-22); }
+.menu__list--big a { font-size: var(--t-h3); font-stretch: var(--wide); font-weight: 500; line-height: 1.2; }
+.menu__list--big .num { font-size: var(--t-16); color: var(--lagoon); font-weight: 600; font-stretch: 100%; }
+.menu__list a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.menu__foot { color: var(--ink-2); }
+
+/* ── HUD (desktop): the left margin of the chart, and a scale at the right ── */
+.hud {
+  position: fixed; z-index: 20; left: 28px; bottom: 28px; width: calc(var(--hud-w) - 28px);
+  display: grid; gap: var(--s-2); font-size: var(--t-14); line-height: 1.35;
+}
+.hud__wps, .hud__read, .scale {
+  background: var(--ice-hud); -webkit-backdrop-filter: var(--ice-blur); backdrop-filter: var(--ice-blur);
+  border: 1px solid var(--ice-edge);
+}
+.hud__wps ol { list-style: none; margin: 0; padding: var(--s-2) 0; }
+.hud__wps a {
+  position: relative; display: flex; gap: var(--s-3); align-items: center; min-height: 32px;
+  padding: 0 var(--s-3) 0 var(--s-5); text-decoration: none; color: var(--ink-2); font-weight: 500;
+  transition: color .2s var(--ease);
+}
+.hud__wps a .num { color: var(--lagoon); font-weight: 600; min-width: 4.4ch; }
+.hud__wps a::before { content: ""; position: absolute; left: 10px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border: 1.5px solid var(--lagoon); transform: rotate(45deg); }
+.hud__wps a:hover { color: var(--ink); }
+.hud__wps a[aria-current="step"] { color: var(--ink); font-weight: 700; }
+.hud__wps a[aria-current="step"]::before { background: var(--lagoon); }
+.hud__read { margin: 0; padding: var(--s-3) var(--s-3) var(--s-3) var(--s-5); display: grid; gap: 2px; }
+.hud__read div { display: flex; gap: var(--s-3); }
+.hud__read dt { min-width: 4.4ch; color: var(--lagoon); font-weight: 600; }
+.hud__read dd { margin: 0; color: var(--ink); white-space: nowrap; }
+.hud__read [data-hud-lat], .hud__read [data-hud-lon] { display: block; }
+/* the instruments come on when the passage starts: the first screen belongs to the boat and the name */
+.hud > * { transition: opacity .48s var(--ease), transform .48s var(--ease), visibility .48s; }
+.hud.is-hero > * { opacity: 0; transform: translateY(12px); visibility: hidden; }
+.hud.is-hero > :nth-child(2) { transition-delay: 0ms; }
+.hud > :nth-child(1) { transition-delay: 120ms; }
+
+.scale {
+  display: flex; align-items: center; gap: var(--s-3); padding: var(--s-2) var(--s-3); min-height: 40px;
+  font-size: var(--t-14); color: var(--ink); font-weight: 600;
+}
+.scale__n { display: grid; place-items: center; width: 22px; height: 22px; border: 1.5px solid var(--ink); border-radius: 50%; font-size: 12px; line-height: 1; } /* glyph, not text: the bar's label carries the meaning */
+.scale__bar { position: relative; display: block; flex: none; width: 120px; height: 6px; border: 1.5px solid var(--ink); background: linear-gradient(90deg, var(--ink) 50%, transparent 50%); background-size: 50% 100%; }
+.scale__k { min-width: 5ch; }
+
+.hud, .scale, .neatline { transition: opacity .48s var(--ease), visibility .48s; }
+.ashore .hud, .ashore .scale, .ashore .neatline { opacity: 0; visibility: hidden; }
+
+/* ── the course, on the chart ────────────────────────── */
+main { position: relative; }
+.course { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 2; }
+.course__ahead { fill: none; stroke: rgba(255, 255, 255, .78); stroke-width: 1.5; stroke-dasharray: 2 9; stroke-linecap: round; }
+.course__track { fill: none; stroke: rgba(255, 255, 255, .92); stroke-width: 2; }
+.course__wp { fill: none; stroke: #fff; stroke-width: 1.5; }
+.course__wp-dot { fill: #fff; }
+
+/* ── acts: the chart area is right of the HUD margin; cards are placed by --x / --w within it ── */
+.act { position: relative; padding: 0 var(--gutter) 0 var(--area-l); }
+.act > * { position: relative; z-index: 5; scroll-margin-top: 120px; }   /* notes ride above the vessel (z 3), the course below it (z 2) */
+.rise-x, .act > .card, .act > .act__head { margin-left: calc(var(--x, 0) * 100%); width: calc(var(--w, 1) * 100%); }
+
+/* WP 01 */
+.act--hero { min-height: 100vh; min-height: 100svh; display: grid; align-content: center; padding-left: var(--gutter); padding-top: var(--hdr-h); padding-bottom: 18vh; }
+.hero { max-width: 44vw; color: var(--white); display: grid; gap: var(--s-4); justify-items: start; }
+.hero__eyebrow { font-size: var(--t-18); font-weight: 600; letter-spacing: .01em; }
+.hero__h1 { margin: 0; font-size: var(--t-h1); line-height: .98; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.02em; text-wrap: balance; }
+.hero__lede { font-size: var(--t-20); line-height: 1.45; max-width: 30ch; font-weight: 500; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-3); }
+
+/* WP 02 */
+.act--tec { padding-top: 62vh; padding-bottom: 6vh; }
+.act--tec > .card + .card { margin-top: 26vh; }
+
+/* ice: the chart note */
+.card {
+  background: var(--ice); -webkit-backdrop-filter: var(--ice-blur); backdrop-filter: var(--ice-blur);
+  border: 1px solid var(--ice-edge); box-shadow: var(--lift);
+  padding: var(--s-6); display: grid; gap: var(--s-3); align-content: start;
+  font-size: var(--t-17); line-height: 1.55;
+}
+.card__k { display: flex; align-items: center; gap: var(--s-2); font-size: var(--t-14); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--lagoon); }
+.card__h2 { margin: 0; font-size: clamp(2rem, 1.2rem + 1.6vw, 2.75rem); line-height: 1.02; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.015em; text-wrap: balance; }
+.card__h3 { margin: 0; font-size: var(--t-h3); line-height: 1.15; font-weight: 600; font-stretch: var(--wide); }
+.card__h3 a { text-decoration: none; }
+.card__h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.card__big { font-size: var(--t-big); line-height: 1.12; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.01em; }
+.card__sub { color: var(--ink-2); font-size: var(--t-16); }
+.card__price { font-size: var(--t-big); line-height: 1.1; font-weight: 500; font-stretch: var(--wide); }
+.card__cta { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); align-items: center; margin-top: var(--s-2); }
+.card__note { font-size: var(--t-14); color: var(--ink-2); border-top: 1px solid var(--line); padding-top: var(--s-3); margin-top: var(--s-2); }
+.card__links { display: flex; flex-wrap: wrap; gap: 0 var(--s-5); }
+.card__links a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: var(--t-16); text-underline-offset: 4px; }
+
+/* act heads sit straight on the water, white, over a deep pool the sea shader digs beneath them */
+.act__head { color: var(--white); display: grid; gap: var(--s-2); }
+.act__k { font-size: var(--t-16); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; justify-self: start; }
+.act__h2 { margin: 0; font-size: var(--t-h2); line-height: 1.02; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.015em; justify-self: start; }
+
+/* WP 03 — four marks stepping down in two files */
+.act--brands { padding-top: 70vh; padding-bottom: 8vh; }
+.marks { list-style: none; margin: var(--s-8) 0 0 27%; padding: 0; width: 73%; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8) var(--s-6); align-items: start; }
+.marks > :nth-child(even) { margin-top: 22vh; margin-bottom: -22vh; }
+.card--brand { padding: 0; grid-template-columns: 32% 1fr; gap: 0; }
+.card--brand .card__h3 { font-size: var(--t-22); }
+.card--brand .card__img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
+.card--brand .card__body { padding: var(--s-5); display: grid; gap: var(--s-2); align-content: start; }
+.mark { width: 9px; height: 9px; border: 1.5px solid var(--lagoon); background: var(--lagoon); transform: rotate(45deg); flex: none; }
+
+/* WP 04 — four berths, two files, the second set back half a berth */
+.act--stock { padding-top: 64vh; padding-bottom: 6vh; }
+.berths { list-style: none; margin: var(--s-8) 0 0; padding: 0; width: 74%; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6); align-items: start; }
+.berths > :nth-child(even) { transform: translateY(14vh); }
+.berths > .card.is-in:nth-child(even) { transform: translateY(14vh); }
+.card--berth { padding: 0; gap: 0; }
+.card__media { display: block; aspect-ratio: 3 / 2; overflow: hidden; }
+.card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .48s var(--ease); }
+.card--berth:hover .card__media img { transform: scale(1.03); }
+.card--berth .card__body { padding: var(--s-5); display: grid; gap: var(--s-2); }
+.spec { margin: var(--s-1) 0 0; display: grid; gap: 2px; font-size: var(--t-16); }
+.spec div { display: flex; gap: var(--s-3); }
+.spec dt { min-width: 5.5ch; color: var(--ink-2); }
+.spec dd { margin: 0; }
+.card__row { display: flex; justify-content: space-between; align-items: center; gap: var(--s-4); margin-top: var(--s-2); padding-top: var(--s-3); border-top: 1px solid var(--line); }
+.card__row .card__price { font-size: clamp(1.375rem, 1.1rem + .8vw, 1.875rem); }
+.card--log { margin-top: calc(14vh + var(--s-8)); }
+.log { font-size: var(--t-16); color: var(--ink-2); }
+
+/* WP 05 */
+.act--arrival { padding-top: 64vh; padding-bottom: 46vh; }
+.card--contact { grid-template-columns: 1fr 1.15fr; gap: var(--s-7); padding: var(--s-7); }
+.contact__info { display: grid; gap: var(--s-3); align-content: start; }
+.contact__tel a { font-size: var(--t-big); font-weight: 500; font-stretch: var(--wide); text-decoration: none; }
+.contact__tel a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.hours { display: grid; grid-template-columns: auto 1fr; gap: 2px var(--s-5); margin: 0; font-size: var(--t-16); }
+.hours dt { font-weight: 600; }
+.hours dd { margin: 0; }
+
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); align-content: start; }
+.field { grid-column: 1 / -1; display: grid; gap: var(--s-1); }
+.field--half { grid-column: span 1; }
+.field label { font-size: var(--t-14); font-weight: 600; }
+.field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: var(--s-2) var(--s-3); border: 1px solid rgba(42, 38, 39, .55); border-radius: 0; background: rgba(255, 255, 255, .78); font-size: var(--t-16); }
+.field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+.field.is-invalid input { border-color: #A3262A; border-width: 2px; }
+.field__err { font-size: var(--t-14); color: #A3262A; font-weight: 600; }
+.form__send { grid-column: 1 / -1; justify-self: start; }
+.form__note { grid-column: 1 / -1; font-size: var(--t-14); color: var(--ink-2); }
+.form__done { grid-column: 1 / -1; font-size: var(--t-20); font-weight: 600; }
+
+/* ── the shore ───────────────────────────────────────── */
+.foot { position: relative; z-index: 6; isolation: isolate; min-height: max(860px, 100vh); display: grid; align-content: end; padding-bottom: var(--s-8); color: var(--ink); }
+.foot__surf { position: absolute; inset: 0; z-index: -1; overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent 0, #000 22%); mask-image: linear-gradient(transparent 0, #000 22%); }
+.foot__surf video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transform: scaleY(-1); filter: saturate(1.25); }
+.foot__surf::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(238, 250, 249, 0) 52%, rgba(238, 250, 249, .9) 66%, var(--ground) 76%); }
+.foot__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--s-6); }
+.foot__name { margin: 0 0 var(--s-2); font-size: var(--t-h3); font-weight: 600; font-stretch: 125%; }
+.foot__brand p, .foot__col p { color: var(--ink-2); font-size: var(--t-16); }
+.foot__col { display: grid; gap: var(--s-1); align-content: start; font-size: var(--t-16); }
+.foot__col a { display: inline-flex; align-items: center; min-height: 36px; text-decoration: none; }
+.foot__col a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot__k { font-weight: 700; color: var(--ink) !important; margin-bottom: var(--s-1) !important; }
+.foot__legal { grid-column: 1 / -1; margin-top: var(--s-5); font-size: var(--t-14); color: var(--ink-2); }
+
+/* film */
+.film { padding: 0; border: 0; background: #000; width: min(1200px, 92vw); max-height: 90vh; }
+.film::backdrop { background: rgba(10, 20, 24, .86); }
+.film__video { width: 100%; max-height: 86vh; }
+.film__close { position: absolute; top: var(--s-3); right: var(--s-3); z-index: 2; min-height: 44px; padding: 0 var(--s-4); background: var(--white); border: 0; font-weight: 600; cursor: pointer; }
+
+/* ── arrival: notes float up from below, softly, one after another ── */
+.js-rise .rise { opacity: 0; transform: translateY(40px); transition: opacity var(--rise) var(--ease), transform var(--rise) var(--ease); transition-delay: var(--d, 0ms); }
+.js-rise .rise > * { opacity: 0; transform: translateY(14px); transition: opacity var(--rise) var(--ease), transform var(--rise) var(--ease); }
+.js-rise .rise.is-in { opacity: 1; transform: none; }
+.js-rise .rise.is-in > * { opacity: 1; transform: none; }
+.js-rise .rise.is-in > :nth-child(1) { transition-delay: calc(var(--d, 0ms) + var(--step) * 1); }
+.js-rise .rise.is-in > :nth-child(2) { transition-delay: calc(var(--d, 0ms) + var(--step) * 2); }
+.js-rise .rise.is-in > :nth-child(3) { transition-delay: calc(var(--d, 0ms) + var(--step) * 3); }
+.js-rise .rise.is-in > :nth-child(4) { transition-delay: calc(var(--d, 0ms) + var(--step) * 4); }
+.js-rise .rise.is-in > :nth-child(n+5) { transition-delay: calc(var(--d, 0ms) + var(--step) * 5); }
+.js-rise .berths > .rise:nth-child(even) { transform: translateY(calc(14vh + 40px)); }
+.js-rise .berths > .rise.is-in:nth-child(even) { transform: translateY(14vh); }
+.card--brand.rise > *, .card--berth.rise > * { transform: none !important; }
+
+/* ── no WebGL / no JS: the poster is the sea, and the white heads get a deep pool painted for them.
+   Removed once the shader is drawing (it digs the pools in the water itself). ── */
+html:not(.gl-on) .act__head, html:not(.gl-on) .hero { text-shadow: 0 0 24px rgba(3, 60, 70, .7), 0 0 2px rgba(3, 60, 70, .6); }
+html:not(.gl-on) .hero::before, html:not(.gl-on) .act__head::before { content: ""; position: absolute; inset: -60px -80px; z-index: -1; background: radial-gradient(closest-side, rgba(5, 84, 98, .82), rgba(5, 84, 98, 0)); }
+.hero { position: relative; }
+/* the instruments are live readouts: without the script they would lie, so they are not shown */
+html:not(.js-rise) .hud { display: none; }
+
+/* ── narrow: one file, centred lane; the vessel sails between the notes and under the ice ── */
+@media (max-width: 1099px) {
+  :root { --hud-w: 0px; --area-l: var(--gutter); }
+  .hud, .scale { display: none; }
+  .hdr__hud { display: flex; flex: 0 0 calc(100% + 2 * var(--gutter)); gap: var(--s-3); margin: 0 calc(var(--gutter) * -1); padding: 6px var(--gutter) 8px; border-top: 1px solid rgba(42, 38, 39, .12); font-size: var(--t-14); font-weight: 600; color: var(--ink); }
+  .hdr__hud span:first-child { color: var(--lagoon); }
+  .hdr__hud span:last-child { margin-left: auto; }
+  .neatline { top: calc(var(--hdr-h) + 38px + 8px); inset-inline: 8px; bottom: 8px; }
+  .act > .card, .act > .act__head, .card--log, .card--contact { margin-left: auto; margin-right: auto; width: 100%; max-width: 620px; }
+  .marks, .berths { margin-inline: auto; width: 100%; max-width: 620px; grid-template-columns: 1fr; gap: 30vh; }
+  .marks > :nth-child(even) { margin: 0; }
+  .berths > :nth-child(even), .js-rise .berths > .rise.is-in:nth-child(even) { transform: none; }
+  .js-rise .berths > .rise:nth-child(even) { transform: translateY(40px); }
+  .act--tec > .card + .card { margin-top: 34vh; }
+  .card--log { margin-top: 30vh; }
+  .hero { max-width: 100%; }
+  .act--hero { align-content: start; padding-top: calc(var(--hdr-h) + 38px + 4vh); }
+  .card--contact { grid-template-columns: 1fr; }
+}
+@media (max-width: 1099px) {
+  .vessel { left: 50%; top: 72vh; height: 28vh; --len: 28vh; }
+}
+@media (max-width: 720px) {
+  :root { --hdr-h: 64px; }
+  .hdr__div { display: none; }
+  .hdr__name { font-size: var(--t-20); }
+  .hdr__tel-num { display: none; }
+  .hdr__right { gap: var(--s-3); }
+  .hdr__cta { padding: 0 var(--s-4); }
+  .card { padding: var(--s-5); }
+  .card--brand { grid-template-columns: 1fr; }
+  .card--brand .card__img { aspect-ratio: 16 / 9; }
+  .card--contact { padding: var(--s-5); gap: var(--s-6); }
+  .form { grid-template-columns: 1fr; }
+  .field--half { grid-column: 1 / -1; }
+  .foot__grid { grid-template-columns: 1fr 1fr; gap: var(--s-6) var(--s-5); }
+  .foot__brand { grid-column: 1 / -1; }
+  .foot__col a { min-height: 44px; }
+  .foot { min-height: 1000px; }
+  .foot__surf::after { background: linear-gradient(rgba(238, 250, 249, 0) 38%, rgba(238, 250, 249, .9) 48%, var(--ground) 56%); }
+  .hero__lede { font-size: var(--t-18); }
+}
+@media (max-width: 440px) {
+  .hdr { gap: 0 var(--s-3); }
+  .hdr__name { font-size: var(--t-18); }
+  .hdr__tel { display: none; }            /* the number stays in the hero, the menu and the contact note */
+  .hdr__menu { min-width: 44px; justify-content: center; }
+  .hdr__menu [data-menu-label] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}

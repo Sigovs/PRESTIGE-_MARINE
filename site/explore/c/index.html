@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Prestige Marine | The Showroom (Explore C)</title>
+<meta name="description" content="Prestige Marine, a division of the Prestige Imports family: Tecnomar for Lamborghini 63, Midnight Express, VanDutch and Iguana Yachts, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
+<link rel="preload" as="image" href="img/tecnomar63-top-h.webp" media="(min-width: 721px)">
+<link rel="preload" as="image" href="../../assets/img/gen-tecnomar63-top.webp" media="(max-width: 720px)">
+<link rel="stylesheet" href="css/c.css?v=7">
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
+<script src="js/water.js?v=1" defer></script>
+<script src="js/c.js?v=6" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- The header never leaves; it only changes tone (ground over the showroom, asphalt over the floor). -->
+<header class="hdr" data-hdr data-tone="ground">
+  <a class="hdr__brand" href="#top" aria-label="Prestige Marine, top of page">
+    <span class="hdr__name">Prestige Marine</span>
+    <span class="hdr__div">A Division of the Prestige Imports Family</span>
+  </a>
+  <div class="hdr__right">
+    <a class="hdr__tel" href="tel:+13059471000" aria-label="Call 305-947-1000"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4.2-2 1.3a12 12 0 0 0 6 6l1.3-2 4.2 1.4v3a2 2 0 0 1-2.1 2A16.5 16.5 0 0 1 4.6 5.6a2 2 0 0 1 2-2.1Z"/></svg><span class="hdr__tel-num">305-947-1000</span></a>
+    <a class="btn btn--solid hdr__cta" href="#inventory">Inventory</a>
+    <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="hdr__burger" aria-hidden="true"><i></i><i></i></span><span data-menu-label>Menu</span>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden data-menu data-lenis-prevent>
+  <nav class="menu__inner" aria-label="Main">
+    <p class="menu__label">Brands</p>
+    <ul class="menu__list menu__list--big">
+      <li><a href="#tecnomar">Tecnomar for Lamborghini 63</a></li>
+      <li><a href="https://www.midnightboats.com/" rel="noopener">Midnight Express</a></li>
+      <li><a href="https://vandutch.com/" rel="noopener">VanDutch</a></li>
+      <li><a href="https://www.iguana-yachts.com/" rel="noopener">Iguana Yachts</a></li>
+    </ul>
+    <ul class="menu__list">
+      <li><a href="#inventory">New Inventory</a></li>
+      <li><a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Brokerage</a></li>
+      <li><a href="https://www.prestigemarine.co/sold/" rel="noopener">Sold</a></li>
+      <li><a href="#visit">Contact Us</a></li>
+    </ul>
+    <p class="menu__foot"><a href="tel:+13059471000">305-947-1000</a><br>15050 Biscayne Blvd, North Miami Beach, FL 33181</p>
+  </nav>
+</div>
+
+<main id="main" data-main>
+
+  <!-- THE SHOWROOM. One object, one window of water, one grid.
+       Without scripts (and under reduced motion) this is two plain blocks: the first screen, then
+       the Tecnomar's four cards on their own water panel. With motion, both live in one pinned stage:
+       the window opens to the frame, the yacht levels off, and the cards rise one after another. -->
+  <section class="show" id="top" aria-labelledby="h1" data-show data-hdr-tone="ground">
+    <div class="show__pin" data-pin>
+
+      <div class="show__first">
+        <div class="show__water" data-window>
+          <div class="show__media" data-water data-media>
+            <picture class="show__poster" aria-hidden="true">
+              <source media="(max-width: 720px)" srcset="../../assets/img/gen-azure-topdown-m2-poster.jpg">
+              <img src="../../assets/img/gen-azure-topdown-poster.jpg" alt="">
+            </picture>
+            <video class="show__video" autoplay muted loop playsinline preload="auto" aria-hidden="true" data-loop>
+              <source media="(max-width: 720px)" src="../../assets/video/gen-azure-topdown-m2.mp4" type="video/mp4">
+              <source src="../../assets/video/gen-azure-topdown.mp4" type="video/mp4">
+            </video>
+          </div>
+          <!-- the shadow falls only where there is water: it shares the window's clip -->
+          <div class="show__shade" aria-hidden="true">
+            <div class="rig rig--shade" data-rig-shade>
+              <picture>
+                <source media="(max-width: 720px)" srcset="../../assets/img/gen-tecnomar63-top.webp">
+                <img src="img/tecnomar63-top-h.webp" alt="" width="2499" height="750">
+              </picture>
+            </div>
+          </div>
+        </div>
+
+        <div class="show__head wrap">
+          <p class="show__eyebrow" data-split>Prestige Marine · North Miami Beach</p>
+          <h1 class="show__h1" id="h1"><span class="ln" data-split>The boat you deserve</span> <span class="ln" data-split>starts here.</span></h1>
+          <div class="show__intro" data-split>
+            <p>Not your typical marine dealership. The same passion that built Prestige Imports, brought to the water.</p>
+            <div class="show__cta">
+              <a class="btn btn--solid" href="#inventory">View inventory</a>
+              <a class="btn btn--line" href="tel:+13059471000">305-947-1000</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="show__placard" data-split><b>Tecnomar for Lamborghini 63</b><span>Represented by Prestige Marine</span></p>
+
+        <!-- the object: over the water, never clipped by it -->
+        <figure class="rig rig--boat" data-rig>
+          <picture>
+            <source media="(max-width: 720px)" srcset="../../assets/img/gen-tecnomar63-top.webp">
+            <img src="img/tecnomar63-top-h.webp" width="2499" height="750" alt="A Tecnomar for Lamborghini 63 in Giallo yellow, seen from directly above (generated artwork).">
+          </picture>
+        </figure>
+      </div>
+
+      <div class="show__spec" id="tecnomar" aria-labelledby="tec-h">
+        <div class="show__title" data-title>
+          <h2 class="show__h2" id="tec-h">Tecnomar for Lamborghini&nbsp;63</h2>
+          <p class="show__sub">Represented in Miami by Prestige Marine</p>
+        </div>
+        <ol class="cards" data-cards>
+          <li class="card" data-card>
+            <p class="card__k">Lineage</p>
+            <p class="card__v">Inspired by the Sián FKP&nbsp;37 and the Terzo&nbsp;Millennio.</p>
+          </li>
+          <li class="card" data-card>
+            <p class="card__k">Build</p>
+            <p class="card__v">Conceived in synergy between Automobili Lamborghini and The Italian Sea&nbsp;Group. Carbon fibre, 24&nbsp;tonnes.</p>
+          </li>
+          <li class="card" data-card>
+            <p class="card__k">Power</p>
+            <p class="card__v card__v--big">Twin MAN&nbsp;V12</p>
+            <p class="card__v">2,000&nbsp;hp each.</p>
+          </li>
+          <li class="card card--stock" data-card>
+            <p class="card__k">In stock now</p>
+            <p class="card__v">2022, in Verde Gea, the Sián launch colour. 96&nbsp;hours. Request&nbsp;price.</p>
+            <p class="card__links"><a href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener">View this boat</a><a href="https://tecnomar.com/fleet/tecnomar-for-lamborghini-63/" rel="noopener">tecnomar.com</a></p>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- THE FLOOR. Four boats in stock, each wearing a car's paint: the paint is the headline,
+       the boat is read from above and from the side, and its specs arrive as their own cards. -->
+  <section class="floor" id="inventory" aria-labelledby="inv-h" data-hdr-tone="asphalt">
+    <div class="wrap">
+      <div class="floor__head">
+        <h2 class="floor__h2" id="inv-h">In stock now</h2>
+        <p class="floor__lede">Four boats, each in a car's paint.</p>
+        <div class="floor__aside">
+          <p class="floor__note">Prices as listed 26 Oct 2026</p>
+          <a class="btn btn--ghost" href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">View all 8 boats</a>
+        </div>
+      </div>
+
+      <article class="lot" data-lot aria-labelledby="lot1-h">
+        <p class="lot__paint" data-paint aria-hidden="true">Pagani Silver</p>
+        <div class="lot__media">
+          <a class="lot__plan" href="https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/" rel="noopener" tabindex="-1" aria-hidden="true" data-plan>
+            <img src="../../assets/img/slip-vd402-plan.webp" width="960" height="640" loading="lazy" alt="">
+          </a>
+          <div class="lot__side" data-side aria-hidden="true"><img src="../../assets/img/slip-vd402-side.webp" width="960" height="640" loading="lazy" alt=""></div>
+        </div>
+        <div class="lot__info">
+          <p class="lot__year num">2021</p>
+          <h3 class="lot__name" id="lot1-h"><a href="https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/" rel="noopener">VanDutch 40.2</a></h3>
+          <p class="lot__line">Super Jet Black hull, Pagani Silver bootstripe</p>
+          <p class="lot__price num">$698,500</p>
+          <ul class="lot__spec" data-spec>
+            <li><span class="k">Hours</span><span class="v num">Under 140</span></li>
+            <li><span class="k">Power</span><span class="v">2 × Volvo Penta D6, 440&nbsp;hp</span></li>
+            <li><span class="k">Length × beam</span><span class="v num">40′11″ × 11′5″</span></li>
+          </ul>
+          <p class="lot__act"><a class="btn btn--light" href="https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/" rel="noopener">View this boat</a><a class="lot__enq" href="#visit">Enquire</a></p>
+        </div>
+      </article>
+
+      <article class="lot lot--flip" data-lot aria-labelledby="lot2-h">
+        <p class="lot__paint" data-paint aria-hidden="true">Nardo Grey</p>
+        <div class="lot__media">
+          <a class="lot__plan" href="https://www.prestigemarine.co/boats-for-sale/2023-vandutch-48-north-miami-beach-florida-9561670/" rel="noopener" tabindex="-1" aria-hidden="true" data-plan>
+            <img src="../../assets/img/slip-vd48-plan.webp" width="960" height="640" loading="lazy" alt="">
+          </a>
+          <div class="lot__side" data-side aria-hidden="true"><img src="../../assets/img/slip-vd48-side.webp" width="960" height="640" loading="lazy" alt=""></div>
+        </div>
+        <div class="lot__info">
+          <p class="lot__year num">2023</p>
+          <h3 class="lot__name" id="lot2-h"><a href="https://www.prestigemarine.co/boats-for-sale/2023-vandutch-48-north-miami-beach-florida-9561670/" rel="noopener">VanDutch 48</a> <span class="lot__boat">· BRIX</span></h3>
+          <p class="lot__line">Custom Audi Nardo Grey</p>
+          <p class="lot__price num">$1,129,000</p>
+          <ul class="lot__spec" data-spec>
+            <li><span class="k">Hours</span><span class="v num">180</span></li>
+            <li><span class="k">Power</span><span class="v">2 × Volvo Penta D11, 725&nbsp;hp</span></li>
+            <li><span class="k">Length × beam</span><span class="v num">48′ × 13′2″</span></li>
+          </ul>
+          <p class="lot__act"><a class="btn btn--light" href="https://www.prestigemarine.co/boats-for-sale/2023-vandutch-48-north-miami-beach-florida-9561670/" rel="noopener">View this boat</a><a class="lot__enq" href="#visit">Enquire</a></p>
+        </div>
+      </article>
+
+      <article class="lot" data-lot aria-labelledby="lot3-h">
+        <p class="lot__paint" data-paint aria-hidden="true">Grigio Lynx</p>
+        <div class="lot__media">
+          <a class="lot__plan" href="https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/" rel="noopener" tabindex="-1" aria-hidden="true" data-plan>
+            <img src="../../assets/img/slip-me52-plan.webp" width="960" height="640" loading="lazy" alt="">
+          </a>
+          <div class="lot__side" data-side aria-hidden="true"><img src="../../assets/img/slip-me52-side.webp" width="960" height="640" loading="lazy" alt=""></div>
+        </div>
+        <div class="lot__info">
+          <p class="lot__year num">2026 · Available now</p>
+          <h3 class="lot__name" id="lot3-h"><a href="https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/" rel="noopener">Midnight Express 52 Vitesse</a></h3>
+          <p class="lot__line">Lamborghini Grigio Lynx, camel seating</p>
+          <p class="lot__price num">$2,500,000</p>
+          <ul class="lot__spec" data-spec>
+            <li><span class="k">Power</span><span class="v">Mercury Racing 500R outboards</span></li>
+            <li><span class="k">Length × beam</span><span class="v num">52′ × 13′8″</span></li>
+          </ul>
+          <p class="lot__act"><a class="btn btn--light" href="https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/" rel="noopener">View this boat</a><a class="lot__enq" href="#visit">Enquire</a></p>
+        </div>
+      </article>
+
+      <article class="lot lot--flip" data-lot aria-labelledby="lot4-h">
+        <p class="lot__paint" data-paint aria-hidden="true">Verde Gea</p>
+        <div class="lot__media">
+          <a class="lot__plan" href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener" tabindex="-1" aria-hidden="true" data-plan>
+            <img src="../../assets/img/slip-tec63-plan.webp" width="960" height="640" loading="lazy" alt="">
+          </a>
+          <div class="lot__side" data-side aria-hidden="true"><img src="../../assets/img/slip-tec63-side.webp" width="960" height="640" loading="lazy" alt=""></div>
+        </div>
+        <div class="lot__info">
+          <p class="lot__year num">2022 · Available now</p>
+          <h3 class="lot__name" id="lot4-h"><a href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener">Tecnomar Lamborghini 63</a></h3>
+          <p class="lot__line">Verde Gea, the Sián launch colour, with gold accents</p>
+          <p class="lot__price">Request price</p>
+          <ul class="lot__spec" data-spec>
+            <li><span class="k">Hours</span><span class="v num">96</span></li>
+            <li><span class="k">Power</span><span class="v">2 × MAN V12, 2,000&nbsp;hp each</span></li>
+            <li><span class="k">Length × beam</span><span class="v num">63′ × 17′8″</span></li>
+          </ul>
+          <p class="lot__act"><a class="btn btn--light" href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener">View this boat</a><a class="lot__enq" href="#visit">Enquire</a></p>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="visit" aria-labelledby="foot-h" data-hdr-tone="ground">
+  <div class="foot__water" data-water>
+    <video class="foot__surf" muted loop playsinline preload="none" poster="../../assets/img/gen-surf2-poster.jpg" aria-hidden="true" data-surf>
+      <source media="(max-width: 720px)" data-src="../../assets/video/gen-surf2-m.mp4" type="video/mp4">
+      <source data-src="../../assets/video/gen-surf2.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="foot__ground" aria-hidden="true"></div>
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <h2 class="foot__name" id="foot-h">Prestige Marine</h2>
+      <p>A Division of the Prestige Imports Family</p>
+      <p class="foot__tel"><a href="tel:+13059471000">305-947-1000</a></p>
+    </div>
+    <nav class="foot__col" aria-label="Brands">
+      <p class="foot__k">Brands</p>
+      <a href="#tecnomar">Tecnomar for Lamborghini 63</a>
+      <a href="https://www.midnightboats.com/" rel="noopener">Midnight Express</a>
+      <a href="https://vandutch.com/" rel="noopener">VanDutch</a>
+      <a href="https://www.iguana-yachts.com/" rel="noopener">Iguana Yachts</a>
+    </nav>
+    <nav class="foot__col" aria-label="Boats">
+      <p class="foot__k">Boats</p>
+      <a href="#inventory">New Inventory</a>
+      <a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Brokerage</a>
+      <a href="https://www.prestigemarine.co/sold/" rel="noopener">Sold</a>
+    </nav>
+    <div class="foot__col">
+      <p class="foot__k">Visit</p>
+      <p>15050 Biscayne Blvd<br>North Miami Beach, FL 33181</p>
+      <p>Mon–Fri 9:00 am – 7:00 pm<br>Saturday 10:00 am – 6:00 pm<br>Sunday by appointment</p>
+      <a href="https://www.facebook.com/PrestigeMarineMiami" rel="noopener">Facebook</a>
+    </div>
+    <p class="foot__legal">© 2026 Prestige Marine. The yellow Tecnomar seen from above and the water footage on this page are generated artwork, not photographs.</p>
+  </div>
+</footer>
+</body>
+</html>

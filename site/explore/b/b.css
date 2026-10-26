@@ -1,0 +1,300 @@
+/* Prestige Marine — EXPLORE B "Day to Night" (26 Oct 2026).
+   One idea: the scroll is the clock. The same water, seen from above, runs from midday azure through
+   golden hour into a moonlit night while the yellow Tecnomar crosses it; the words arrive between the hours.
+   Grounds come only from the subject: the water itself, shallows-white #EEFAF9 (the sand bars), graphite ink
+   #2A2627, lagoon #0B6A70. Night adds no new hue — the "smoke" is the night water's own deep band
+   (#06161F, sampled from gen-night-topdown at the band, darkened), and the only warm notes are light sources
+   on the boat. No beige / cream / camel anywhere (color I8). */
+
+:root {
+  --ground: #EEFAF9;
+  --ink: #2A2627;
+  --ink-2: #4A4446;               /* 9.0:1 on ground */
+  --lagoon: #0B6A70;
+  --white: #FFFFFF;
+  --moon: #EAF7F8;                /* night type: the moonlit sand bar, cooled */
+  --moon-2: #B9D6DA;              /* night secondary: 9.6:1 on the smoke over night water */
+  --frost: rgba(244, 252, 252, .70);   /* ice by day: shallows-white at 70 % over the water */
+  --frost-edge: rgba(255, 255, 255, .62);
+  --smoke: rgba(6, 22, 31, .62);       /* ice by night: the night band at 62 % */
+  --smoke-edge: rgba(150, 228, 238, .18);
+  --line: rgba(42, 38, 39, .22);
+
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --wide: 118%;
+
+  --t-14: .875rem; --t-16: 1rem; --t-18: 1.125rem; --t-20: 1.25rem; --t-22: 1.375rem;
+  --t-h3: clamp(1.375rem, 1.1rem + .9vw, 1.875rem);
+  --t-h2: clamp(1.875rem, 1.3rem + 2vw, 3rem);
+  --t-h1: clamp(2.75rem, 1.2rem + 5vw, 6rem);
+  --t-night: clamp(2.25rem, 1.3rem + 3.4vw, 4.75rem);
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --gutter: clamp(16px, 4vw, 64px);
+  --max: 1440px;
+  --hdr-h: 72px;
+  --radius: 6px;
+
+  --dur-1: .25s; --dur-2: .6s; --dur-3: .9s; --dur-4: 1.2s;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --stagger: 120ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: #0E5E6A; }
+body {
+  margin: 0; color: var(--ink); background: transparent;
+  font-family: var(--font); font-size: var(--t-18); line-height: 1.55; font-stretch: 100%;
+  overflow-x: clip; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nb { white-space: nowrap; }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.skip { position: absolute; left: var(--s-4); top: -60px; z-index: 100; background: var(--ink); color: var(--white); padding: var(--s-2) var(--s-4); }
+.skip:focus { top: var(--s-4); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.ice--night :focus-visible, .night :focus-visible, .hdr[data-tone="night"] :focus-visible, .hero__words :focus-visible { outline-color: var(--moon); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: 48px; padding: 0 var(--s-5); border: 1px solid transparent; border-radius: 0;
+  font-size: var(--t-16); font-weight: 600; letter-spacing: .01em; text-decoration: none; cursor: pointer;
+  transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.btn--solid { background: var(--ink); color: var(--white); }
+.btn--solid:hover { background: var(--lagoon); }
+.btn--line { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn--line:hover { background: var(--ink); color: var(--white); }
+
+/* ── the sea ─────────────────────────────────────────────── */
+.sea { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #0E5E6A; }
+.sea__day, .sea__night, .sea__gl { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sea__night { opacity: 0; }
+.sea__gl { opacity: 0; transition: opacity var(--dur-2) var(--ease); }
+.gl .sea__gl { opacity: 1; }
+main { position: relative; z-index: 1; }
+
+/* ── ice: the one container. Frost by day, smoke by night — re-solved, not inverted:
+   frost keeps graphite ink, smoke carries moonlit type; both at the same blur and radius ── */
+.ice {
+  border: 1px solid var(--frost-edge); border-radius: var(--radius);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35); backdrop-filter: blur(22px) saturate(1.35);
+}
+.ice--day { background: var(--frost); color: var(--ink); box-shadow: 0 24px 60px -36px rgba(4, 48, 58, .55); }
+.ice--night { background: var(--smoke); border-color: var(--smoke-edge); color: var(--moon); box-shadow: 0 24px 60px -36px rgba(0, 0, 0, .7); }
+.ice--night .btn--solid { background: var(--moon); color: var(--ink); }
+.ice--night .btn--solid:hover { background: var(--white); }
+
+/* ── header: always on, frosted; re-toned for night ── */
+.hdr {
+  position: fixed; inset: 0 0 auto; z-index: 50; height: var(--hdr-h);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-5);
+  padding-inline: var(--gutter); color: var(--ink);
+  background: rgba(244, 252, 252, .66); border-bottom: 1px solid rgba(255, 255, 255, .5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
+  transition: background-color var(--dur-2) var(--ease), color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+}
+.hdr[data-tone="night"] { background: rgba(6, 22, 31, .58); color: var(--moon); border-bottom-color: rgba(150, 228, 238, .14); }
+.hdr[data-tone="night"] .btn--solid { background: var(--moon); color: var(--ink); }
+.hdr[data-tone="night"] .btn--solid:hover { background: var(--white); }
+.hdr__brand { display: grid; align-content: center; min-height: 44px; text-decoration: none; line-height: 1.15; }
+.hdr__name { font-size: var(--t-22); font-weight: 600; font-stretch: 125%; }
+.hdr__div { font-size: var(--t-14); }
+.hdr__right { display: flex; align-items: center; gap: var(--s-5); }
+.hdr__tel { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2); min-width: 44px; min-height: 44px; font-size: var(--t-16); font-weight: 600; text-decoration: none; }
+.hdr__cta { min-height: 44px; }
+.hdr__menu { display: inline-flex; align-items: center; gap: var(--s-3); min-height: 44px; background: none; border: 0; cursor: pointer; font-size: var(--t-16); font-weight: 600; padding: 0; }
+.hdr__burger { display: grid; gap: 6px; width: 22px; }
+.hdr__burger i { display: block; height: 1.5px; background: currentColor; transition: transform var(--dur-1) var(--ease); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:first-child { transform: translateY(3.75px) rotate(45deg); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+.menu-open .hdr { background: var(--ground); color: var(--ink); }
+.menu { position: fixed; inset: 0; z-index: 40; background: var(--ground); color: var(--ink); overflow-y: auto; padding: calc(var(--hdr-h) + var(--s-7)) var(--gutter) var(--s-7); }
+.menu__inner { max-width: var(--max); margin-inline: auto; display: grid; gap: var(--s-6); }
+.menu__label { margin: 0; font-size: var(--t-14); color: var(--ink-2); }
+.menu__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+.menu__list a { display: inline-block; padding-block: var(--s-2); text-decoration: none; font-size: var(--t-22); }
+.menu__list--big a { font-size: var(--t-h3); font-stretch: var(--wide); font-weight: 500; line-height: 1.2; }
+.menu__list a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.menu__foot { margin: 0; color: var(--ink-2); }
+
+/* ── Acts I–II: the voyage ───────────────────────────────── */
+.voyage { position: relative; }
+.voyage__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; pointer-events: none; z-index: 0; }
+.voyage__flow { position: relative; z-index: 1; margin-top: -100vh; margin-top: -100svh; }
+
+/* the vessel: placed by four custom properties, so the no-JS frame and every scrolled frame share one rule */
+.vessel {
+  --bh: min(76svh, 1000px); --bw: calc(var(--bh) * .3001);
+  --x: 63vw; --y: 54svh; --r: -14deg; --s: 1;
+  --sx: 0px; --sy: 0px; --so: .62; --sb: 7px;     /* shadow, world-fixed sun: written by script in boat space */
+  --night: 0; --lamps: 0;
+  position: absolute; left: 0; top: 0; width: var(--bw); height: var(--bh);
+  transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0) rotate(var(--r)) scale(var(--s));
+  will-change: transform;
+}
+.vessel__shadow, .vessel__body, .vessel__img, .vessel__lit { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* darker by day (Alex): a black silhouette at ~55 %, offset down-sun, soft at the edge */
+.vessel__shadow { filter: brightness(0) blur(var(--sb)); opacity: var(--so); transform: translate(var(--sx), var(--sy)); }
+.vessel__img { filter: brightness(calc(1 - var(--night) * .52)) saturate(calc(1 - var(--night) * .25)); }
+/* the lit stern: the deck's own Y-strips, lifted to light (a mask derived from the generated master) */
+.vessel__lit { opacity: var(--night); mix-blend-mode: screen; }
+.lamp { position: absolute; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; opacity: var(--lamps); }
+.lamp--port  { left: 9%;  top: 37%; background: #FF4A3D; box-shadow: 0 0 6px 2px rgba(255, 74, 61, .9), 0 0 22px 6px rgba(255, 74, 61, .45); }
+.lamp--stbd  { left: 91%; top: 37%; background: #3DFF8A; box-shadow: 0 0 6px 2px rgba(61, 255, 138, .9), 0 0 22px 6px rgba(61, 255, 138, .45); }
+.lamp--mast  { left: 50%; top: 50.6%; background: #FFFFFF; box-shadow: 0 0 6px 2px rgba(255, 255, 255, .95), 0 0 26px 8px rgba(220, 240, 255, .5); }
+.lamp--stern { left: 50%; top: 99%; background: #FFFFFF; box-shadow: 0 0 6px 2px rgba(255, 255, 255, .95), 0 0 30px 10px rgba(220, 240, 255, .45); }
+
+/* first screen */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; }
+.hero__words { position: absolute; left: var(--gutter); top: 33%; width: min(48vw, 760px); color: var(--white); }
+.hero__eyebrow { margin: 0 0 var(--s-4); font-size: 1.5rem; font-weight: 500; letter-spacing: 0; }   /* 24px: large text, so 3:1 on the deep band holds */
+.hero__h1 { margin: 0; font-size: var(--t-h1); line-height: .98; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.02em; text-wrap: balance; }
+.hero__card { position: absolute; left: var(--gutter); bottom: var(--s-7); width: min(520px, calc(100% - 2 * var(--gutter))); padding: var(--s-5); display: grid; gap: var(--s-4); }
+.hero__sub { margin: 0; font-size: var(--t-18); line-height: 1.5; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+/* chapters: cards alternate either side of the boat's track */
+.chapter { position: relative; min-height: 110vh; min-height: 110svh; display: flex; align-items: center; padding-inline: var(--gutter); }
+.chapter--r { justify-content: flex-end; }
+.card { width: min(440px, 100%); padding: var(--s-6); display: grid; gap: var(--s-3); }
+.card__hour { margin: 0; font-size: var(--t-14); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; opacity: .82; }
+.card__h { margin: 0; font-size: var(--t-h2); line-height: 1.04; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.015em; text-wrap: balance; }
+.card__p { margin: 0; font-size: var(--t-18); line-height: 1.55; }
+.card__a { margin: var(--s-2) 0 0; font-weight: 600; font-size: var(--t-16); }
+.card__a a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 5px; }
+.voyage__tail { height: 50vh; height: 50svh; }
+
+/* ── Act III: night ─────────────────────────────────────── */
+.night { position: relative; padding: var(--s-10) 0 var(--s-10); color: var(--moon); }
+.night__head { max-width: 760px; display: grid; gap: var(--s-4); margin-bottom: var(--s-8); }
+.night__h { margin: 0; font-size: var(--t-night); line-height: 1; font-weight: 500; font-stretch: var(--wide); letter-spacing: -.02em; text-wrap: balance; }
+.night__lede { margin: 0; font-size: var(--t-20); line-height: 1.5; color: var(--moon); max-width: 44ch; }
+.marques { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-5); align-items: start; }
+/* the steps: each marque stands one stair lower than the last, so the row reads left to right as a descent */
+.marque:nth-child(2) { margin-top: var(--s-8); }
+.marque:nth-child(3) { margin-top: calc(var(--s-8) * 2); }
+.marque:nth-child(4) { margin-top: calc(var(--s-8) * 3); }
+.marque__in { padding: var(--s-3) var(--s-3) var(--s-5); display: grid; gap: var(--s-3); height: 100%; }
+.marque__media { aspect-ratio: 4 / 5; overflow: hidden; border-radius: calc(var(--radius) - 2px); }
+.marque__media img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.86) saturate(.9); transition: filter var(--dur-2) var(--ease), transform var(--dur-4) var(--ease-out); }
+.marque:hover .marque__media img, .marque:focus-within .marque__media img { filter: none; transform: scale(1.03); }
+.marque__name { margin: var(--s-2) var(--s-2) 0; font-size: var(--t-h3); line-height: 1.12; font-weight: 500; font-stretch: var(--wide); text-wrap: balance; }
+.marque__fact { margin: 0 var(--s-2); font-size: var(--t-16); line-height: 1.5; color: var(--moon-2); }
+.marque__links { margin: 0 var(--s-2); font-size: var(--t-16); font-weight: 600; }
+.marque__links a { display: inline-flex; min-height: 44px; align-items: center; text-underline-offset: 5px; }
+
+/* ── Act IV: first light ────────────────────────────────── */
+.dawn { position: relative; padding: 70vh 0 30vh; padding: 70svh 0 30svh; }
+.dawn__wrap { position: relative; z-index: 1; display: flex; justify-content: center; }
+/* the morning water dissolves into the shallows-white of the shore before the surf */
+.dawn::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 28vh; background: linear-gradient(rgba(238, 250, 249, 0), var(--ground)); pointer-events: none; }
+.card--visit { width: min(560px, 100%); }
+.visit__tel { margin: 0; font-size: var(--t-h2); font-weight: 500; font-stretch: var(--wide); line-height: 1.1; }
+.visit__tel a { text-decoration: none; }
+.visit__tel a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.visit__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); font-size: var(--t-16); }
+.visit__grid p { margin: 0; }
+.hours { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: var(--s-1) var(--s-4); }
+.hours dt { font-weight: 600; }
+.hours dd { margin: 0; }
+.visit__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+
+/* ── footer: the surf, at first light ───────────────────── */
+.foot { position: relative; z-index: 1; isolation: isolate; min-height: max(760px, 100vh); overflow: hidden; background: var(--ground); }
+.foot__surf { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; z-index: -2; }
+.foot__ground { position: absolute; inset: 0; z-index: -1; background: linear-gradient(var(--ground) 44%, rgba(238, 250, 249, 0) 62%); }
+.foot__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--s-6); padding-top: var(--s-9); }
+.foot__name { margin: 0 0 var(--s-2); font-size: var(--t-h3); font-weight: 600; font-stretch: 125%; }
+.foot__brand p, .foot__col p { margin: 0; color: var(--ink-2); font-size: var(--t-16); }
+.foot__col { display: grid; gap: var(--s-1); align-content: start; font-size: var(--t-16); }
+.foot__col a { display: inline-flex; align-items: center; min-height: 36px; text-decoration: none; }
+.foot__col a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot__k { font-weight: 700; color: var(--ink) !important; margin-bottom: var(--s-1) !important; }
+.foot__legal { grid-column: 1 / -1; margin: var(--s-5) 0 0; font-size: var(--t-14); color: var(--ink-2); }
+
+/* ── HUD: the clock, centred in the header ─────────────── */
+.hud {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: none; align-items: center; gap: var(--s-3);
+  font-size: var(--t-14); font-weight: 600; letter-spacing: .02em; white-space: nowrap;
+}
+.js .hud { display: inline-flex; }
+.hud__track { position: relative; width: 120px; height: 1px; background: currentColor; opacity: .55; }
+.hud__track i { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; margin-left: -3.5px; border-radius: 50%; background: currentColor; transform: translateX(var(--p, 0px)); }
+.hud__time { min-width: 3.1em; font-size: var(--t-16); }
+@media (max-width: 1100px) { .hud__track { display: none; } }
+
+/* ── stepped arrival: each card rises, then its lines follow it up, one step at a time ── */
+.js [data-chapter] .step, .js .card[data-chapter] .step, .js [data-chapter] > .ice.card {
+  opacity: 0; transform: translateY(36px); filter: blur(6px);
+  transition: opacity var(--dur-3) var(--ease) calc(var(--i, 0) * var(--stagger) + 120ms),
+              transform var(--dur-4) var(--ease-out) calc(var(--i, 0) * var(--stagger) + 120ms),
+              filter var(--dur-3) var(--ease) calc(var(--i, 0) * var(--stagger) + 120ms);
+}
+.js [data-chapter] > .ice.card { --i: -1; transform: translateY(64px); filter: none; }
+.js .is-in .step, .js .is-in > .ice.card, .js .card.is-in .step { opacity: 1; transform: none; filter: none; }
+
+/* ── paths without the WebGL sea: the night act carries its own still ── */
+html:not(.gl) .night { background: #06161F url("../../assets/img/gen-night-topdown-poster.jpg") center / cover; }
+html:not(.gl) .night::before { content: ""; position: absolute; inset: 0; background: rgba(4, 16, 24, .55); }
+html:not(.gl) .night > .wrap { position: relative; }
+html:not(.gl) .dawn { background: none; }   /* the day loop shows through; the ::after fade carries it to the shore */
+
+/* ── reduced motion: the clock still turns (colour only), nothing travels ── */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-chapter] .step, .js [data-chapter] > .ice.card { opacity: 1; transform: none; filter: none; transition: none; }
+  .vessel { will-change: auto; }
+}
+
+/* ── tablet / phone: recomposed, not shrunk ─────────────── */
+@media (max-width: 1100px) {
+  .marques { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .marque:nth-child(2) { margin-top: var(--s-8); }
+  .marque:nth-child(3) { margin-top: 0; }
+  .marque:nth-child(4) { margin-top: var(--s-8); }
+  .foot__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  :root { --hdr-h: 64px; }
+  .hdr__div, .hdr__tel-num, .hdr__cta { display: none; }
+  .hdr__name { font-size: var(--t-20); }
+  .hdr__right { gap: var(--s-3); }
+  .vessel { --bh: min(52svh, 560px); --x: 50vw; --y: 52svh; --r: -8deg; }
+  .hero__words { left: var(--gutter); right: var(--gutter); top: calc(var(--hdr-h) + var(--s-5)); width: auto; color: var(--ink); }
+  .hero__eyebrow { font-size: var(--t-16); margin-bottom: var(--s-2); }
+  .hero__h1 { font-size: clamp(2.25rem, 9.4vw, 2.75rem); }
+  .hero__card { bottom: var(--s-4); padding: var(--s-4); gap: var(--s-3); }
+  .hero__sub { font-size: var(--t-16); }
+  .hero__cta .btn { flex: 1 1 auto; }
+  .chapter, .chapter--r { justify-content: center; align-items: flex-end; padding-bottom: 14svh; min-height: 100svh; }
+  .card { padding: var(--s-5); }
+  .night { padding: var(--s-9) 0; }
+  .marques { grid-template-columns: 1fr; gap: var(--s-6); }
+  .marque:nth-child(n) { margin-top: 0; }
+  .marque__media { aspect-ratio: 4 / 3; }
+  .visit__grid { grid-template-columns: 1fr; gap: var(--s-4); }
+  .visit__cta .btn { flex: 1 1 auto; }
+  .hud__phase { display: none; }
+  .hud { left: auto; right: calc(var(--gutter) + 112px); transform: translateY(-50%); }
+  .hdr__menu [data-menu-label] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hdr__menu { min-width: 44px; justify-content: center; }
+  .night__head { padding: var(--s-5); border-radius: var(--radius); background: var(--smoke); border: 1px solid var(--smoke-edge);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35); backdrop-filter: blur(22px) saturate(1.35); margin-bottom: var(--s-6); }
+  .foot { min-height: 1020px; }
+  .foot__ground { background: linear-gradient(var(--ground) 70%, rgba(238, 250, 249, 0) 84%); }
+  .foot__grid { padding-top: var(--s-8); gap: var(--s-6) var(--s-5); }
+  .foot__brand { grid-column: 1 / -1; }
+  .foot__col a { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 721px) {
+  /* the boat holds its first-screen pose, so every chapter stands on the free side */
+  .chapter--r { justify-content: flex-start; }
+}

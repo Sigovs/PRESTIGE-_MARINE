@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prestige Marine — versions</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
+<style>
+  :root { --ground: #EEFAF9; --ink: #2A2627; --ink-2: #5A5153; --lagoon: #0B6A70; --line: rgba(42,38,39,.16); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Archivo", Arial, sans-serif; font-size: 16px; line-height: 1.5; }
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 48px clamp(16px, 4vw, 56px) 80px; }
+  header { display: grid; gap: 8px; margin-bottom: 40px; }
+  h1 { margin: 0; font-size: clamp(32px, 4vw, 56px); line-height: 1.05; font-weight: 500; font-stretch: 118%; }
+  .sub { margin: 0; color: var(--ink-2); max-width: 64ch; }
+  h2 { margin: 48px 0 16px; font-size: 14px; font-weight: 700; letter-spacing: .02em; color: var(--lagoon); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 24px; }
+  .card { display: grid; gap: 12px; text-decoration: none; color: inherit; }
+  .card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; border: 1px solid var(--line); transition: transform .2s ease; }
+  .card:hover img { transform: translateY(-2px); }
+  .card:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .t { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .t b { font-size: 22px; font-weight: 500; font-stretch: 118%; }
+  .tag { font-size: 14px; font-weight: 600; padding: 2px 8px; background: var(--ink); color: #fff; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .docs { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .docs a { color: var(--ink); text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+  footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 14px; }
+  @media (prefers-reduced-motion: reduce) { .card img { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Prestige Marine — homepage versions</h1>
+    <p class="sub">Child site of Prestige Imports, Miami. Prototypes for review, 26 Oct 2026. Forms are mock-ups; water footage and the yellow Tecnomar seen from above are generated artwork.</p>
+  </header>
+
+  <h2>Current</h2>
+  <div class="grid">
+    <a class="card" href="site/index_finale.html">
+      <img src="dashboard/thumbs/finale.jpg" alt="Finale first screen" loading="lazy">
+      <span class="t"><b>Finale</b><span class="tag">latest</span></span>
+      <p>v2 layout on the WebGL sea from direction A. Yellow Tecnomar 63 sails up the page and rocks; ice cards rise one by one; the sea streams astern; berth-sheet inventory; full surf footer.</p>
+    </a>
+  </div>
+
+  <h2>Explore — three directions</h2>
+  <div class="grid">
+    <a class="card" href="site/explore/a/index.html">
+      <img src="dashboard/thumbs/a.jpg" alt="Direction A first screen" loading="lazy">
+      <span class="t"><b>A — The Chart</b></span>
+      <p>The page as a nautical chart: one continuous sea, a course with waypoints, the yacht follows it, a quiet navigator's HUD. The flipped surf footer lives here.</p>
+    </a>
+    <a class="card" href="site/explore/b/index.html">
+      <img src="dashboard/thumbs/b.jpg" alt="Direction B first screen" loading="lazy">
+      <span class="t"><b>B — Day to Night</b></span>
+      <p>The scroll is the clock: midday azure, golden hour, dusk, a moonlit sea with the Tecnomar's lights on, then first light.</p>
+    </a>
+    <a class="card" href="site/explore/c/index.html">
+      <img src="dashboard/thumbs/c.jpg" alt="Direction C first screen" loading="lazy">
+      <span class="t"><b>C — The Showroom</b></span>
+      <p>Boats shown like supercars: editorial grid, water in windows, the yacht breaking out of its frame, cards stepping in, inventory on asphalt.</p>
+    </a>
+  </div>
+
+  <h2>Earlier</h2>
+  <div class="grid">
+    <a class="card" href="site/index_v2.html">
+      <img src="dashboard/thumbs/v2.jpg" alt="v2 first screen" loading="lazy">
+      <span class="t"><b>v2</b></span>
+      <p>Azure water, no beige, the ME52 hull sails over bright flats, berth-sheet inventory, full surf footer.</p>
+    </a>
+    <a class="card" href="site/index.html">
+      <img src="dashboard/thumbs/v1.jpg" alt="v1 first screen" loading="lazy">
+      <span class="t"><b>v1</b></span>
+      <p>First build: the Midnight Express 52 Vitesse rises over a green-teal loop into a sand ground.</p>
+    </a>
+  </div>
+
+  <h2>Documents</h2>
+  <p class="docs">
+    <a href="https://github.com/Sigovs/PRESTIGE-_MARINE/blob/main/DESIGN-READ.md">Design Read v1</a>
+    <a href="https://github.com/Sigovs/PRESTIGE-_MARINE/blob/main/DESIGN-READ-v2.md">Design Read v2</a>
+    <a href="https://github.com/Sigovs/PRESTIGE-_MARINE/blob/main/CRITIQUE-v1.md">Critique of v1</a>
+    <a href="https://github.com/Sigovs/PRESTIGE-_MARINE/blob/main/EXPLORE-BRIEF.md">Explore brief</a>
+  </p>
+
+  <footer>Prestige Marine · 15050 Biscayne Blvd, North Miami Beach, FL 33181 · 305-947-1000</footer>
+</div>
+</body>
+</html>

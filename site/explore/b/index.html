@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prestige Marine | Noon to Night</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prestige Marine, a division of the Prestige Imports family: Tecnomar for Lamborghini 63, Midnight Express, VanDutch and Iguana Yachts, new and brokerage, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
+<link rel="preload" as="image" href="../../assets/img/gen-tecnomar63-top.webp">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+<link rel="stylesheet" href="b.css?v=3">
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
+<script src="b.js?v=3" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Header: never leaves. One frosted bar whose tone follows the clock (ice by day, smoke by night). -->
+<header class="hdr" data-hdr data-tone="day">
+  <a class="hdr__brand" href="#top" aria-label="Prestige Marine, top of page">
+    <span class="hdr__name">Prestige Marine</span>
+    <span class="hdr__div">A Division of the Prestige Imports Family</span>
+  </a>
+  <!-- HUD: the clock the scroll is running, carried by the header (one persistent layer, not two).
+       Decorative restatement of the chapter hours, so hidden from assistive tech. -->
+  <div class="hud" aria-hidden="true" data-hud>
+    <span class="hud__time num" data-hud-time>12:00</span>
+    <span class="hud__track"><i data-hud-dot></i></span>
+    <span class="hud__phase" data-hud-phase>Midday</span>
+  </div>
+  <div class="hdr__right">
+    <a class="hdr__tel" href="tel:+13059471000" aria-label="Call 305-947-1000"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4.2-2 1.3a12 12 0 0 0 6 6l1.3-2 4.2 1.4v3a2 2 0 0 1-2.1 2A16.5 16.5 0 0 1 4.6 5.6a2 2 0 0 1 2-2.1Z"/></svg><span class="hdr__tel-num">305-947-1000</span></a>
+    <a class="btn btn--solid hdr__cta" href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Inventory</a>
+    <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="hdr__burger" aria-hidden="true"><i></i><i></i></span><span data-menu-label>Menu</span>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden data-menu data-lenis-prevent>
+  <nav class="menu__inner" aria-label="Main">
+    <p class="menu__label">Brands</p>
+    <ul class="menu__list menu__list--big">
+      <li><a href="#brand-tecnomar">Tecnomar for Lamborghini 63</a></li>
+      <li><a href="#brand-midnight">Midnight Express</a></li>
+      <li><a href="#brand-vandutch">VanDutch</a></li>
+      <li><a href="#brand-iguana">Iguana Yachts</a></li>
+    </ul>
+    <ul class="menu__list">
+      <li><a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">New Inventory</a></li>
+      <li><a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Brokerage</a></li>
+      <li><a href="https://www.prestigemarine.co/sold/" rel="noopener">Sold</a></li>
+      <li><a href="#land">About Us</a></li>
+      <li><a href="#visit">Contact Us</a></li>
+    </ul>
+    <p class="menu__foot"><a href="tel:+13059471000">305-947-1000</a><br>15050 Biscayne Blvd, North Miami Beach, FL 33181</p>
+  </nav>
+</div>
+
+<!-- The sea: one fixed field under the whole page. Two generated loops of the same water at the same
+     framing (midday azure, moonlit night); the WebGL layer grades between them by the scroll clock,
+     lights the water under the hull at night and ripples under the pointer. Without WebGL the day
+     loop plays and the night act carries its own still. -->
+<div class="sea" aria-hidden="true" data-sea>
+  <video class="sea__day" autoplay muted loop playsinline preload="auto" poster="../../assets/img/gen-azure-topdown-poster.jpg" data-day>
+    <source media="(max-width: 720px)" src="../../assets/video/gen-azure-topdown-m2.mp4" type="video/mp4">
+    <source src="../../assets/video/gen-azure-topdown.mp4" type="video/mp4">
+  </video>
+  <video class="sea__night" muted loop playsinline preload="auto" data-night>
+    <source media="(max-width: 720px)" src="../../assets/video/gen-night-topdown-m.mp4" type="video/mp4">
+    <source src="../../assets/video/gen-night-topdown.mp4" type="video/mp4">
+  </video>
+  <canvas class="sea__gl" data-gl></canvas>
+</div>
+
+<main id="main">
+
+  <!-- Acts I–II: the voyage. The boat lives in a sticky stage; the chapters scroll through it in the
+       normal flow, so they rise from below on their own and stay readable with scripts removed. -->
+  <section class="voyage" id="top" aria-labelledby="h1" data-voyage>
+    <div class="voyage__stage" aria-hidden="true">
+      <div class="vessel" data-vessel>
+        <img class="vessel__shadow" src="../../assets/img/gen-tecnomar63-top.webp" alt="" width="750" height="2499" data-shadow>
+        <div class="vessel__body" data-body>
+          <img class="vessel__img" src="../../assets/img/gen-tecnomar63-top.webp" alt="" width="750" height="2499" fetchpriority="high">
+          <img class="vessel__lit" src="img/tec-lights.webp" alt="" width="750" height="2499">
+          <i class="lamp lamp--port"></i><i class="lamp lamp--stbd"></i><i class="lamp lamp--mast"></i><i class="lamp lamp--stern"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="voyage__flow">
+      <div class="hero">
+        <div class="hero__words">
+          <p class="hero__eyebrow">Prestige Marine · North Miami Beach</p>
+          <h1 class="hero__h1" id="h1">Noon to night, <span class="nb">on the water.</span></h1>
+        </div>
+        <div class="ice ice--day hero__card">
+          <p class="hero__sub">Tecnomar for Lamborghini&nbsp;63, Midnight Express, VanDutch and Iguana Yachts. New and brokerage, from the Prestige Imports family.</p>
+          <div class="hero__cta">
+            <a class="btn btn--solid" href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">View inventory</a>
+            <a class="btn btn--line" href="tel:+13059471000">305-947-1000</a>
+          </div>
+        </div>
+        <p class="hero__boat-note"><span class="sr-only">Pictured: the yellow Tecnomar for Lamborghini 63 seen from directly above, generated artwork.</span></p>
+      </div>
+
+      <article class="chapter chapter--l" aria-labelledby="c1-h" data-chapter>
+        <div class="ice ice--day card">
+          <p class="card__hour step" style="--i:0"><span class="num">14:00</span> · High sun</p>
+          <h2 class="card__h step" id="c1-h" style="--i:1">Tecnomar for Lamborghini&nbsp;63</h2>
+          <p class="card__p step" style="--i:2">Conceived in synergy between Automobili Lamborghini and The Italian Sea Group. Twin MAN V12 engines, 2,000&nbsp;HP each.</p>
+          <p class="card__a step" style="--i:3"><a href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener">The 2022 Tecnomar in stock</a></p>
+        </div>
+      </article>
+
+      <article class="chapter chapter--r" aria-labelledby="c2-h" data-chapter>
+        <div class="ice ice--day card">
+          <p class="card__hour step" style="--i:0"><span class="num">16:30</span> · Afternoon</p>
+          <h2 class="card__h step" id="c2-h" style="--i:1">Drawn from the Sián</h2>
+          <p class="card__p step" style="--i:2">Its lines take after the Lamborghini Sián FKP&nbsp;37 and the Terzo Millennio concept. Twenty metres, built in carbon fibre.</p>
+          <p class="card__a step" style="--i:3"><a href="https://tecnomar.com/fleet/tecnomar-for-lamborghini-63/" rel="noopener">tecnomar.com</a></p>
+        </div>
+      </article>
+
+      <article class="chapter chapter--l" id="land" aria-labelledby="c3-h" data-chapter>
+        <div class="ice ice--day card">
+          <p class="card__hour step" style="--i:0"><span class="num">18:40</span> · Golden hour</p>
+          <h2 class="card__h step" id="c3-h" style="--i:1">Land, Air &amp; now&nbsp;Sea.</h2>
+          <p class="card__p step" style="--i:2">Prestige Marine grew out of Brett David's love of yachting in Miami, and the clients who already drove his cars. The same client-first practice has run Prestige Imports for over 45&nbsp;years.</p>
+        </div>
+      </article>
+
+      <article class="chapter chapter--r" aria-labelledby="c4-h" data-chapter>
+        <div class="ice ice--night card">
+          <p class="card__hour step" style="--i:0"><span class="num">20:15</span> · After dark</p>
+          <h2 class="card__h step" id="c4-h" style="--i:1">Come aboard</h2>
+          <p class="card__p step" style="--i:2">Viewings and sea trials by appointment at Marina Palms, North Miami Beach.</p>
+          <p class="card__a step" style="--i:3"><a href="#visit">Book a viewing</a></p>
+        </div>
+      </article>
+      <div class="voyage__tail" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Act III, at night: the four marques, rising in steps. -->
+  <section class="night" id="brands" aria-labelledby="brands-h" data-nightact>
+    <div class="wrap">
+      <div class="night__head" data-chapter>
+        <p class="card__hour step" style="--i:0"><span class="num">21:30</span> · Night</p>
+        <h2 class="night__h step" id="brands-h" style="--i:1">Four marques, after dark.</h2>
+        <p class="night__lede step" style="--i:2">Representing the most iconic yacht brands on Miami's waterways. Not your typical marine dealership.</p>
+      </div>
+      <ol class="marques">
+        <li class="marque" id="brand-tecnomar" data-chapter>
+          <div class="ice ice--night marque__in step" style="--i:0">
+            <div class="marque__media"><img src="../../assets/img/brand-tecnomar.webp" alt="The Tecnomar for Lamborghini 63 on the water, three-quarter view from above." loading="lazy" width="900" height="1125"></div>
+            <h3 class="marque__name">Tecnomar for Lamborghini&nbsp;63</h3>
+            <p class="marque__fact">Conceived with Automobili Lamborghini. Twin MAN V12, 2,000&nbsp;HP each.</p>
+            <p class="marque__links"><a href="https://tecnomar.com/fleet/tecnomar-for-lamborghini-63/" rel="noopener">tecnomar.com</a></p>
+          </div>
+        </li>
+        <li class="marque" id="brand-midnight" data-chapter>
+          <div class="ice ice--night marque__in step" style="--i:1">
+            <div class="marque__media"><img src="../../assets/img/b2-midnight.webp" alt="A Midnight Express center console running on green water, seen from above." loading="lazy" width="900" height="1125"></div>
+            <h3 class="marque__name">Midnight Express</h3>
+            <p class="marque__fact">High performance center consoles built in Miami, from 34′ to 60′. Family owned and operated.</p>
+            <p class="marque__links"><a href="https://www.midnightboats.com/" rel="noopener">midnightboats.com</a></p>
+          </div>
+        </li>
+        <li class="marque" id="brand-vandutch" data-chapter>
+          <div class="ice ice--night marque__in step" style="--i:2">
+            <div class="marque__media"><img src="../../assets/img/b2-vandutch.webp" alt="A VanDutch running on deep blue water, seen from directly above." loading="lazy" width="900" height="1125"></div>
+            <h3 class="marque__name">VanDutch</h3>
+            <p class="marque__fact">Essential lines, refined power. From the VanDutch 32 to the 75, built by Cantiere del Pardo in Italy.</p>
+            <p class="marque__links"><a href="https://vandutch.com/" rel="noopener">vandutch.com</a></p>
+          </div>
+        </li>
+        <li class="marque" id="brand-iguana" data-chapter>
+          <div class="ice ice--night marque__in step" style="--i:3">
+            <div class="marque__media"><img src="../../assets/img/b2-iguana.webp" alt="An Iguana amphibious boat on its tracks on a beach beside the surf, seen from above." loading="lazy" width="900" height="1125"></div>
+            <h3 class="marque__name">Iguana Yachts</h3>
+            <p class="marque__fact">French luxury amphibious boats. From land to sea in seconds.</p>
+            <p class="marque__links"><a href="https://www.iguana-yachts.com/" rel="noopener">iguana-yachts.com</a></p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Act IV: first light. The night passes in one scroll; the visit card arrives with the morning. -->
+  <section class="dawn" id="visit" aria-labelledby="visit-h" data-dawn>
+    <div class="wrap dawn__wrap">
+      <div class="ice ice--day card card--visit" data-chapter>
+        <p class="card__hour step" style="--i:0"><span class="num">06:20</span> · First light</p>
+        <h2 class="card__h step" id="visit-h" style="--i:1">See them in daylight</h2>
+        <p class="visit__tel step" style="--i:2"><a href="tel:+13059471000">305-947-1000</a></p>
+        <div class="visit__grid step" style="--i:3">
+          <p>15050 Biscayne Blvd<br>North Miami Beach, FL 33181</p>
+          <dl class="hours">
+            <dt>Mon–Fri</dt><dd>9:00 am – 7:00 pm</dd>
+            <dt>Saturday</dt><dd>10:00 am – 6:00 pm</dd>
+            <dt>Sunday</dt><dd>By appointment</dd>
+          </dl>
+        </div>
+        <div class="visit__cta step" style="--i:4">
+          <a class="btn btn--solid" href="tel:+13059471000">Call to book a viewing</a>
+          <a class="btn btn--line" href="https://www.google.com/maps/search/?api=1&amp;query=15050+Biscayne+Blvd+North+Miami+Beach+FL+33181" rel="noopener">Directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" aria-labelledby="foot-h">
+  <video class="foot__surf" muted loop playsinline preload="none" poster="../../assets/img/gen-surf2-poster.jpg" aria-hidden="true" data-surf>
+    <source media="(max-width: 720px)" data-src="../../assets/video/gen-surf2-m.mp4" type="video/mp4">
+    <source data-src="../../assets/video/gen-surf2.mp4" type="video/mp4">
+  </video>
+  <div class="foot__ground" aria-hidden="true"></div>
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <h2 class="foot__name" id="foot-h">Prestige Marine</h2>
+      <p>A Division of the Prestige Imports Family</p>
+    </div>
+    <nav class="foot__col" aria-label="Brands">
+      <p class="foot__k">Brands</p>
+      <a href="#brand-tecnomar">Tecnomar for Lamborghini 63</a>
+      <a href="#brand-midnight">Midnight Express</a>
+      <a href="#brand-vandutch">VanDutch</a>
+      <a href="#brand-iguana">Iguana Yachts</a>
+    </nav>
+    <nav class="foot__col" aria-label="Boats">
+      <p class="foot__k">Boats</p>
+      <a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">New Inventory</a>
+      <a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Brokerage</a>
+      <a href="https://www.prestigemarine.co/sold/" rel="noopener">Sold</a>
+      <a href="#land">About Us</a>
+      <a href="#visit">Contact Us</a>
+    </nav>
+    <div class="foot__col">
+      <p class="foot__k">Visit</p>
+      <a href="tel:+13059471000">305-947-1000</a>
+      <p>15050 Biscayne Blvd<br>North Miami Beach, FL 33181</p>
+      <a href="https://www.facebook.com/PrestigeMarineMiami" rel="noopener">Facebook</a>
+    </div>
+    <p class="foot__legal">© 2026 Prestige Marine. The water footage and the yellow Tecnomar for Lamborghini&nbsp;63 seen from above are generated artwork.</p>
+  </div>
+</footer>
+
+</body>
+</html>
