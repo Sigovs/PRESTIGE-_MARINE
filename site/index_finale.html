@@ -12,9 +12,9 @@
 <link rel="preload" as="image" href="assets/img/gen-azure-topdown-poster.jpg" media="(min-width: 721px)">
 <link rel="preload" as="image" href="assets/img/gen-azure-topdown-m2-poster.jpg" media="(max-width: 720px)">
 <link rel="preload" as="image" href="assets/img/gen-tecnomar63-top.webp">
-<link rel="stylesheet" href="assets/css/marine_finale.css?v=8">
+<link rel="stylesheet" href="assets/css/marine_finale.css?v=9">
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
-<script src="assets/js/marine_finale.js?v=8" defer></script>
+<script src="assets/js/marine_finale.js?v=9" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -41,33 +41,39 @@
       </button>
     </div>
   </div>
-  <nav class="hdr__nav" aria-label="Sections">
-    <a href="#inventory">New inventory</a>
-    <a href="#brand-tecnomar">Tecnomar</a>
-    <a href="#brand-midnight">Midnight Express</a>
-    <a href="#brand-vandutch">VanDutch</a>
-    <a href="#brand-iguana">Iguana Yachts</a>
+  <nav class="hdr__nav" aria-label="Main">
+    <div class="hdr__drop">
+      <button class="hdr__droptgl" type="button" aria-expanded="false" aria-controls="drop-brands">Brands <svg class="ico ico--chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <ul class="hdr__droplist" id="drop-brands">
+        <li><a href="https://www.prestigemarine.co/tecnomar-for-lamboughini-63-yacht/" rel="noopener">Tecnomar for Lamborghini 63 Yacht</a></li>
+        <li><a href="https://www.prestigemarine.co/new-boat-showrooms/iguana/" rel="noopener">Iguana Yachts</a></li>
+        <li><a href="https://www.prestigemarine.co/new-boat-showrooms/vandutch/" rel="noopener">VanDutch Yachts</a></li>
+        <li><a href="https://www.prestigemarine.co/new-boat-showrooms/midnight-express/" rel="noopener">Midnight Express</a></li>
+      </ul>
+    </div>
+    <a href="https://www.prestigemarine.co/new-inventory/" rel="noopener">New Inventory</a>
     <a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Brokerage</a>
-    <a href="#sold">Sold</a>
-    <a href="#contact">Contact</a>
+    <a href="https://www.prestigemarine.co/sold/" rel="noopener">Sold</a>
+    <a href="https://www.prestigemarine.co/about-us/" rel="noopener">About Us</a>
+    <a href="https://www.prestigemarine.co/contact-us/" rel="noopener">Contact Us</a>
   </nav>
 </header>
 
 <div class="menu" id="menu" hidden data-menu data-lenis-prevent>
-  <nav class="menu__inner" aria-label="Main">
+  <nav class="menu__inner" aria-label="Menu">
     <p class="menu__label">Brands</p>
     <ul class="menu__list menu__list--big">
-      <li><a href="#brand-tecnomar">Tecnomar for Lamborghini 63</a></li>
-      <li><a href="#brand-midnight">Midnight Express</a></li>
-      <li><a href="#brand-vandutch">VanDutch</a></li>
-      <li><a href="#brand-iguana">Iguana Yachts</a></li>
+      <li><a href="https://www.prestigemarine.co/tecnomar-for-lamboughini-63-yacht/" rel="noopener">Tecnomar for Lamborghini 63 Yacht</a></li>
+      <li><a href="https://www.prestigemarine.co/new-boat-showrooms/iguana/" rel="noopener">Iguana Yachts</a></li>
+      <li><a href="https://www.prestigemarine.co/new-boat-showrooms/vandutch/" rel="noopener">VanDutch Yachts</a></li>
+      <li><a href="https://www.prestigemarine.co/new-boat-showrooms/midnight-express/" rel="noopener">Midnight Express</a></li>
     </ul>
     <ul class="menu__list">
-      <li><a href="#inventory">New Inventory</a></li>
+      <li><a href="https://www.prestigemarine.co/new-inventory/" rel="noopener">New Inventory</a></li>
       <li><a href="https://www.prestigemarine.co/boats-for-sale/" rel="noopener">Brokerage</a></li>
-      <li><a href="#sold">Sold</a></li>
-      <li><a href="#land">About Us</a></li>
-      <li><a href="#contact">Contact Us</a></li>
+      <li><a href="https://www.prestigemarine.co/sold/" rel="noopener">Sold</a></li>
+      <li><a href="https://www.prestigemarine.co/about-us/" rel="noopener">About Us</a></li>
+      <li><a href="https://www.prestigemarine.co/contact-us/" rel="noopener">Contact Us</a></li>
     </ul>
     <p class="menu__foot"><a href="tel:+13059471000">305-947-1000</a><br>15050 Biscayne Blvd, North Miami Beach, FL 33181</p>
   </nav>
@@ -90,27 +96,31 @@
         <a class="btn btn--ghost" href="#inventory">View inventory</a>
         <a class="hero__tel" href="tel:+13059471000">305-947-1000</a>
       </div>
-      <ul class="hero__brands" aria-label="The brands we represent">
-        <li><a href="#brand-tecnomar">Tecnomar</a></li>
-        <li><a href="#brand-midnight">Midnight Express</a></li>
-        <li><a href="#brand-vandutch">VanDutch</a></li>
-        <li><a href="#brand-iguana">Iguana Yachts</a></li>
-      </ul>
+      <div class="hero__brands" role="group" aria-label="Choose a boat">
+        <button type="button" aria-pressed="true" data-boat="tecnomar">Tecnomar</button>
+        <button type="button" aria-pressed="false" data-boat="midnight">Midnight Express</button>
+        <button type="button" aria-pressed="false" data-boat="vandutch">VanDutch</button>
+      </div>
     </div>
 
     <div class="passage" aria-labelledby="voyage-h">
       <div class="passage__hold">
-        <div class="ice voyage__plate rise">
-          <p class="eyebrow eyebrow--ink">The flagship we represent</p>
-          <h2 class="voyage__name" id="voyage-h">Tecnomar for Lamborghini 63</h2>
-          <p class="voyage__stock">In stock: 2022, Verde Gea, 96 hours</p>
-          <p class="voyage__price">Request price</p>
+        <div class="ice bswitch rise" role="group" aria-label="Choose a boat">
+          <button class="bswitch__btn" type="button" aria-pressed="true" data-boat="tecnomar">Tecnomar</button>
+          <button class="bswitch__btn" type="button" aria-pressed="false" data-boat="midnight">Midnight Express</button>
+          <button class="bswitch__btn" type="button" aria-pressed="false" data-boat="vandutch">VanDutch</button>
+        </div>
+        <div class="ice voyage__plate rise" aria-live="polite">
+          <p class="eyebrow eyebrow--ink" data-p="kicker">The flagship we represent</p>
+          <h2 class="voyage__name" id="voyage-h" data-p="name">Tecnomar for Lamborghini 63</h2>
+          <p class="voyage__stock" data-p="status">In stock: 2022, Verde Gea, 96 hours</p>
+          <p class="voyage__price" data-p="price">Request price</p>
           <div class="voyage__cta">
-            <a class="btn btn--solid" href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener">View this boat</a>
-            <a class="link-btn" href="#contact" data-enquire="2022 Tecnomar Lamborghini 63">Enquire</a>
+            <a class="btn btn--solid" href="https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/" rel="noopener" data-p="link">View this boat</a>
+            <a class="link-btn" href="#contact" data-enquire="2022 Tecnomar Lamborghini 63" data-p="enquire">Enquire</a>
           </div>
         </div>
-        <ol class="voyage__cards">
+        <ol class="voyage__cards" data-p="facts">
           <li class="ice card rise"><span class="card__k">Lineage</span>Conceived in synergy between Automobili Lamborghini and The Italian Sea Group. Terzo Millennio and Sián FKP 37 are its main inspirations.</li>
           <li class="ice card rise"><span class="card__k">Power</span>Two MAN V12 engines, 2,000&nbsp;hp each.</li>
           <li class="ice card rise"><span class="card__k">Build</span>Carbon fibre keeps her among the ultralight boats: 24 tons for 63 feet.</li>
@@ -128,7 +138,7 @@
     <div class="rail" aria-hidden="true">
       <div class="rail__hold">
         <span class="rail__line"><i data-rail></i></span>
-        <p class="rail__count"><span data-count>01</span><span class="rail__of">/ 05</span></p>
+        <p class="rail__count"><span data-count>01</span><span class="rail__of" data-count-of>/ 05</span></p>
       </div>
     </div>
   </section>

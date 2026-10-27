@@ -87,6 +87,12 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   start hidden and softened under the hull; pointer ripples scaled to the scene. No surf edge on the brands panel
   (rejected). Inventory head: no "Four boats…" lede and no "Prices as listed" line (Alex's request; the price date
   is therefore not on the page — re-add it if the client needs the listing date shown).
+- **FINALE, several boats + blue's nav (27 Oct):** the finale's section row and menu are the current prestigemarine.co
+  navigation, as on blue (Brands ▾ · New Inventory · Brokerage · Sold · About Us · Contact Us). The brand row on the
+  first screen chooses the boat (Tecnomar · Midnight Express · VanDutch — the hulls seen from above; Iguana has none),
+  and an ice tab bar above the plate carries the same choice, in sync. The last boat sails off the top before the next
+  rises; the headline, plate, facts, link and counter take the new boat's words (blue's BOATS data; Tecnomar keeps
+  its Size card, so 05 facts, the others 04).
 - **Footer line "Powered by All Auto Network"** at the very bottom (Alex, 27 Oct) — on the finale and on blue.
 - **RULE, repeated by Alex (27 Oct: "the rule is gone again, why every time the same"): no text ever sits against a
   rule, bar or edge.** Anything under the header keeps at least `--s-8` clear of the header's bottom hairline (the

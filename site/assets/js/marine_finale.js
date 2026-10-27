@@ -81,6 +81,7 @@
     const hero = $('.hero');
     const lane = $('.lane');
     const fig = hull.parentElement;
+    let swapY = 0;   // the boat switch: how far the hull is off its course while one boat leaves and the next arrives
     function placeHull(now) {
         const vh = innerHeight;
         const st = stage.getBoundingClientRect();
@@ -96,14 +97,15 @@
         const t = now / 1000;
         const roll = Math.sin(t * 0.9) * 0.7 + Math.sin(t * 0.37) * 0.25;
         const sway = Math.sin(t * 0.55) * 3;
-        hull.style.transform = `translate3d(${sway.toFixed(2)}px, ${(yImg - top).toFixed(1)}px, 0) rotate(${roll.toFixed(3)}deg)`;
+        hull.style.transform = `translate3d(${sway.toFixed(2)}px, ${(yImg - top + swapY).toFixed(1)}px, 0) rotate(${roll.toFixed(3)}deg)`;
     }
 
     /* ── the plate and the facts arrive one by one, each on its own stretch of the passage; the rail
        fills with the stage and the counter names the fact on show ── */
     const passage = $('.passage');
-    const cards = [...document.querySelectorAll('.voyage__cards .rise')];
+    let cards = [...document.querySelectorAll('.voyage__cards .rise')];
     const plate = $('.voyage__plate');
+    const switcher = $('.passage .bswitch');
     const railFill = $('[data-rail]');
     const count = $('[data-count]');
     function stepCards() {
@@ -112,12 +114,83 @@
         const p = clamp((innerHeight * 0.7 - r.top) / Math.max(1, r.height - innerHeight * 0.3), 0, 1);
         const shown = Math.floor(p * (cards.length + 0.6));
         cards.forEach((c, i) => c.classList.toggle('is-in', i < shown));
-        plate.classList.toggle('is-in', p > 0.01);
+        plate.classList.toggle('is-in', p > 0.01); switcher.classList.toggle('is-in', p > 0.01);
         const st = stage.getBoundingClientRect();
         railFill.style.transform = `scaleY(${clamp(-st.top / Math.max(1, st.height - innerHeight), 0, 1).toFixed(3)})`;
         count.textContent = String(clamp(shown, 1, cards.length)).padStart(2, '0');
+        countOf.textContent = '/ ' + String(cards.length).padStart(2, '0');
     }
-    if (reduce) { cards.forEach((c) => c.classList.add('is-in')); plate.classList.add('is-in'); }
+    const countOf = $('[data-count-of]');
+
+    /* ── several boats (27 Oct, as on blue): one per brand with a hull seen from directly above. The brand row
+       on the first screen and the switch on the plate choose it, kept in sync; the last boat sails off the
+       top before the next rises from below, and the plate and its facts take the new boat's words ── */
+    const BOATS = {
+        tecnomar: {
+            line: 'The boat you deserve starts here.',
+            img: ['assets/img/gen-tecnomar63-top.webp', 750, 2499, 'A Tecnomar for Lamborghini 63 in Giallo yellow with black carbon, seen from directly above (generated artwork).'],
+            kicker: 'The flagship we represent', name: 'Tecnomar for Lamborghini 63', price: 'Request price', status: 'In stock: 2022, Verde Gea, 96 hours',
+            facts: [['Lineage', 'Conceived in synergy between Automobili Lamborghini and The Italian Sea Group. Terzo Millennio and Sián FKP 37 are its main inspirations.'],
+                ['Power', 'Two MAN V12 engines, 2,000 hp each.'], ['Build', 'Carbon fibre keeps her among the ultralight boats: 24 tons for 63 feet.'],
+                ['Hard top', 'Inspired by Lamborghini’s roadster models.'], ['Size', '<span class="num">63′ × 17′8″</span>']],
+            link: 'https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/', enquire: '2022 Tecnomar Lamborghini 63'
+        },
+        midnight: {
+            line: 'Miami-built, family-owned.',
+            img: ['assets/img/me52-hull.webp', 324, 1236, 'The 2026 Midnight Express 52 Vitesse from directly above: Grigio Lynx hull, camel seating, carbon hard top, outboards at the stern.'],
+            kicker: 'In stock now', name: '2026 Midnight Express 52 Vitesse', price: '$2,500,000', status: 'Available now · as listed 26 Oct 2026',
+            facts: [['Bow', 'Custom painted hull in Lamborghini Grigio Lynx, with camel seating.'], ['Hard top', 'Carbon exposed hard top. Midnight Express infusion construction, paired with select carbon fiber sections.'],
+                ['Amidships', 'The first Seakeeper 10, designed for much larger yachts, installed on a Midnight Express.'], ['Stern', 'Mercury Racing 500R outboards, painted the colour of the hull.']],
+            link: 'https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/', enquire: '2026 Midnight Express 52 Vitesse'
+        },
+        vandutch: {
+            line: 'Essential lines, refined power.',
+            img: ['assets/img/vd402-hull.webp', 268, 927, 'The 2021 VanDutch 40.2 from directly above: Super Jet Black hull with a Pagani Silver bootstripe, teak deck.'],
+            kicker: 'In stock now', name: '2021 VanDutch 40.2', price: '$698,500', status: 'As listed 26 Oct 2026 · Miami Beach, Florida',
+            facts: [['Hull', 'Super Jet Black, with a Pagani Silver bootstripe.'], ['Power', 'Twin Volvo Penta D6, 440 hp each, with joystick control.'],
+                ['Hours', 'Under 140.'], ['Length × beam', '<span class="num">40′11″ × 11′5″</span>']],
+            link: 'https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/', enquire: '2021 VanDutch 40.2'
+        }
+    };
+    const P = (k) => passage.querySelector(`[data-p="${k}"]`);
+    const h1 = $('#h1');
+    const choosers = [...document.querySelectorAll('[data-boat]')];
+    let current = 'tecnomar', busy = false;
+    const tween = (from, to, ms, ease) => new Promise((done) => {
+        const t0 = performance.now();
+        const tick = (now) => { const k = clamp((now - t0) / ms, 0, 1); swapY = from + (to - from) * ease(k); k < 1 ? requestAnimationFrame(tick) : done(); };
+        requestAnimationFrame(tick);
+    });
+    const easeIn = (k) => k * k * k, easeOut = (k) => 1 - Math.pow(1 - k, 4);
+    function fill(b) {
+        P('kicker').textContent = b.kicker; P('name').textContent = b.name; P('price').textContent = b.price; P('status').textContent = b.status;
+        P('link').href = b.link; P('enquire').dataset.enquire = b.enquire;
+        P('facts').innerHTML = b.facts.map(([k, v]) => `<li class="ice card rise"><span class="card__k">${k}</span>${v}</li>`).join('');
+        cards = [...P('facts').children];
+        if (reduce) cards.forEach((c) => c.classList.add('is-in'));   // otherwise the next frame raises them again, one by one
+    }
+    async function choose(key) {
+        if (key === current || busy || !BOATS[key]) return;
+        busy = true; current = key;
+        choosers.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.boat === key)));
+        const b = BOATS[key];
+        const pre = new Image(); pre.src = b.img[0];
+        // the headline changes in place: out, then in, never two lines at once
+        (async () => {
+            if (!reduce) await h1.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-10px)' }], { duration: 220, easing: 'ease-in', fill: 'forwards' }).finished;
+            h1.textContent = b.line;
+            if (!reduce) h1.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'forwards' });
+        })();
+        if (!reduce) await tween(0, -1.1 * innerHeight - hull.offsetHeight * 0.5, 650, easeIn);   // the boat sails off the top
+        try { await pre.decode(); } catch (e) { /* the swap still happens */ }
+        hull.src = b.img[0]; hull.setAttribute('width', b.img[1]); hull.setAttribute('height', b.img[2]); hull.alt = b.img[3];
+        fill(b);
+        if (!reduce) await tween(1.1 * innerHeight, 0, 1300, easeOut);   // the next one sails in from below
+        busy = false;
+    }
+    choosers.forEach((c) => c.addEventListener('click', () => choose(c.dataset.boat)));
+
+    if (reduce) { cards.forEach((c) => c.classList.add('is-in')); plate.classList.add('is-in'); switcher.classList.add('is-in'); }
     else { window.addEventListener('scroll', stepCards, { passive: true }); stepCards(); }
 
     /* ── the catalogue's tiles and cards rise as their row arrives, one after another ── */
@@ -158,6 +231,14 @@
             inv.querySelectorAll('img[data-src]').forEach((im) => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
             o.disconnect();
         }), { rootMargin: '100% 0px' }).observe(inv);
+    }
+
+    /* ── the Brands list in the section row ── */
+    const dropT = $('.hdr__droptgl');
+    if (dropT) {
+        dropT.addEventListener('click', () => dropT.setAttribute('aria-expanded', String(dropT.getAttribute('aria-expanded') !== 'true')));
+        document.addEventListener('click', (e) => { if (!e.target.closest('.hdr__drop')) dropT.setAttribute('aria-expanded', 'false'); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && dropT.getAttribute('aria-expanded') === 'true') { dropT.setAttribute('aria-expanded', 'false'); dropT.focus(); } });
     }
 
     /* ── menu (the page behind it is inert) ── */
