@@ -17,13 +17,17 @@
     };
     if (window.Lenis) boot(); else window.addEventListener('load', boot, { once: true });
 
-    /* header: always on screen (ice) */
+    /* header: always on screen. Bare over the first screen; once the page moves the section row folds
+       away and the bar takes the ground of whatever is under it (deep glass over water, white over a
+       panel, navy over the land band and the footer), so its type never crosses live content */
     const hdr = $('[data-hdr]');
-    hdr.classList.remove('is-hidden');
-    const land = $('.land');
-    const toneHdr = () => {   // no backing: ink type everywhere, light type while the asphalt is under it
-        const r = land.getBoundingClientRect();
-        hdr.dataset.tone = r.top < 60 && r.bottom > 20 ? 'dark' : 'water';
+    const grounds = [...document.querySelectorAll('.panel, .land, .foot')];
+    const toneHdr = () => {
+        const y = hdr.querySelector('.hdr__bar').offsetHeight;
+        hdr.classList.toggle('is-compact', window.scrollY > 40);
+        if (window.scrollY <= 40) { hdr.dataset.tone = 'water'; return; }
+        const under = grounds.find((el) => { const r = el.getBoundingClientRect(); return r.top < y && r.bottom > y * 0.5; });
+        hdr.dataset.tone = !under ? 'deep' : under.classList.contains('land') ? 'dark' : 'light';
     };
     window.addEventListener('scroll', toneHdr, { passive: true }); toneHdr();
 
@@ -71,36 +75,64 @@
         }, { passive: true });
     }
 
-    /* ── the hull crosses the screen over the whole passage, and rocks a little ── */
-    const grid = $('.voyage__grid');
+    /* ── the hull sails up its lane over the whole stage, and rocks a little: it is in full view on the
+       first screen (where the lane's --start puts its bow) and has left by the top when the stage ends ── */
+    const stage = $('.stage');
+    const hero = $('.hero');
+    const lane = $('.lane');
+    const fig = hull.parentElement;
     function placeHull(now) {
         const vh = innerHeight;
-        const g = grid.getBoundingClientRect();
+        const st = stage.getBoundingClientRect();
         const hh = hull.offsetHeight;
-        const travel = Math.max(1, g.height);
-        const qq = clamp(window.scrollY / travel, 0, 1);
-        const yImg = (1 - qq) * vh * 0.9 + qq * (-hh - vh * 0.05);   // bow at the bottom edge → gone off the top
-        const box = Math.min(Math.max(g.top, 0), g.bottom - vh);       // where the sticky lane is now
+        const start = parseFloat(getComputedStyle(lane).getPropertyValue('--start')) || 0.2;
+        // desktop: the whole stage, slow at first so the hull stays beside its facts; phone: the first
+        // screen only, so the facts can take the full width behind it
+        const qq = phone.matches
+            ? clamp(-st.top / Math.max(1, hero.offsetHeight * 0.9), 0, 1)
+            : Math.pow(clamp(-st.top / Math.max(1, st.height - vh), 0, 1), 1.6);
+        const yImg = (1 - qq) * vh * start + qq * (-hh - vh * 0.05);
+        const top = fig.getBoundingClientRect().top;                   // where the sticky lane is now
         const t = now / 1000;
         const roll = Math.sin(t * 0.9) * 0.7 + Math.sin(t * 0.37) * 0.25;
         const sway = Math.sin(t * 0.55) * 3;
-        hull.style.transform = `translate3d(${sway.toFixed(2)}px, ${(yImg - box).toFixed(1)}px, 0) rotate(${roll.toFixed(3)}deg)`;
+        hull.style.transform = `translate3d(${sway.toFixed(2)}px, ${(yImg - top).toFixed(1)}px, 0) rotate(${roll.toFixed(3)}deg)`;
     }
 
-    /* ── the cards arrive one by one, each on its own stretch of the passage ── */
-    const voyage = $('.voyage');
+    /* ── the plate and the facts arrive one by one, each on its own stretch of the passage; the rail
+       fills with the stage and the counter names the fact on show ── */
+    const passage = $('.passage');
     const cards = [...document.querySelectorAll('.voyage__cards .rise')];
     const plate = $('.voyage__plate');
+    const railFill = $('[data-rail]');
+    const count = $('[data-count]');
     function stepCards() {
-        const r = voyage.getBoundingClientRect();
-        // 0 when the voyage top reaches the middle of the screen, 1 when its bottom leaves the top third
-        const p = clamp((innerHeight * 0.5 - r.top) / Math.max(1, r.height - innerHeight * 0.2), 0, 1);
+        const r = passage.getBoundingClientRect();
+        // 0 when the passage top reaches 70% of the screen, 1 when its bottom is a screen away
+        const p = clamp((innerHeight * 0.7 - r.top) / Math.max(1, r.height - innerHeight * 0.3), 0, 1);
         const shown = Math.floor(p * (cards.length + 0.6));
         cards.forEach((c, i) => c.classList.toggle('is-in', i < shown));
-        plate.classList.toggle('is-in', p > 0.02);   // the name plate waits for the hull, off the first screen
+        plate.classList.toggle('is-in', p > 0.01);
+        const st = stage.getBoundingClientRect();
+        railFill.style.transform = `scaleY(${clamp(-st.top / Math.max(1, st.height - innerHeight), 0, 1).toFixed(3)})`;
+        count.textContent = String(clamp(shown, 1, cards.length)).padStart(2, '0');
     }
     if (reduce) { cards.forEach((c) => c.classList.add('is-in')); plate.classList.add('is-in'); }
     else { window.addEventListener('scroll', stepCards, { passive: true }); stepCards(); }
+
+    /* ── the catalogue's tiles and cards rise as their row arrives, one after another ── */
+    const risers = [...document.querySelectorAll('.tile.rise, .boat.rise')];
+    if (reduce || !('IntersectionObserver' in window)) risers.forEach((el) => el.classList.add('is-in'));
+    else {
+        const io = new IntersectionObserver((es) => es.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const sibs = [...e.target.parentElement.children];
+            e.target.style.transitionDelay = `${(sibs.indexOf(e.target) % 4) * 0.09}s`;
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+        }), { rootMargin: '0px 0px -12% 0px' });
+        risers.forEach((el) => io.observe(el));
+    }
 
     /* ── the surf loads on approach ── */
     const surf = $('[data-surf]');
@@ -114,18 +146,7 @@
         }), { rootMargin: '400px 0px' }).observe(surf);
     }
 
-    /* ── brands: the row in the middle of the screen owns the sticky frame ── */
-    const rows = [...document.querySelectorAll('[data-brand]')];
-    const frames = [...document.querySelectorAll('[data-frame-item]')];
-    if (rows.length && 'IntersectionObserver' in window && !phone.matches) {
-        const io = new IntersectionObserver((es) => es.forEach((e) => {
-            if (!e.isIntersecting) return;
-            const k = +e.target.dataset.brand;
-            rows.forEach((r, i) => r.classList.toggle('is-on', i === k));
-            frames.forEach((f, i) => f.classList.toggle('is-on', i === k));
-        }), { rootMargin: '-45% 0px -45% 0px' });
-        rows.forEach((r) => io.observe(r));
-    }
+    /* ── brands: on the phone the tiles are a swipe rail, kept out of Lenis ── */
     const rail = $('[data-brands]');
     if (rail && phone.matches) rail.setAttribute('data-lenis-prevent', '');
 
@@ -239,6 +260,7 @@ vec3 tap(vec2 u){
 }
 float luma(vec3 c){ return dot(c, vec3(.299, .587, .114)); }
 vec3 ramp(float t){
+  // the approved azure (Alex, 27 Oct: "the water as it was" — the finale's own ramp)
   vec3 d2 = vec3(.020, .330, .392);
   vec3 d  = vec3(.031, .478, .541);
   vec3 m  = vec3(.078, .690, .745);

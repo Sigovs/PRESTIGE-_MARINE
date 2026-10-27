@@ -36,3 +36,7 @@ Same pixel framing as gen-azure-topdown(-m2), so a crossfade reads as the light 
 grades both further in WebGL (golden hour and the final night darkness are shader grades, not generations). Masters and
 raw clips in `_work/night/`. GI9: frame sheets reviewed — sand bars and deep band static, only ripples and glints move — pass.
 Disclosed on the page in the footer legal line. 4 paid jobs total.
+
+prestige-iguana-miami(-m).mp4 + img/prestige-iguana-miami-poster.jpg — NOT generated. Prestige Marine's own film,
+IguanaCommuter2020_v2.0-1.mp4 from prestigemarine.co (fetched 27 Oct 2026), trimmed 17.75–40.15 s, muted,
+re-encoded for the web; no other edits.

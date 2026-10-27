@@ -1,0 +1,366 @@
+/* Prestige Marine — BLUE layout (27 Oct 2026). Loaded after marine_finale.css: the storyboard lends the
+   layout (a held stage, the promise and the boat side by side, a plate with four facts, brand rows beside
+   one large picture); every material, type style and colour is the finale's own. The boats on the stage
+   are shown at one width (Alex's composition, 27 Oct): large, the bow just above the pills, the stern running off
+   the bottom of the screen, never under the header bar. */
+
+/* ── the held stage, on the sea ── */
+.bstage { position: relative; height: 480vh; color: var(--white); }
+/* the brands panel slides up over the held stage: its last screen is the overlap */
+.bstage + .brands { position: relative; z-index: 3; margin-top: -100vh; margin-top: -100svh; }
+.bstage__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .62fr); grid-template-rows: minmax(0, 1fr); column-gap: var(--s-7); }
+.bstage__copy { position: relative; z-index: 2; }
+.bintro, .bplate { position: absolute; inset: 0; display: grid; align-content: center; will-change: transform, opacity; }
+.bstage .hero__h1, .bstage .bplate__h, .bstage .bplate__price, .bstage .eyebrow, .bstage .hero__tel, .bstage .btn--ghost {
+  text-shadow: 0 1px 2px rgba(3, 52, 60, .35), 0 0 22px rgba(3, 52, 60, .28); }
+/* the promise sits at the middle of the height; the headline keeps two lines of room whatever the boat,
+   so a new line never moves the pills or the buttons */
+.bintro { align-content: center; gap: var(--s-6); padding-top: calc(var(--bar-h) + var(--nav-h)); }
+.bintro .hero__h1 { min-height: 2.12em; }
+.bintro .hero__cta { margin-top: 0; grid-row: auto; }
+/* on the azure the small words are set as large text (19px bold) and the pills carry their own glass */
+.bstage .eyebrow, .bstage .hero__tel { font-size: 1.1875rem; font-weight: 700; letter-spacing: .08em; color: var(--white); }
+.pills { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.pill { background: rgba(255, 255, 255, .34); border: 1px solid rgba(255, 255, 255, .62); color: var(--navy);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), inset 0 -1px 0 rgba(255, 255, 255, .18), 0 10px 30px -18px rgba(2, 40, 48, .55);
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.25); backdrop-filter: blur(1.5px) saturate(1.25); text-shadow: none; }
+.pill { min-height: 44px; padding: 0 var(--s-5); border-radius: 999px; cursor: pointer;
+  font-size: var(--t-14); font-weight: 700; letter-spacing: var(--caps); text-transform: uppercase;
+  transition: background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease); }
+.pill:hover { border-color: var(--white); background: rgba(255, 255, 255, .4); }
+.pill[aria-pressed="true"] { background: var(--white); color: var(--navy); border-color: var(--white); }
+
+.bplate { gap: var(--s-3); padding-top: calc(var(--bar-h) + var(--s-5)); pointer-events: none; }
+.bplate.is-live { pointer-events: auto; }
+.bplate__h { margin: 0; font-family: var(--serif); font-size: clamp(2.25rem, 1.3rem + 2.4vw, 3.75rem); line-height: 1.06; font-weight: 400; max-width: 12em; text-wrap: balance; }
+.bplate__price { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2) var(--s-5); font-size: var(--t-price); font-weight: 600; letter-spacing: .02em; }
+.bplate__status { font-size: 1.1875rem; font-weight: 700; }
+.bfacts { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); max-width: 46rem; }
+/* the facts are plain cards on a background blur (Alex, 27 Oct: "ordinary cards, with background blur",
+   Figma's 26px): the water behind is blurred and lightly deepened so the white type reads; a small radius */
+.bfacts .card { background: rgba(6, 40, 67, .36); border: 0; box-shadow: none;
+  -webkit-backdrop-filter: blur(26px) saturate(1.15); backdrop-filter: blur(26px) saturate(1.15);
+  border-radius: 10px; padding: var(--s-5) var(--s-6); color: var(--white); font-size: var(--t-16); font-weight: 500; line-height: 1.55; text-shadow: none; }
+.bfacts .card .card__k { margin-bottom: var(--s-2); font-size: var(--t-14); font-weight: 600; color: rgba(255, 255, 255, .8); }
+.no-gl .bfacts .card { background: rgba(3, 50, 62, .55); }
+.bstage .btn--solid { background: var(--white); color: var(--navy); text-shadow: none; }
+.bstage .btn--solid:hover { background: var(--navy); color: var(--white); }
+.bplate__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-6); margin-top: var(--s-3); }
+.js .step { opacity: 0; }
+
+.bstage__hull { position: relative; z-index: 1; margin: 0; min-height: 0; height: 100%; display: flex; justify-content: center; align-items: flex-start; --hw: min(24vw, 420px); }
+.bstage__hull img { --hh: calc(var(--hw) * 3.4); width: var(--hw); height: auto; max-width: none; will-change: transform; transform-origin: 50% 45%;
+  transform: translateY(calc(var(--bar-h) + 3vh)); filter: drop-shadow(calc(var(--hh) * .05) calc(var(--hh) * .06) 22px rgba(2, 40, 48, .62)); }
+
+/* ── brands: rows beside one large picture, the row in the middle of the screen owns it ── */
+.brows__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-9); align-items: start; }
+.brows { list-style: none; margin: 0; padding: 0; }
+.brow { min-height: 46vh; display: grid; align-content: center; gap: var(--s-3); padding-block: var(--s-7); border-top: 1px solid var(--line); scroll-margin-top: calc(var(--bar-h) + var(--s-5)); }
+.brow:last-child { border-bottom: 1px solid var(--line); }
+.brow__name { margin: 0; font-family: var(--serif); font-size: var(--t-h3); line-height: 1.1; font-weight: 400; color: var(--ink-2); transition: color .3s var(--ease); }
+.brow.is-on .brow__name { color: var(--navy); }
+.brow__fact { margin: 0; max-width: 40ch; font-size: var(--t-16); line-height: 1.6; color: var(--ink-2); }
+.brow__links { margin: 0; display: flex; flex-wrap: wrap; gap: 0 var(--s-5); }
+.brow__media { display: none; }
+.bframe__hold { position: sticky; top: calc(50vh - (min(54vw, 860px) * .66) / 2 + var(--bar-h) / 2); }
+.bframe { position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; background: var(--mist); }
+.bframe__item { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .45s var(--ease); }
+.bframe__item.is-on { opacity: 1; }
+
+/* short screens: the plate set tighter so its actions stay on screen */
+@media (max-height: 920px) and (min-width: 721px) {
+  .bplate { gap: var(--s-2); }
+  .bplate__h { font-size: clamp(2rem, 1.1rem + 2vw, 3rem); }
+  .bfacts { gap: var(--s-2); margin-top: var(--s-2); }
+  .bfacts .card { padding: var(--s-4) var(--s-5); font-size: var(--t-14); line-height: 1.5; border-radius: 10px; }
+}
+
+@media (max-width: 1100px) {
+  .bintro { padding-top: var(--bar-h); }
+  .bstage__pin { grid-template-columns: minmax(0, 1fr) minmax(0, .5fr); }
+  .bstage__hull { --hw: min(26vw, 360px); }
+  .bintro .hero__h1 { min-height: 3.18em; }
+  .brows__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-7); }
+}
+
+@media (max-width: 900px) { .bfacts { grid-template-columns: 1fr; max-width: 30rem; } }
+
+/* phone: the words take the screen; the boat keeps a lane at the right edge and slips out of the plate's way */
+@media (max-width: 720px) {
+  .bstage__pin { grid-template-columns: minmax(0, 1fr) 30vw; column-gap: 0; }
+  .bstage__copy { grid-column: 1 / -1; grid-row: 1; }
+  .bstage__hull { grid-column: 2; grid-row: 1; --hw: 26vw; }
+  .bintro { align-content: start; padding-top: calc(var(--bar-h) + 5vh); gap: var(--s-5); }
+  .bintro .hero__h1 { font-size: clamp(2.5rem, 11vw, 3.25rem); max-width: 7em; min-height: 3.18em; }
+  .pill { padding: 0 var(--s-3); }
+  .bplate { align-content: start; padding-top: calc(var(--bar-h) + 3vh); gap: var(--s-2); }
+  .bplate__h { font-size: clamp(1.875rem, 8vw, 2.25rem); }
+  .bplate__status { font-size: var(--t-16); }
+  .bfacts { grid-template-columns: 1fr; gap: var(--s-2); margin-top: var(--s-2); }
+  .bfacts .card { padding: var(--s-3) var(--s-4); font-size: var(--t-14); border-radius: 10px; }
+
+  .brows__grid { display: block; }
+  .bframe__hold { display: none; }
+  .brows { display: grid; grid-auto-flow: column; grid-auto-columns: 82vw; gap: var(--s-4); overflow-x: auto; scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--s-4); overscroll-behavior-x: contain; }
+  .brow { min-height: 0; scroll-snap-align: start; align-content: start; border: 0; padding: 0; }
+  .brow:last-child { border: 0; }
+  .brow__media { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: var(--mist); }
+  .brow__media img { width: 100%; height: 100%; object-fit: cover; }
+  .brow__name { color: var(--navy); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bstage { height: auto; }
+  .bstage + .brands { margin-top: 0; }
+  .bstage__pin { position: relative; height: auto; overflow: visible; padding-bottom: var(--s-9); }
+  .bintro, .bplate { position: relative; inset: auto; }
+  .bintro { min-height: 100svh; }
+  .bplate { pointer-events: auto; padding-top: 0; }
+  .js .step { opacity: 1; }
+  .pill, .bframe__item { transition: none; }
+}
+
+/* ── inventory: each boat on its own card — white, a hairline, a radius; a soft shadow lifts it on hover ── */
+.inv .boats { row-gap: var(--s-6); }
+.inv .boat { grid-row: span 7; }
+.inv .boat__row { justify-content: flex-end; }
+.inv .boat__spec div { grid-template-columns: 7.5em 1fr; }
+.inv .boat__enq { justify-self: stretch; margin-top: var(--s-5); min-height: 48px; }
+/* the side view takes over from the plan slowly, the plan settling as it goes */
+.inv .boat__img img { transition: opacity .9s cubic-bezier(.4, 0, .2, 1), transform 1.6s cubic-bezier(.22, .61, .36, 1); }
+.inv .boat { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: var(--s-3) var(--s-3) var(--s-5);
+  transition: box-shadow .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease); }
+.inv .boat:hover { border-color: transparent; transform: translateY(-2px); box-shadow: 0 2px 6px rgba(6, 40, 67, .06), 0 24px 48px -24px rgba(6, 40, 67, .32); }
+.inv .boat > :not(.boat__img) { margin-inline: var(--s-2); }
+.inv .boat__img { border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { .inv .boat { transition: none; } .inv .boat:hover { transform: none; } }
+
+/* footer: the legal line sits beside the name (Alex, 27 Oct); "Powered by" closes the page under a hairline */
+.foot__id { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2) var(--s-5); }
+.foot__meta { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--s-2); font-size: var(--t-14); }
+.foot__meta span { opacity: .5; }
+.foot__meta a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(6, 40, 67, .35); }
+.foot__meta a:hover { text-decoration-color: currentColor; }
+.foot__powered { margin: var(--s-6) 0 0 !important; padding-top: var(--s-5); border-top: 1px solid var(--line-2); }
+
+/* no tracked capitals (Alex, 27 Oct: "don't stretch the letters", "don't make it all capitals"): every
+   label, button and link is set in sentence case at normal spacing; only the logotype keeps its small caps */
+.pill, .btn, .link-btn, .hdr__cell, .hdr__nav a, .eyebrow, .card__k, .boat__brand, .boat__name, .field label,
+.foot__k, .foot__powered, .menu__label, .tile__more, .bstage .eyebrow, .bstage .hero__tel, .hero__tel, .rail__of {
+  text-transform: none; letter-spacing: 0; }
+.pill { font-size: var(--t-16); font-weight: 600; }
+.btn, .hdr__cell, .hdr__nav a { font-size: var(--t-16); font-weight: 600; }
+.link-btn { font-size: var(--t-16); }
+.bstage .eyebrow, .bstage .hero__tel { font-size: 1.1875rem; }
+.boat__name { font-size: var(--t-22); font-weight: 600; }
+
+
+
+/* the brands head: the title on two lines, the paragraph under it (Alex, 27 Oct) */
+.brands .sec-head { display: grid; justify-content: start; gap: var(--s-5); }
+.brands .sec-head .h2 { max-width: 9.5em; }
+.brands .sec-head .lede { max-width: 34ch; }
+
+/* the section row is the current prestigemarine.co navigation; Brands opens a small list */
+.hdr:not(.is-compact) .hdr__nav { overflow: visible; }
+.hdr__drop { position: relative; display: flex; }
+.hdr__droptgl { display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font-size: var(--t-16); font-weight: 600; }
+.ico--chev { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+.hdr__drop:hover .ico--chev, .hdr__droptgl[aria-expanded="true"] .ico--chev { transform: rotate(180deg); }
+.hdr__droplist { list-style: none; margin: 0; padding: var(--s-2); position: absolute; top: 100%; left: calc(var(--s-4) * -1); min-width: 300px;
+  background: rgba(255, 255, 255, .97); border-radius: 10px; box-shadow: 0 18px 40px -18px rgba(2, 30, 45, .45); color: var(--navy);
+  opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s; }
+.hdr__drop:hover .hdr__droplist, .hdr__drop:focus-within .hdr__droplist, .hdr__droptgl[aria-expanded="true"] + .hdr__droplist { opacity: 1; visibility: visible; transform: none; }
+.hdr__droplist a { display: flex; align-items: center; min-height: 44px; padding: 0 var(--s-4); border-radius: 6px; text-decoration: none; font-size: var(--t-16); font-weight: 500; }
+.hdr__droplist a:hover { background: var(--mist); }
+.hdr__droplist a::after { display: none; }
+
+/* small grey brand marks over each brand row (the brands' own logos, set as a mask so they take one tone) */
+.brow__logo { display: block; width: 150px; height: 26px; background: #9AA6B1; opacity: .9;
+  -webkit-mask: var(--logo) left center / contain no-repeat; mask: var(--logo) left center / contain no-repeat; }
+.brow.is-on .brow__logo { background: #7E8C99; }
+
+/* facts cards hierarchy (Alex, 27 Oct): the title leads, the paragraph follows — 16 over 14, not the other way */
+.bfacts .card { font-size: var(--t-14); line-height: 1.55; font-weight: 400; color: rgba(255, 255, 255, .9); }
+.bfacts .card .card__k { font-size: var(--t-16); font-weight: 600; color: var(--white); margin-bottom: var(--s-1); }
+
+/* pills as before the glass round (Alex, 27 Oct: "glass pills not needed, as it was"): a light tint and a white
+   hairline; the chosen boat solid white. No focus ring after a click; keyboard focus gets a soft white halo. */
+.pill:focus { outline: none; }
+.pill:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 255, 255, .55); }
+
+/* Inter Tight replaces Raleway for everything read or pressed (Alex, 27 Oct) */
+:root { --sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif; }
+body { font-family: var(--sans); }
+
+/* the white page runs into the sand through a long, eased fade, not a band */
+.foot::before { height: 34vh; background: linear-gradient(to bottom, #fff 0%, rgba(255, 255, 255, .86) 22%, rgba(255, 255, 255, .55) 48%, rgba(255, 255, 255, .22) 74%, rgba(255, 255, 255, 0) 100%); }
+
+/* the closing line: copyright and links, the division, and "Powered by" on one row under the hairline */
+.foot__bar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2) var(--s-6);
+  margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--line-2); font-size: var(--t-14); }
+.foot__bar p { margin: 0 !important; padding: 0 !important; border: 0 !important; font-size: var(--t-14); }
+.foot__bar .foot__powered { margin-left: auto !important; font-weight: 600; }
+
+/* brand marks a little larger and clearer, still grey and quiet */
+.brow__logo { width: 210px; height: 34px; background: #8B98A5; opacity: 1; margin-bottom: var(--s-2); }
+.brow.is-on .brow__logo { background: #6F7E8C; }
+#brand-midnight .brow__logo { height: 24px; }
+
+@media (max-width: 1100px) { .menu__inner { padding-inline: calc(var(--gutter) + var(--s-5) + 1px); } }
+@media (max-width: 720px) { .menu__inner { padding-inline: calc(var(--s-4) + 1px); } }
+
+/* footer columns: the heading leads (18, navy, semibold), the links follow (16, quieter, tighter rows) */
+.foot__k { font-size: var(--t-18) !important; font-weight: 600; color: var(--navy) !important; margin-bottom: var(--s-3) !important; }
+.foot__col { gap: 0; }
+.foot__col a, .foot__col p { font-size: var(--t-16); color: var(--ink-2); }
+.foot__col a { min-height: 34px; transition: color .2s var(--ease); }
+.foot__col a:hover { color: var(--navy); }
+.foot__col p { margin: var(--s-1) 0 !important; line-height: 1.55; }
+@media (max-width: 720px) { .foot__col a { min-height: 44px; } }
+
+/* the stage's actions: primary = solid white with navy type, secondary = a white-outline ghost on the water;
+   one height, one radius-free shape, one weight */
+.bstage .btn { min-height: 52px; padding: 0 var(--s-6); gap: var(--s-2); text-shadow: none; }
+.bstage .btn--solid { background: var(--white); color: var(--navy); border: 1px solid var(--white); }
+.bstage .btn--solid:hover { background: var(--navy); border-color: var(--navy); color: var(--white); }
+.bstage .btn--ghost { background: rgba(4, 52, 62, .18); color: var(--white); border: 1px solid rgba(255, 255, 255, .85);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.bstage .btn--ghost:hover { background: var(--white); color: var(--navy); }
+.bstage .btn--ghost .ico { width: 18px; height: 18px; }
+.bintro .hero__cta, .bplate__cta { gap: var(--s-3); }
+
+/* the logo is the current site's own script mark (no subline), larger; set as a mask so it takes the bar's
+   ink — white over the water, navy over the white pages */
+.hdr__mark { display: block; width: 172px; height: 70px; background: currentColor;
+  -webkit-mask: url(../img/logos/prestige-marine.png) center / contain no-repeat; mask: url(../img/logos/prestige-marine.png) center / contain no-repeat; }
+@media (max-width: 720px) { .hdr__mark { width: 128px; height: 52px; } }
+/* no backing over the hero: the bar sits bare on the water until the page moves */
+.hdr[data-tone="water"] { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--white); --hl: rgba(255, 255, 255, .32); }
+.hdr[data-tone="water"] .hdr__cell, .hdr[data-tone="water"] .hdr__nav a, .hdr[data-tone="water"] .hdr__droptgl { text-shadow: 0 1px 2px rgba(0, 40, 50, .3); }
+
+/* a soft shade from the top of the water, under the bare header, so its white type sits on deeper water */
+.sea::after { content: ""; position: absolute; inset: 0 0 auto; height: 46vh; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(2, 44, 56, .62) 0%, rgba(2, 44, 56, .3) 45%, rgba(2, 44, 56, 0) 100%); }
+
+/* the brands panel arrives over the water with rounded top corners */
+.bstage + .brands { border-radius: 32px 32px 0 0; }   /* no overflow clip here: it would break the sticky picture inside */
+@media (max-width: 720px) { .bstage + .brands { border-radius: 20px 20px 0 0; } }
+
+/* "Recently sold" uses the contact section's columns, so the list starts on the form's left edge below */
+.sold { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); column-gap: var(--s-9); }
+@media (max-width: 1100px) { .sold { column-gap: var(--s-7); } }
+@media (max-width: 720px) { .sold { grid-template-columns: 1fr; } }
+
+/* pills without an outline: only the light tint on the water; the chosen one solid white */
+.pill { border: 0; box-shadow: none; }
+.pill:hover { border: 0; }
+
+/* inactive pills: white type, a little transparent; the chosen one keeps navy on white */
+.pill:not([aria-pressed="true"]) { color: rgba(255, 255, 255, .86); background: rgba(255, 255, 255, .18); }
+.pill:not([aria-pressed="true"]):hover { color: var(--white); background: rgba(255, 255, 255, .28); }
+
+/* the Brands list opens a clear step below the nav's hairline (a transparent bridge keeps the hover alive) */
+.hdr__droplist { top: calc(100% + var(--s-3)); }
+.hdr__droplist::before { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--s-3) * -1 - 2px); height: calc(var(--s-3) + 2px); }
+.hdr__droplist a { text-shadow: none !important; }
+
+/* header cells: no box left behind after a click or when focus returns from the menu; keyboard gets an inset line */
+.hdr__cell:focus, .hdr__droptgl:focus { outline: none; }
+.hdr__cell:focus-visible, .hdr__droptgl:focus-visible { outline: none; box-shadow: inset 0 -2px 0 currentColor; }
+
+/* About us: the current site's own film (Prestige's Iguana Commuter off Miami) in place of the still */
+.land__img--film { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px; background: #0c2a3a; }
+.land__img--film video { width: 100%; height: 100%; object-fit: cover; }
+
+/* the logo never touches an edge: a taller bar and a mark with at least 14px clear above and below
+   (12px on the phone) — the rule that keeps coming back */
+:root { --bar-h: 88px; }
+.hdr__logo { padding-block: 14px; }
+.hdr__mark { width: 150px; height: 60px; }
+@media (max-width: 720px) { :root { --bar-h: 68px; } .hdr__logo { padding-block: 12px; } .hdr__mark { width: 110px; height: 44px; } }
+
+/* About us: the copy starts on the film's top edge; the heading's cap height sits on that line */
+.land__grid { align-items: start; }
+.land__copy .h2 { margin-top: -.14em; }
+
+/* text in motion: heading words slide up out of a mask, paragraph words fade and lift (js scrubs both) */
+.tw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .14em; margin-bottom: -.14em; }
+.tw__in { display: inline-block; will-change: transform; }
+.pw { display: inline-block; will-change: opacity, transform; }
+@media (prefers-reduced-motion: reduce) { .tw__in, .pw { transform: none !important; opacity: 1 !important; } }
+
+/* the plate, as in the finale: a light ice card on the left, the facts beside it in one column of ice cards
+   that arrive one by one like steps (navy type on ice); our hierarchy inside: 16 title over 14 text */
+.bplate { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--s-4); align-content: center; align-items: start; }
+.bplate__card { padding: var(--s-6); display: grid; gap: var(--s-3); border-radius: 10px; color: var(--navy); text-shadow: none;
+  background: rgba(238, 250, 252, .9); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); box-shadow: 0 18px 40px -24px rgba(5, 60, 70, .55); }
+.bstage .bplate__card .bplate__h, .bstage .bplate__card .bplate__price, .bstage .bplate__card .eyebrow { text-shadow: none; color: var(--navy); }
+.bplate__card .bplate__h { font-size: clamp(1.75rem, 1.1rem + 1.4vw, 2.5rem); }
+.bplate__card .bplate__price { padding-top: var(--s-3); border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: var(--s-1); }
+.bplate__card .bplate__status { font-size: var(--t-14); font-weight: 500; color: var(--ink-2); }
+.bstage .bplate__card .btn--solid { background: var(--navy); border-color: var(--navy); color: var(--white); }
+.bstage .bplate__card .btn--solid:hover { background: var(--accent); border-color: var(--accent); }
+.bstage .bplate__card .btn--line { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+.bstage .bplate__card .btn--line:hover { background: var(--navy); color: var(--white); }
+.bfacts { grid-template-columns: 1fr; max-width: 24rem; margin: 0; gap: var(--s-3); }
+.bfacts .ice.card { background: rgba(238, 250, 252, .9); color: var(--ink-2); border-radius: 10px; padding: var(--s-4) var(--s-5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); box-shadow: 0 18px 40px -24px rgba(5, 60, 70, .55); }
+.bfacts .ice.card .card__k { color: var(--navy); }
+
+/* the rail at the stage's right edge: the line fills with the facts, the counter names the one on show */
+.brail { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); z-index: 3; display: grid; justify-items: end; gap: var(--s-6); color: var(--white); opacity: 0; pointer-events: none; }
+.brail .rail__line { display: block; position: relative; width: 1px; height: 28vh; background: rgba(255, 255, 255, .35); margin-right: .9em; }
+.brail .rail__line i { position: absolute; inset: 0; background: var(--white); transform-origin: top; transform: scaleY(0); }
+.brail .rail__count { margin: 0; display: grid; justify-items: end; line-height: 1; text-shadow: 0 1px 2px rgba(0, 40, 50, .3); }
+.brail .rail__count [data-count] { font-family: var(--serif); font-size: 2.5rem; }
+.brail .rail__of { margin-top: var(--s-1); font-size: var(--t-14); font-weight: 600; }
+@media (max-width: 1100px) { .brail { display: none; } .bplate { grid-template-columns: 1fr; } .bfacts { max-width: 30rem; } }
+@media (max-height: 920px) and (min-width: 721px) { .bplate__card { padding: var(--s-5); gap: var(--s-2); } .bfacts { gap: var(--s-2); } .bfacts .ice.card { padding: var(--s-3) var(--s-4); } }
+
+/* narrow screens: the facts sit two by two under the plate, and everything is set tighter so the plate's
+   actions and the last fact stay on screen */
+@media (max-width: 1100px) {
+  .bplate { gap: var(--s-2); align-content: start; padding-top: calc(var(--bar-h) + var(--s-4)); }
+  .bfacts { grid-template-columns: 1fr 1fr; max-width: none; gap: var(--s-2); }
+  .bplate__card { padding: var(--s-4) var(--s-5); gap: var(--s-2); }
+  .bplate__card .bplate__price { flex-direction: row; align-items: baseline; gap: var(--s-1) var(--s-3); flex-wrap: wrap; }
+  .bfacts .ice.card { padding: var(--s-3) var(--s-4); font-size: var(--t-14); line-height: 1.45; }
+  .bfacts .ice.card .card__k { font-size: var(--t-16); margin-bottom: 2px; }
+}
+@media (max-width: 720px) {
+  .bplate { padding-top: calc(var(--bar-h) + var(--s-2)); }
+  .bplate__card .bplate__h { font-size: 1.625rem; }
+  .bplate__card .btn { min-height: 44px; padding-inline: var(--s-4); }
+  .bfacts .ice.card { padding: var(--s-2) var(--s-3); }
+}
+
+/* the plate card runs the full height of the facts column, for every boat; its actions sit on the card's floor */
+.bplate { align-items: stretch; }
+.bplate__card { display: flex; flex-direction: column; gap: var(--s-3); }
+.bplate__card .bplate__cta { margin-top: auto; padding-top: var(--s-4); }
+@media (max-width: 1100px) { .bplate { align-items: start; } .bplate__card .bplate__cta { padding-top: var(--s-2); } }
+
+/* headings now step in from the side (no mask needed; opacity carries it) */
+.tw { overflow: visible; padding-bottom: 0; margin-bottom: 0; }
+
+/* footer: the same script mark as the header (the current site's logo), navy */
+.foot__mark { display: block; width: 190px; height: 80px; background: var(--navy);
+  -webkit-mask: url(../img/logos/prestige-marine.png) left center / contain no-repeat; mask: url(../img/logos/prestige-marine.png) left center / contain no-repeat; }
+@media (max-width: 720px) { .foot__mark { width: 150px; height: 63px; } }
+
+/* the boat switch inside the plate card: the same choice as the hero's pills (kept in sync), set quietly on
+   the ice — three names on a hairline, the chosen one navy and underlined */
+.bswitch { display: flex; flex-wrap: wrap; gap: 0 var(--s-5); margin: calc(var(--s-2) * -1) 0 var(--s-2); border-bottom: 1px solid var(--line); }
+.bswitch__btn { position: relative; min-height: 44px; padding: 0; background: none; border: 0; cursor: pointer;
+  font-size: var(--t-14); font-weight: 600; color: var(--ink-2); transition: color .2s var(--ease); }
+.bswitch__btn::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--navy); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
+.bswitch__btn:hover { color: var(--navy); }
+.bswitch__btn[aria-pressed="true"] { color: var(--navy); }
+.bswitch__btn[aria-pressed="true"]::after { transform: scaleX(1); }
+.bswitch__btn:focus { outline: none; }
+.bswitch__btn:focus-visible { outline: none; box-shadow: inset 0 -2px 0 var(--accent); }
+@media (max-width: 720px) { .bswitch { gap: 0 var(--s-4); margin-top: 0; } .bswitch__btn { min-height: 40px; } }
