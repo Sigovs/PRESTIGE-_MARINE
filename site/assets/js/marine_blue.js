@@ -69,7 +69,7 @@
     function fill(b) {
         P('kicker').textContent = b.kicker; P('name').textContent = b.name; P('price').textContent = b.price; P('status').textContent = b.status;
         P('facts').innerHTML = b.facts.map(([k, v]) => `<li class="ice card step"><span class="card__k">${k}</span>${v}</li>`).join('');
-        P('link').href = b.link; P('enquire').dataset.enquire = b.enquire;
+        P('enquire').dataset.enquire = b.enquire;
         steps = [...plate.querySelectorAll('.step')];
         if (reduce) steps.forEach((s) => { s.style.opacity = 1; });
     }
