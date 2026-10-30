@@ -242,7 +242,8 @@
             [[-off, h * 0.3], [w * 0.3, h * 0.18], [w * 0.62, -off]],
             [[w + off, h * 0.35], [w * 0.7, h * 0.18], [w * 0.38, -off]]
         ];
-        const rects = ['.pills__label', '.hero__h1', '.hero__cta'].map((c) => intro.querySelector(c)?.getBoundingClientRect()).filter(Boolean);
+        const onPlate = intro.style.visibility === 'hidden';
+        const rects = (onPlate ? ['.bplate__card', '.bfacts'] : ['.pills__label', '.hero__h1', '.hero__cta']).map((c) => stage.querySelector(c)?.getBoundingClientRect()).filter(Boolean);
         const clear = (r) => {
             for (let i = 0; i <= 16; i++) {
                 const q = i / 16, m = 1 - q, x = m * m * r[0][0] + 2 * m * q * r[1][0] + q * q * r[2][0], y = m * m * r[0][1] + 2 * m * q * r[1][1] + q * q * r[2][1];
@@ -265,18 +266,19 @@
             return { x: sx + ox, y: sy + oy, vx: 0, vy: 0, ox, oy, ph: Math.random() * 6.28, len: L * (0.85 + Math.random() * 0.3), a: 0.86 + Math.random() * 0.14, ang: null, bend: 0 };
         });
     }
-    function stepSchool(now, dt, heroScroll) {
+    function stepSchool(now, dt, seaFrac) {
         if (reduce) return null;
         if (!school.on) {
-            if (now > school.next && heroScroll < 0.1) spawnSchool(now);
+            if (now > school.next && seaFrac > 0.5) spawnSchool(now);
             if (!school.on) return null;
         }
+        if (seaFrac <= 0) { school.on = false; school.next = now; return null; }   // the panel has covered the water
         const raw = (now - school.t0) / school.dur, s = clamp(raw, 0, 1), m = 1 - s, [a, b, c] = school.route;
         const lx = m * m * a[0] + 2 * m * s * b[0] + s * s * c[0], ly = m * m * a[1] + 2 * m * s * b[1] + s * s * c[1];
         const dx = 2 * m * (b[0] - a[0]) + 2 * s * (c[0] - b[0]), dy = 2 * m * (b[1] - a[1]) + 2 * s * (c[1] - b[1]);
         const lvx = dx / (school.dur / 1000), lvy = dy / (school.dur / 1000);
         const hd = Math.atan2(dy, dx), cs = Math.cos(hd), sn = Math.sin(hd), t = now / 1000;
-        const fade = 1 - seg(heroScroll, 0.05, 0.35);
+        const fade = seg(seaFrac, 0.1, 0.5);
         fx.setTransform(FS, 0, 0, FS, 0, 0);
         fx.clearRect(0, 0, innerWidth, innerHeight);
         let visible = false;
@@ -339,7 +341,7 @@
             if (o < 0.02) return;
             glass.push([q.left, q.top, q.right, q.bottom, parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, o]);
         });
-        const fishCanvas = sea ? stepSchool(now, dt, Math.max(0, -sr0.top / innerHeight)) : null;
+        const fishCanvas = sea ? stepSchool(now, dt, seaFrac) : null;
         if (sea) sea.draw({ now, glass, fish: fishCanvas, fishSoft: school.soft, dy: 0,   // the ocean is locked: only its own waves, the wake and the rings move
             boat: [hr.left + hr.width / 2, hr.top + hr.height / 2, 0, hr.height], shore,
             wake: reduce ? 0 : clamp(Math.max(0.55, 0.38 * cruise + vel / 12), 0, 1) * trailOn, arm: reduce ? 0 : armV, ripples });
