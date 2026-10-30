@@ -100,6 +100,22 @@
     }
     pills.forEach((p) => p.addEventListener('click', () => choose(p.dataset.boat)));
 
+    // the plate keeps one size for all three boats: each part is measured with every boat's words, the largest is held
+    function holdPlate() {
+        const card = plate.querySelector('.bplate__card'), st = plate.style, all = Object.values(BOATS);
+        ['--name-h', '--card-h', '--facts-h'].forEach((k) => st.removeProperty(k));
+        let n = 0, c = 0, f = 0;
+        all.forEach((b) => { fill(b); n = Math.max(n, P('name').offsetHeight); });
+        st.setProperty('--name-h', `${n}px`);
+        all.forEach((b) => { fill(b); c = Math.max(c, card.offsetHeight); f = Math.max(f, P('facts').offsetHeight); });
+        fill(BOATS[current]);
+        st.setProperty('--card-h', `${c}px`); st.setProperty('--facts-h', `${f}px`);
+    }
+    holdPlate();
+    if (document.fonts) document.fonts.ready.then(holdPlate);
+    let holdT = 0;
+    window.addEventListener('resize', () => { clearTimeout(holdT); holdT = setTimeout(holdPlate, 120); }, { passive: true });
+
     /* ── the held stage, drawn every frame with the sea ── */
     const stage = $('[data-stage]');
     const canvas = $('[data-sea]');
@@ -107,6 +123,17 @@
     const ripples = [];
     let sea = null, lastScroll = window.scrollY, vel = 0, cruise = 0, wakeV = 0.6, armV = 0, trailOn = 1;
     const brandsEl = document.getElementById('brands');
+    let tilt = 0, tiltA = 0, tiltTo = 0, pitch = 0, pitchA = 0, pitchTo = 0;
+    if (!reduce) {
+        hull.addEventListener('pointermove', (e) => {
+            if (e.pointerType !== 'mouse') return;
+            const q = hull.getBoundingClientRect();
+            tiltTo = clamp((e.clientX - (q.left + q.width / 2)) / (q.width / 2), -1, 1);
+            const top = Math.max(q.top, 0), bot = Math.min(q.bottom, innerHeight);   // the part of the hull on screen
+            pitchTo = clamp((e.clientY - (top + bot) / 2) / Math.max(1, (bot - top) / 2), -1, 1);
+        });
+        hull.addEventListener('pointerleave', () => { tiltTo = 0; pitchTo = 0; });
+    }
     function placeStage(now) {
         const vh = innerHeight;
         const r = stage.getBoundingClientRect();
@@ -150,7 +177,136 @@
         const x = phone.matches && !reduce ? (smooth(seg(p, 0.1, 0.3)) - smooth(seg(p, 0.88, 0.98))) * 125 : 0;   // on the phone it slips out of the plate's way
         const t = now / 1000;
         const roll = reduce ? 0 : Math.sin(t * 0.9) * 0.6 + Math.sin(t * 0.37) * 0.2;
-        hull.style.transform = `translate3d(${x.toFixed(1)}%, ${y.toFixed(1)}px, 0) rotate(${roll.toFixed(3)}deg)`;
+        // on hover the boat turns toward the pointer: it heels, pitches and yaws a little, through two stages of
+        // smoothing so it starts and stops softly, like something heavy on water, and settles back when it leaves
+        tiltA += (tiltTo - tiltA) * 0.035; tilt += (tiltA - tilt) * 0.045;
+        pitchA += (pitchTo - pitchA) * 0.035; pitch += (pitchA - pitch) * 0.045;
+        hull.style.transform = `translate3d(${x.toFixed(1)}%, ${y.toFixed(1)}px, 0) perspective(2400px) rotateX(${(pitch * -4).toFixed(3)}deg) rotateY(${(tilt * 7).toFixed(3)}deg) rotate(${(roll + tilt * 2.4).toFixed(3)}deg)`;
+    }
+    /* a school of fish passes under the surface now and then, along the edge of the first scene, away from the
+       words; it scatters from the pointer and closes up again */
+    const fishC = document.createElement('canvas');
+    const fx = fishC.getContext('2d');
+    // two kinds take turns; every pass draws its own count, size and spacing
+    const FISH = [
+        { n: [18, 44], len: [26, 40], dens: [0.75, 1.35], spread: 0.5, speed: 205, wide: 0.066, fin: 0.1, flex: 0.5, wag: 11, soft: 1.1 },
+        { n: [3, 7], len: [56, 84], dens: [0.85, 1.4], spread: 0.7, speed: 140, wide: 0.082, fin: 0.1, flex: 0.4, wag: 5, soft: 1.8 }
+    ];
+    const pick = (r) => r[0] + Math.random() * (r[1] - r[0]);
+    /* one fish from above, drawn along a flexing spine: a round head, wide shoulders with swept pectoral fins, then a
+       long taper into a thin tail; the swimming wave grows towards the tail */
+    const FS = 0.75, SPINE = 15, sx = new Float32Array(SPINE), sy = new Float32Array(SPINE), nx = new Float32Array(SPINE), ny = new Float32Array(SPINE), hw = new Float32Array(SPINE);
+    function drawFish(f, type, t) {
+        const L = f.len, W = L * type.wide, ds = L / (SPINE - 1);
+        let x = L * 0.3, y = 0;
+        for (let i = 0; i < SPINE; i++) {
+            const q = i / (SPINE - 1);
+            const th = type.flex * Math.pow(q, 1.5) * Math.sin(t * type.wag + f.ph - q * 4.6) + f.bend * q;
+            sx[i] = x; sy[i] = y; nx[i] = -Math.sin(th); ny[i] = Math.cos(th);
+            hw[i] = W * (q < 0.24 ? Math.sqrt(Math.sin((q / 0.24) * Math.PI / 2)) : Math.pow(1 - (q - 0.24) / 0.76, 1.55));
+            x -= Math.cos(th) * ds; y -= Math.sin(th) * ds;
+        }
+        fx.beginPath();
+        fx.moveTo(sx[0], sy[0]);
+        for (let i = 1; i < SPINE; i++) fx.lineTo(sx[i] + nx[i] * hw[i], sy[i] + ny[i] * hw[i]);
+        for (let i = SPINE - 1; i > 0; i--) fx.lineTo(sx[i] - nx[i] * hw[i], sy[i] - ny[i] * hw[i]);
+        fx.closePath();
+        // pectoral fins from the shoulders, swept back, opening and closing a little with the stroke
+        const a = 3, b = 5, open = 1 + 0.2 * Math.sin(t * type.wag * 0.5 + f.ph), fl = L * type.fin;
+        for (const side of [1, -1]) {
+            fx.moveTo(sx[a] + side * nx[a] * hw[a], sy[a] + side * ny[a] * hw[a]);
+            fx.lineTo(sx[b] + side * nx[b] * (hw[b] + fl * 0.62 * open) - fl * 0.5, sy[b] + side * ny[b] * (hw[b] + fl * 0.62 * open));
+            fx.lineTo(sx[b] + side * nx[b] * hw[b], sy[b] + side * ny[b] * hw[b]);
+            fx.closePath();
+        }
+        fx.fill();
+    }
+    const school = { kind: 1, on: false, next: performance.now() + 2500 + Math.random() * 1500, fish: [], t0: 0, dur: 11000, route: null };
+    let ptrX = -9999, ptrY = -9999;
+    if (!reduce) window.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') { ptrX = e.clientX; ptrY = e.clientY; } }, { passive: true });
+    function spawnSchool(now) {
+        const w = innerWidth, h = innerHeight, k = clamp(w / 1440, 0.62, 1.2);
+        fishC.width = Math.ceil(w * FS); fishC.height = Math.ceil(h * FS);
+        school.kind = (school.kind + 1) % FISH.length;
+        const type = FISH[school.kind];
+        const n = Math.max(3, Math.round(pick(type.n) * (phone.matches ? 0.65 : 1)));
+        const L = pick(type.len) * k, rx = type.spread * Math.sqrt(n) * L * pick(type.dens), ry = rx * 0.38, off = rx + L + 40;
+        // in from the corners and edges, on any line that keeps clear of the words
+        const routes = [
+            [[-off, h * 0.87], [w * 0.5, h * 0.93], [w + off, h * 0.82]],
+            [[w + off, h * 0.83], [w * 0.5, h * 0.93], [-off, h * 0.87]],
+            [[-off, h * 0.82], [w * 0.3, h * 0.9], [w * 0.62, h + off]],
+            [[w + off, h * 0.8], [w * 0.72, h * 0.9], [w * 0.4, h + off]],
+            [[-off, h * 0.3], [w * 0.45, h * 0.2], [w + off, h * 0.27]],
+            [[w + off, h * 0.27], [w * 0.45, h * 0.2], [-off, h * 0.3]],
+            [[-off, h * 0.3], [w * 0.3, h * 0.18], [w * 0.62, -off]],
+            [[w + off, h * 0.35], [w * 0.7, h * 0.18], [w * 0.38, -off]]
+        ];
+        const rects = ['.pills__label', '.hero__h1', '.hero__cta'].map((c) => intro.querySelector(c)?.getBoundingClientRect()).filter(Boolean);
+        const clear = (r) => {
+            for (let i = 0; i <= 16; i++) {
+                const q = i / 16, m = 1 - q, x = m * m * r[0][0] + 2 * m * q * r[1][0] + q * q * r[2][0], y = m * m * r[0][1] + 2 * m * q * r[1][1] + q * q * r[2][1];
+                if (rects.some((b) => x > b.left - rx && x < b.right + rx && y > b.top - ry && y < b.bottom + ry)) return false;
+            }
+            return true;
+        };
+        const open = routes.map((r, i) => i).filter((i) => i !== school.last && clear(routes[i]));
+        school.last = open.length ? open[Math.floor(Math.random() * open.length)] : (school.last === 0 ? 1 : 0);
+        school.route = routes[school.last];
+        const [a, b, c] = school.route, way = Math.hypot(b[0] - a[0], b[1] - a[1]) + Math.hypot(c[0] - b[0], c[1] - b[1]);
+        school.dur = (way / (type.speed * k * pick([0.85, 1.2]))) * 1000;
+        school.soft = type.soft;
+        school.t0 = now; school.on = true;
+        const [sx, sy] = a;
+        school.fish = Array.from({ length: n }, (_, i) => {
+            // an even packing, a little loosened, so they read as one close body and not as a scatter
+            const ang = i * 2.39996 + Math.random() * 0.5, r = Math.sqrt((i + 0.5) / n);
+            const ox = Math.cos(ang) * r * rx, oy = Math.sin(ang) * r * ry;
+            return { x: sx + ox, y: sy + oy, vx: 0, vy: 0, ox, oy, ph: Math.random() * 6.28, len: L * (0.85 + Math.random() * 0.3), a: 0.86 + Math.random() * 0.14, ang: null, bend: 0 };
+        });
+    }
+    function stepSchool(now, dt, heroScroll) {
+        if (reduce) return null;
+        if (!school.on) {
+            if (now > school.next && heroScroll < 0.1) spawnSchool(now);
+            if (!school.on) return null;
+        }
+        const raw = (now - school.t0) / school.dur, s = clamp(raw, 0, 1), m = 1 - s, [a, b, c] = school.route;
+        const lx = m * m * a[0] + 2 * m * s * b[0] + s * s * c[0], ly = m * m * a[1] + 2 * m * s * b[1] + s * s * c[1];
+        const dx = 2 * m * (b[0] - a[0]) + 2 * s * (c[0] - b[0]), dy = 2 * m * (b[1] - a[1]) + 2 * s * (c[1] - b[1]);
+        const lvx = dx / (school.dur / 1000), lvy = dy / (school.dur / 1000);
+        const hd = Math.atan2(dy, dx), cs = Math.cos(hd), sn = Math.sin(hd), t = now / 1000;
+        const fade = 1 - seg(heroScroll, 0.05, 0.35);
+        fx.setTransform(FS, 0, 0, FS, 0, 0);
+        fx.clearRect(0, 0, innerWidth, innerHeight);
+        let visible = false;
+        const type = FISH[school.kind];
+        school.fish.forEach((f) => {
+            const sw = 1 + 0.08 * Math.sin(t * 0.8 + f.ph);          // the school breathes
+            const tx = lx + (f.ox * cs - f.oy * sn) * sw, ty = ly + (f.ox * sn + f.oy * cs) * sw;
+            let ax = (tx - f.x) * 6 + (lvx - f.vx) * 3.4, ay = (ty - f.y) * 6 + (lvy - f.vy) * 3.4;
+            const px = f.x - ptrX, py = f.y - ptrY, d = Math.hypot(px, py);
+            if (d < 210 && d > 0.1) { const push = (1 - d / 210) * 2600; ax += (px / d) * push; ay += (py / d) * push; }
+            f.vx += ax * dt; f.vy += ay * dt;
+            f.x += f.vx * dt; f.y += f.vy * dt;
+            if (f.x > -60 && f.x < innerWidth + 60 && f.y > -60 && f.y < innerHeight + 60) visible = true;
+            const want = Math.atan2(f.vy, f.vx);
+            if (f.ang === null) f.ang = hd;
+            const turn = Math.atan2(Math.sin(want - f.ang), Math.cos(want - f.ang));
+            f.ang += turn * Math.min(1, dt * 7);
+            f.bend += (clamp(turn * 1.4, -0.7, 0.7) - f.bend) * Math.min(1, dt * 5);   // it curves into a turn
+            fx.save();
+            fx.translate(f.x, f.y); fx.rotate(f.ang);
+            fx.fillStyle = `rgba(0,0,0,${(f.a * fade).toFixed(3)})`;
+            drawFish(f, type, t);
+            fx.restore();
+        });
+        if (raw > 1 && !visible) {
+            school.on = false;
+            school.next = now + (3000 + Math.random() * 2000) * (phone.matches ? 1.4 : 1);   // often: nobody stays on this screen for long
+            return null;
+        }
+        return fishC;
     }
     function frame(now) {
         if (!reduce) placeStage(now);
@@ -183,7 +339,8 @@
             if (o < 0.02) return;
             glass.push([q.left, q.top, q.right, q.bottom, parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, o]);
         });
-        if (sea) sea.draw({ now, glass, dy: 0,   // the ocean is locked: only its own waves, the wake and the rings move
+        const fishCanvas = sea ? stepSchool(now, dt, Math.max(0, -sr0.top / innerHeight)) : null;
+        if (sea) sea.draw({ now, glass, fish: fishCanvas, fishSoft: school.soft, dy: 0,   // the ocean is locked: only its own waves, the wake and the rings move
             boat: [hr.left + hr.width / 2, hr.top + hr.height / 2, 0, hr.height], shore,
             wake: reduce ? 0 : clamp(Math.max(0.55, 0.38 * cruise + vel / 12), 0, 1) * trailOn, arm: reduce ? 0 : armV, ripples });
         if (!reduce) requestAnimationFrame(frame);
@@ -209,7 +366,7 @@ uniform vec2 uRes; uniform float uDpr;
 uniform vec2 uCenter; uniform vec2 uTile;
 uniform float uTime;
 uniform vec4 uRip[8];
-uniform vec4 uBoat; uniform float uWake; uniform float uShore; uniform float uArm;
+uniform vec4 uBoat; uniform float uWake; uniform float uShore; uniform float uArm; uniform sampler2D uFish; uniform float uFishOn;
 uniform vec4 uPool[8];
 uniform vec4 uGlass[12]; uniform float uGlassR[12]; uniform float uGlassO[12];
 uniform float uReady;
@@ -296,6 +453,14 @@ void main(){
   }
   t = mix(t, -.3, pool);
   vec3 col = ramp(t);
+  if (uFishOn > 0.){
+    vec2 fq = q + vec2(sin(q.y * .04 + uTime * 1.3), cos(q.x * .035 + uTime * 1.1)) * 2.5;   // seen through moving water
+    vec2 fr = vec2(uFishOn * uRes.y / 900.) / uRes, fp = fq / uRes;
+    float fm = texture2D(uFish, fp).a * .2
+      + (texture2D(uFish, fp + vec2(fr.x, 0.)).a + texture2D(uFish, fp - vec2(fr.x, 0.)).a + texture2D(uFish, fp + vec2(0., fr.y)).a + texture2D(uFish, fp - vec2(0., fr.y)).a) * .12
+      + (texture2D(uFish, fp + fr * .7).a + texture2D(uFish, fp - fr * .7).a + texture2D(uFish, fp + fr * vec2(.7, -.7)).a + texture2D(uFish, fp + fr * vec2(-.7, .7)).a) * .08;
+    col = mix(col, vec3(.012, .17, .215), fm * .66);
+  }
   col += hi * 1.7 * (1. - pool * .7) * vec3(.85, 1., 1.) * uReady;
   col += sh * .08;
   col *= 1. - shadow;
@@ -328,7 +493,7 @@ void main(){
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
         const loc = gl.getAttribLocation(prog, 'p');
         gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-        const U = {}; ['uTex', 'uRes', 'uDpr', 'uCenter', 'uTile', 'uTime', 'uRip', 'uBoat', 'uWake', 'uShore', 'uArm', 'uPool', 'uGlass', 'uGlassR', 'uGlassO', 'uReady'].forEach((k) => { U[k] = gl.getUniformLocation(prog, k); });
+        const U = {}; ['uTex', 'uRes', 'uDpr', 'uCenter', 'uTile', 'uTime', 'uRip', 'uBoat', 'uWake', 'uShore', 'uArm', 'uFish', 'uFishOn', 'uPool', 'uGlass', 'uGlassR', 'uGlassO', 'uReady'].forEach((k) => { U[k] = gl.getUniformLocation(prog, k); });
         const tex = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -376,6 +541,7 @@ void main(){
             });
             return out;
         };
+        let fishTex = null;
         function draw(s) {
             if (ready === 2 && frameDirty && video.readyState >= 2) {
                 gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -395,6 +561,21 @@ void main(){
             gl.uniform1f(U.uWake, s.wake);
             gl.uniform1f(U.uShore, 99999);
             gl.uniform1f(U.uArm, s.arm ?? 0);
+            gl.uniform1i(U.uFish, 1);
+            gl.uniform1f(U.uFishOn, s.fish ? s.fishSoft : 0);
+            if (s.fish) {
+                gl.activeTexture(gl.TEXTURE1);
+                if (!fishTex) {
+                    fishTex = gl.createTexture();
+                    gl.bindTexture(gl.TEXTURE_2D, fishTex);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                } else gl.bindTexture(gl.TEXTURE_2D, fishTex);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, s.fish);
+                gl.activeTexture(gl.TEXTURE0);
+            }
             gl.uniform4fv(U.uPool, pools());
             const gr = new Float32Array(48), gR = new Float32Array(12), gO = new Float32Array(12);
             (s.glass || []).slice(0, 12).forEach((g, i) => { gr.set(g.slice(0, 4), i * 4); gR[i] = g[4]; gO[i] = g[5]; });
@@ -510,7 +691,7 @@ void main(){
         const intro = [];
         hdr.querySelectorAll('.hdr__cell, .hdr__logo, .hdr__nav > a, .hdr__nav > .hdr__drop').forEach((el, i) => intro.push([el, 120 + i * 45, 'drop']));
         const heroIntro = $('[data-intro]');
-        heroIntro.querySelectorAll('.pill').forEach((el, i) => intro.push([el, 420 + i * 70, 'up']));
+        heroIntro.querySelectorAll('.pills__label, .pill').forEach((el, i) => intro.push([el, 380 + i * 70, 'up']));
         const h1 = heroIntro.querySelector('.hero__h1');
         const h1Text = h1.textContent;
         const h1Words = wrapWords(h1, 'tw');

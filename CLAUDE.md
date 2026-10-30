@@ -105,6 +105,13 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   nav; no links to the brands' websites on the brand rows (only in-page films); stage actions = primary solid white +
   secondary white-outline ghost (phone with icon / Inquire); footer columns: heading 18 navy over 16 links.
 - **BLUE wake (27 Oct): no diagonal side lines at all** — only the bright centre trail astern of the boat.
+- **BLUE, plate (30 Oct), binding:** the plate is one fixed size on all three boats (`holdPlate()` measures each boat's
+  words and holds the largest; nothing moves on a switch). Cards are real frosted glass with no outline: never put
+  `will-change: opacity` on `.bplate`, it makes a backdrop root and the blur sees nothing.
+- **BLUE, fish (30 Oct):** ovals with a triangle tail were rejected ("shapeless piglets"). Fish are slim top-view silhouettes
+  on a flexing spine, after Alex's reference (CodeCanyon "Fish Animation"; own drawing, no copied sprites). Two kinds take
+  turns: a school of small fish and a few larger ones (not very large), every few seconds, because nobody watches a screen for
+  a minute. Each pass draws its own route, count, size and density, and they are slightly blurred, under the water.
 - **Alex's standing rules from the explore round (26 Oct, `EXPLORE-BRIEF.md`):**
   - the boat over the water video stays; water stays saturated azure, never pale shallows;
   - texts are not bolted to the boat: they rise from below in steps, in legible ice cards;

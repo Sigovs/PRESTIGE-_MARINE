@@ -13,9 +13,9 @@
 <link rel="preload" as="image" href="assets/img/gen-azure-topdown-m2-poster.jpg" media="(max-width: 720px)">
 <link rel="preload" as="image" href="assets/img/gen-tecnomar63-top.webp">
 <link rel="stylesheet" href="assets/css/marine_finale.css?v=8">
-<link rel="stylesheet" href="assets/css/marine_blue.css?v=48">
+<link rel="stylesheet" href="assets/css/marine_blue.css?v=54">
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
-<script src="assets/js/marine_blue.js?v=35" defer></script>
+<script src="assets/js/marine_blue.js?v=49" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -88,7 +88,8 @@
     <div class="bstage__pin">
       <div class="bstage__copy">
         <div class="bintro" data-intro>
-          <div class="pills" role="group" aria-label="Choose a boat">
+          <p class="pills__label" id="pills-label">Pick your wake.</p>
+          <div class="pills" role="group" aria-labelledby="pills-label">
             <button class="pill" type="button" aria-pressed="true" data-boat="tecnomar">Tecnomar</button>
             <button class="pill" type="button" aria-pressed="false" data-boat="midnight">Midnight Express</button>
             <button class="pill" type="button" aria-pressed="false" data-boat="vandutch">VanDutch</button>
@@ -104,7 +105,7 @@
           <div class="ice bplate__card step">
             <div class="bswitch" role="group" aria-label="Choose a boat">
               <button class="bswitch__btn" type="button" aria-pressed="true" data-boat="tecnomar">Tecnomar</button>
-              <button class="bswitch__btn" type="button" aria-pressed="false" data-boat="midnight">Midnight Express</button>
+              <button class="bswitch__btn" type="button" aria-pressed="false" data-boat="midnight" aria-label="Midnight Express">Midnight<span class="bswitch__more"> Express</span></button>
               <button class="bswitch__btn" type="button" aria-pressed="false" data-boat="vandutch">VanDutch</button>
             </div>
             <p class="eyebrow eyebrow--ink" data-p="kicker">The flagship we represent</p>

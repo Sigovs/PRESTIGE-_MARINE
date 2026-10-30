@@ -12,7 +12,8 @@
   max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter);
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .62fr); grid-template-rows: minmax(0, 1fr); column-gap: var(--s-7); }
 .bstage__copy { position: relative; z-index: 2; }
-.bintro, .bplate { position: absolute; inset: 0; display: grid; align-content: center; will-change: transform, opacity; }
+.bintro, .bplate { position: absolute; inset: 0; display: grid; align-content: center; }
+.bintro { will-change: transform, opacity; }   /* never on .bplate: will-change opacity is a backdrop root, the cards' blur would see nothing */
 .bstage .hero__h1, .bstage .bplate__h, .bstage .bplate__price, .bstage .eyebrow, .bstage .hero__tel, .bstage .btn--ghost {
   text-shadow: 0 1px 2px rgba(3, 52, 60, .35), 0 0 22px rgba(3, 52, 60, .28); }
 /* the promise sits at the middle of the height; the headline keeps two lines of room whatever the boat,
@@ -364,3 +365,47 @@ body { font-family: var(--sans); }
 .bswitch__btn:focus { outline: none; }
 .bswitch__btn:focus-visible { outline: none; box-shadow: inset 0 -2px 0 var(--accent); }
 @media (max-width: 720px) { .bswitch { gap: 0 var(--s-4); margin-top: 0; } .bswitch__btn { min-height: 40px; } }
+
+/* the line over the pills says there is a choice, in the page's own voice; it sits tight on the row it names */
+.pills__label { margin: 0 0 calc(var(--s-6) * -1 + var(--s-3)); font-size: 1.1875rem; font-weight: 600; color: var(--white); text-shadow: 0 1px 2px rgba(0, 40, 50, .3); }
+/* the Brands toggle reads like the rest of the row: no capitals, no tracking */
+.hdr__droptgl { text-transform: none; letter-spacing: 0; }
+
+/* frosted glass on the plate and the facts: the sea really blurred and lifted behind them, a thin sheen from the
+   top left, a fine grain so the blur reads as frozen rather than as a flat tint, a lit top edge, no outline */
+.bplate__card, .bfacts .ice.card { position: relative; isolation: isolate; border: 0; border-radius: 14px; color: var(--navy);
+  background: linear-gradient(140deg, rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, .3) 55%, rgba(255, 255, 255, .36) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(165%) brightness(1.08); backdrop-filter: blur(24px) saturate(165%) brightness(1.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .65), inset 0 0 0 1px rgba(255, 255, 255, .12), 0 24px 48px -28px rgba(2, 40, 48, .6); }
+.bplate__card::before, .bfacts .ice.card::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: .16; mix-blend-mode: overlay;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 160px 160px; }
+.bfacts .ice.card { color: rgba(6, 40, 67, .86); }
+.bplate__card .bplate__status { color: rgba(6, 40, 67, .82); }
+.bplate__card .bplate__price { border-top-color: rgba(6, 40, 67, .18); }
+
+/* the switch in the card: small pills, plainly pressable; the chosen boat solid navy */
+.bplate__card .bswitch { flex-wrap: wrap; gap: 6px; padding: 0; margin: 0 0 var(--s-1); border: 0; justify-content: flex-start; }
+.bplate__card .bswitch__btn { min-height: 32px; padding: 0 var(--s-3); border-radius: 999px; background: rgba(6, 40, 67, .1); color: var(--navy);
+  font-size: var(--t-14); font-weight: 600; letter-spacing: 0; text-transform: none; white-space: nowrap; transition: background-color .2s var(--ease), color .2s var(--ease); }
+.bplate__card .bswitch__btn::after { display: none; }
+.bplate__card .bswitch__btn:hover { background: rgba(6, 40, 67, .2); }
+.bplate__card .bswitch__btn[aria-pressed="true"] { background: var(--navy); color: var(--white); }
+.bplate__card .bswitch__btn:focus-visible { box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--navy); }
+@media (max-width: 720px) { .bplate__card .bswitch__btn { min-height: 36px; } }
+
+/* one plate size for all three boats: the heights are measured in holdPlate(); spare room falls between the facts and above the buttons */
+.bplate__card { box-sizing: border-box; min-height: var(--card-h, 0); }
+.bplate__card .bplate__h { min-height: var(--name-h, 0); }
+.bfacts { box-sizing: border-box; min-height: var(--facts-h, 0); }
+
+/* the switch stays on one row on a phone; the full name is in the headline right below it */
+@media (max-width: 420px) {
+  .bplate__card .bswitch { flex-wrap: nowrap; }
+  .bplate__card .bswitch__btn { padding: 0 var(--s-3); }
+  .bswitch__more { display: none; }
+}
+@media (max-width: 420px) and (max-height: 780px) {
+  .bplate__card { padding: var(--s-3) var(--s-4); gap: var(--s-1); }
+  .bplate__card .bplate__cta { padding-top: var(--s-1); }
+  .bfacts .ice.card { padding: var(--s-2) var(--s-3); line-height: 1.35; }
+}
