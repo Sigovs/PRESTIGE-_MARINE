@@ -5,9 +5,9 @@ body { background: var(--white); }
 :root { --edge: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); }
 
 /* ── the first screen is the brand's own film, held while the page's first panel slides over it ── */
-.vhero { position: relative; height: 200vh; height: 200svh; background: var(--navy); color: var(--white); }
-.vhero + .panel { position: relative; z-index: 3; margin-top: -100vh; margin-top: -100svh; border-radius: 32px 32px 0 0; }
-.vhero__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; align-items: end; }
+.vhero { position: relative; height: calc(var(--pin) * 2); background: var(--navy); color: var(--white); }
+.vhero + .panel { position: relative; z-index: 3; margin-top: calc(var(--pin) * -1); border-radius: 32px 32px 0 0; }
+.vhero__pin { position: sticky; top: 0; height: var(--pin); padding-bottom: var(--pin-gap); overflow: hidden; display: grid; align-items: end; }
 .vhero__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; background: var(--navy); }
 .vhero__pin::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to bottom, rgba(3, 26, 44, .62) 0, rgba(3, 26, 44, .18) 24%, rgba(3, 26, 44, 0) 42%), linear-gradient(to top, rgba(3, 26, 44, .82) 0, rgba(3, 26, 44, .5) 32%, rgba(3, 26, 44, 0) 66%), linear-gradient(to var(--scrim-to, right), rgba(3, 26, 44, .42) 0, rgba(3, 26, 44, 0) 52%); }
@@ -31,10 +31,10 @@ body { background: var(--white); }
 
 /* ── three chapters, each a full screen of film and a few words; the next one rides up over the last ── */
 .chaps { position: relative; background: var(--navy); }
-.chap { position: relative; height: 250vh; height: 250svh; color: var(--white); }
-.chap + .chap { margin-top: -100vh; margin-top: -100svh; }
-.chap__frame { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; align-items: end; background: var(--navy); transform-origin: 50% 40%; will-change: transform; }
-.chaps + .panel { position: relative; z-index: 2; margin-top: -100vh; margin-top: -100svh; border-radius: 32px 32px 0 0; }
+.chap { position: relative; height: calc(var(--pin) * 2.5); color: var(--white); }
+.chap + .chap { margin-top: calc(var(--pin) * -1); }
+.chap__frame { position: sticky; top: 0; height: var(--pin); padding-bottom: var(--pin-gap); overflow: hidden; display: grid; align-items: end; background: var(--navy); transform-origin: 50% 40%; will-change: transform; }
+.chaps + .panel { position: relative; z-index: 2; margin-top: calc(var(--pin) * -1); border-radius: 32px 32px 0 0; }
 main > .panel { position: relative; z-index: 2; }
 .chap__frame video, .chap__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .chap__frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(3, 26, 44, .86) 0, rgba(3, 26, 44, .66) 28%, rgba(3, 26, 44, 0) 62%); }
@@ -217,15 +217,15 @@ main > .panel { position: relative; z-index: 2; }
 }
 
 /* ── about: the three words first, the film opening behind them as the page moves; the first panel slides over ── */
-.abintro { position: relative; height: 300vh; height: 300svh; background: var(--navy); color: var(--white); }
-.abintro + .panel { position: relative; z-index: 3; margin-top: -100vh; margin-top: -100svh; border-radius: 32px 32px 0 0; }
-.abintro__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; }
+.abintro { position: relative; height: calc(var(--pin) * 3); background: var(--navy); color: var(--white); }
+.abintro + .panel { position: relative; z-index: 3; margin-top: calc(var(--pin) * -1); border-radius: 32px 32px 0 0; }
+.abintro__pin { position: sticky; top: 0; height: var(--pin); padding-bottom: var(--pin-gap); overflow: hidden; display: grid; place-items: center; }
 .abintro__media { position: absolute; inset: 0; will-change: clip-path; }
 .abintro__media video { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .abintro__shade { position: absolute; inset: 0; background: rgba(3, 26, 44, .5); }
 .abintro__h { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; font-family: var(--serif); font-weight: 400; font-size: clamp(3.5rem, 2rem + 9vw, 11rem); line-height: 1; letter-spacing: -.012em; text-align: center; }
 .abintro__h span { display: block; will-change: transform; }
-.abintro__hint { position: absolute; z-index: 1; left: 0; right: 0; bottom: var(--s-7); margin: 0; text-align: center; font-size: var(--t-16); font-weight: 500; }
+.abintro__hint { position: absolute; z-index: 1; left: 0; right: 0; bottom: calc(var(--s-7) + var(--pin-gap)); margin: 0; text-align: center; font-size: var(--t-16); font-weight: 500; }
 
 /* one thought per section: a picture and its words, top edges together, the sides trading places */
 .absplit { padding-block: var(--s-9); }
@@ -358,8 +358,8 @@ main > .panel { overflow-x: clip; }
 }
 
 /* ── boat page: the boat first, with its name and price on it; then the photos beside a rail that stays, the story, the numbers, the people ── */
-.vhero--boat { height: 186vh; height: 186svh; }
-.vhero--boat + .panel { margin-top: -86vh; margin-top: -86svh; }
+.vhero--boat { height: calc(var(--pin) * 1.86); }
+.vhero--boat + .panel { margin-top: calc(var(--pin) * -.86); }
 .vhero--boat .vhero__copy { padding-bottom: calc(14vh + var(--s-5)); }
 .vdtop { gap: var(--s-2); justify-items: stretch; width: 100%; }
 .vdtop__row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--s-5) var(--s-8); }
@@ -431,10 +431,10 @@ main > .panel { overflow-x: clip; }
 .vdmore .boats { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: var(--s-6); }
 
 /* the photos, full size: one at a time, on deep navy */
-.lb { width: 100vw; height: 100vh; height: 100svh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #041825; color: var(--white); overflow: hidden; }
+.lb { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #041825; color: var(--white); overflow: hidden; }
 .lb::backdrop { background: #041825; }
 .lb[open] { display: grid; place-items: center; }
-.lb__img { max-width: min(100vw, 1800px); max-height: 100vh; max-height: 100svh; width: auto; height: auto; object-fit: contain; }
+.lb__img { max-width: min(100vw, 1800px); max-height: 100vh; max-height: 100dvh; width: auto; height: auto; object-fit: contain; }
 .lb__count { position: absolute; left: var(--s-5); top: var(--s-4); margin: 0; min-height: 44px; display: flex; align-items: center; font-size: var(--t-16); font-weight: 600; text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
 .lb__btn { position: absolute; display: inline-flex; align-items: center; justify-content: center; min-width: 52px; min-height: 52px; padding: 0 var(--s-4); border: 0; border-radius: 999px; background: rgba(255, 255, 255, .14); color: var(--white); font-size: var(--t-16); font-weight: 600; cursor: pointer; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background-color .2s var(--ease), color .2s var(--ease); }
 .lb__btn:hover, .lb__btn:focus-visible { background: var(--white); color: var(--navy); }

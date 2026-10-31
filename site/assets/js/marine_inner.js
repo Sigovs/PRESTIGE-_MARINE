@@ -48,8 +48,9 @@
     if (!reduce && (vhero || chaps.length)) {
         const copy = $('[data-vhero-copy]'), film = vhero && vhero.querySelector('video, img');
         const parts = chaps.map((c) => ({ el: c, frame: c.querySelector('.chap__frame'), vid: c.querySelector('[data-chap-media]'), line: c.querySelector('.chap__line') }));
+        const held = (vhero || chaps[0]).querySelector('.vhero__pin, .chap__frame');   // its height stays put when the phone's browser bar moves
         const draw = () => {
-            const vh = innerHeight;
+            const vh = held.offsetHeight;
             if (vhero) {
                 const r = vhero.getBoundingClientRect(), p = clamp(-r.top / Math.max(1, vh), 0, 1);
                 if (r.bottom > 0) {
@@ -77,8 +78,9 @@
     const abi = $('[data-abintro]');
     if (abi && !reduce) {
         const media = $('[data-abmedia]'), vid = media.querySelector('video'), words = [...$('[data-abwords]').children], hint = $('[data-abhint]');
+        const held = abi.querySelector('.abintro__pin');
         const draw = () => {
-            const r = abi.getBoundingClientRect(), vh = innerHeight;
+            const r = abi.getBoundingClientRect(), vh = held.offsetHeight;
             if (r.bottom > 0) {
                 const p = clamp(-r.top / Math.max(1, r.height - 2 * vh), 0, 1), o = smooth(seg(p, 0, 0.75));
                 const iy = (1 - o) * 46, ix = (1 - o) * 30;

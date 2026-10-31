@@ -4,12 +4,16 @@
    are shown at one width (Alex's composition, 27 Oct): large, the bow just above the pills, the stern running off
    the bottom of the screen, never under the header bar. */
 
+/* a pinned screen is as tall as the largest the phone can show, or Safari hiding its bar cuts it short; the words keep above that bar with --pin-gap */
+:root { --pin: 100vh; --pin-gap: 0px; }
+@supports (height: 100lvh) { :root { --pin: 100lvh; --pin-gap: calc(100lvh - 100svh); } }
+
 /* ── the held stage, on the sea ── */
 .bstage { position: relative; height: 480vh; color: var(--white); }
 /* the brands panel slides up over the held stage: its last screen is the overlap */
-.bstage + .brands { position: relative; z-index: 3; margin-top: -100vh; margin-top: -100svh; }
-.bstage__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
-  max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter);
+.bstage + .brands { position: relative; z-index: 3; margin-top: calc(var(--pin) * -1); }
+.bstage__pin { position: sticky; top: 0; height: var(--pin); overflow: hidden;
+  max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); padding-bottom: var(--pin-gap);
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .62fr); grid-template-rows: minmax(0, 1fr); column-gap: var(--s-7); }
 .bstage__copy { position: relative; z-index: 2; }
 .bintro, .bplate { position: absolute; inset: 0; display: grid; align-content: center; }
@@ -422,3 +426,9 @@ body { font-family: var(--sans); }
   .foot__bar .foot__powered { margin-left: 0 !important; }
 }
 @media (max-width: 720px) { .boat__name a { display: inline-block; padding-block: 9px; margin-block: -9px; } }
+
+/* the phone's own stage: the boat on the middle of the screen under the words, sailing straight up with the finger; the plate arrives on open water after it */
+@media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+  .bstage__pin { grid-template-columns: minmax(0, 1fr); }
+  .bstage__hull { grid-column: 1; --hw: 46vw; }
+}

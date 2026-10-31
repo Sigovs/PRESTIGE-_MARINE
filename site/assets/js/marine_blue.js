@@ -134,34 +134,39 @@
         });
         hull.addEventListener('pointerleave', () => { tiltTo = 0; pitchTo = 0; });
     }
+    const stagePin = stage.querySelector('.bstage__pin');   // its height stays put when the phone's browser bar moves
     function placeStage(now) {
-        const vh = innerHeight;
+        const vh = reduce ? innerHeight : stagePin.offsetHeight;
         const r = stage.getBoundingClientRect();
         const p = clamp(-r.top / Math.max(1, r.height - 2 * vh), 0, 1);   // the last screen of the hold is the brands panel sliding over it
         // the promise leaves upward, whole and sharp, before the plate comes in
         const a = smooth(seg(p, 0, 0.2));
-        intro.style.transform = `translate3d(0, ${(-a * 80).toFixed(2)}vh, 0)`;
-        intro.style.opacity = (1 - seg(p, 0.12, 0.2)).toFixed(3);
-        intro.style.visibility = p > 0.2 ? 'hidden' : '';
+        const solo = phone.matches && !reduce;   // the phone's own order: the promise and the boat go up with the finger, then the plate on open water
+        intro.style.transform = solo ? `translate3d(0, ${Math.min(0, r.top).toFixed(1)}px, 0)` : `translate3d(0, ${(-a * 80).toFixed(2)}vh, 0)`;
+        intro.style.opacity = (solo ? 1 - seg(p, 0.02, 0.055) : 1 - seg(p, 0.12, 0.2)).toFixed(3);   // on the phone the promise is gone before it reaches the header bar
+        intro.style.visibility = p > (solo ? 0.1 : 0.2) ? 'hidden' : '';
         // the plate rises fact by fact, holds, then leaves upward the same way
         // ... and leaves the same way, one by one from the top: each line rises and fades in turn
         // as in the finale: the plate first, then the facts one by one, each on its own stretch, like steps
         const n = steps.length;
         let shown = 0;
         steps.forEach((s, i) => {
-            const t = smooth(seg(p, 0.16 + i * 0.09, 0.24 + i * 0.09));
+            const t = solo ? smooth(seg(p, 0.33 + i * 0.075, 0.4 + i * 0.075)) : smooth(seg(p, 0.16 + i * 0.09, 0.24 + i * 0.09));
             const o = smooth(seg(p, 0.8 + i * (0.12 / n), 0.86 + i * (0.12 / n)));
             if (i > 0 && t > 0.5) shown = i;
             s.style.opacity = (t * (1 - o)).toFixed(3);
             s.style.transform = `translate3d(0, ${((1 - t) * 56 - o * 90).toFixed(1)}px, 0)`;
         });
+        // a short phone: the plate rides up as the last facts arrive, so the last one is on screen
+        const factsEl = P('facts'), spill = solo ? Math.max(0, factsEl.offsetTop + factsEl.offsetHeight + 16 - innerHeight) : 0;
+        plate.style.transform = spill ? `translate3d(0, ${(-spill * smooth(seg(p, 0.47, 0.6))).toFixed(1)}px, 0)` : '';
         // the rail fills with the facts and the counter names the one on show
         const facts = n - 1;
         railFill.style.transform = `scaleY(${clamp(seg(p, 0.16, 0.16 + facts * 0.09 + 0.08), 0, 1).toFixed(3)})`;
         countEl.textContent = String(Math.max(1, shown)).padStart(2, '0');
         countOf.textContent = '/ ' + String(facts).padStart(2, '0');
         railBox.style.opacity = (seg(p, 0.12, 0.2) * (1 - seg(p, 0.84, 0.94))).toFixed(3);
-        plate.classList.toggle('is-live', p > 0.3 && p < 0.85);
+        plate.classList.toggle('is-live', p > (solo ? 0.36 : 0.3) && p < 0.85);
         // the boat sails up from its bow to its stern, rocking a little
         const hh = hull.offsetHeight;
         // before the page moves: the bow just above the pills (the phone: under the buttons), the stern off the
@@ -173,15 +178,14 @@
         // then, as the plate leaves and the brands slide over, the boat keeps going up and off the top
         const run = Math.max(1, r.height - 2 * vh);
         const tail = clamp((-r.top - run * 0.8) / (run * 0.2 + vh * 0.7), 0, 1);
-        const y = reduce ? y0 : y0 + (y1 - y0) * smooth(seg(p, 0.02, 0.78)) + (-hh - vh * 0.1 - y1) * smooth(tail);
-        const x = phone.matches && !reduce ? (smooth(seg(p, 0.1, 0.3)) - smooth(seg(p, 0.88, 0.98))) * 125 : 0;   // on the phone it slips out of the plate's way
+        const y = reduce ? y0 : solo ? y0 + (-hh - vh * 0.1 - y0) * seg(p, 0, 0.34) : y0 + (y1 - y0) * smooth(seg(p, 0.02, 0.78)) + (-hh - vh * 0.1 - y1) * smooth(tail);
         const t = now / 1000;
         const roll = reduce ? 0 : Math.sin(t * 0.9) * 0.6 + Math.sin(t * 0.37) * 0.2;
         // on hover the boat turns toward the pointer: it heels, pitches and yaws a little, through two stages of
         // smoothing so it starts and stops softly, like something heavy on water, and settles back when it leaves
         tiltA += (tiltTo - tiltA) * 0.035; tilt += (tiltA - tilt) * 0.045;
         pitchA += (pitchTo - pitchA) * 0.035; pitch += (pitchA - pitch) * 0.045;
-        hull.style.transform = `translate3d(${x.toFixed(1)}%, ${y.toFixed(1)}px, 0) perspective(2400px) rotateX(${(pitch * -4).toFixed(3)}deg) rotateY(${(tilt * 7).toFixed(3)}deg) rotate(${(roll + tilt * 2.4).toFixed(3)}deg)`;
+        hull.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0) perspective(2400px) rotateX(${(pitch * -4).toFixed(3)}deg) rotateY(${(tilt * 7).toFixed(3)}deg) rotate(${(roll + tilt * 2.4).toFixed(3)}deg)`;
     }
     /* a school of fish passes under the surface now and then, along the edge of the first scene, away from the
        words; it scatters from the pointer and closes up again */

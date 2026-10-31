@@ -28,6 +28,11 @@ Older versions (v1 `site/index.html`, v2, `site/explore/a|b|c`) are history; the
 Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media and raw photos) and `_work/`.
 
 ## Feedback log
+
+- **The phone has its own motion, not the desktop's made smaller (Alex, 31 Oct).** Home stage on the phone: the boat in the
+  middle, straight up with the finger, never sideways off the screen; the plate arrives after it on open water.
+- **Pinned screens use `--pin` (100lvh), never 100svh with `overflow: hidden`:** Safari hiding its bar cuts them short.
+  Desktop emulation cannot show this. Words that must be read stay above the bar with `--pin-gap`.
 - **27 Oct 2026 · Finale is the working base** (Alex: "finale nash poslednij, budem rabotatj s nim").
   New work refines the finale; v1 (7/10) and v2 (6/10) were the same page (hull cut-out over water with
   facts beside it) and are not to come back.
