@@ -31,6 +31,8 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
 
 - **The phone has its own motion, not the desktop's made smaller (Alex, 31 Oct).** Home stage on the phone: the boat in the
   middle, straight up with the finger, never sideways off the screen; the plate arrives after it on open water.
+- **Switching boats on the phone's plate (Alex, 31 Oct):** a boat passing unseen under the cards is pointless. The cards step
+  aside, the boat sails the open water, the cards return with her words.
 - **Everything on the phone happens faster (Alex, 31 Oct):** short intervals, quick passes (the fish come about every second).
 - **A snapping rail needs `scroll-padding-inline: var(--gutter)`,** or its cards and words stop against the edge of the screen.
 - **Pinned screens use `--pin` (100lvh), never 100svh with `overflow: hidden`:** Safari hiding its bar cuts them short.

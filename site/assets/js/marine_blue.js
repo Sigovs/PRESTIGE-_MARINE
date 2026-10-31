@@ -76,7 +76,28 @@
 
     const intro = $('[data-intro]');
     const pills = [...document.querySelectorAll('[data-boat]')];
-    let current = 'tecnomar', busy = false;
+    let current = 'tecnomar', busy = false, plateOff = 0, plateOffTo = 0;
+    const pause = (ms) => new Promise((go) => setTimeout(go, ms));
+    /* the phone, on the plate: the cards fill the screen and the boat has gone, so the cards step aside, the chosen boat
+       sails the whole height of the open water, slowing as it passes, and the cards come back with her words */
+    async function passBoat(b, h1Swap) {
+        const pre = new Image(); pre.src = b.img[0];
+        plateOffTo = 1;
+        h1Swap();
+        await Promise.all([pause(260), pre.decode().catch(() => {})]);
+        hull.src = b.img[0]; hull.setAttribute('width', b.img[1]); hull.setAttribute('height', b.img[2]); hull.alt = b.img[3];
+        scale(b); fill(b);
+        const vh = innerHeight, q = hull.getBoundingClientRect(), mid = (vh - q.height) / 2 - q.top;
+        const run = lane.animate([
+            { transform: `translateY(${vh - q.top + 30}px)`, easing: 'cubic-bezier(.12,.7,.35,1)' },
+            { transform: `translateY(${mid + vh * 0.05}px)`, offset: 0.4, easing: 'linear' },
+            { transform: `translateY(${mid - vh * 0.05}px)`, offset: 0.66, easing: 'cubic-bezier(.6,0,.85,.6)' },
+            { transform: 'none' }
+        ], { duration: 2400 });
+        await pause(1750);
+        plateOffTo = 0;
+        await run.finished;
+    }
     async function choose(key) {
         if (key === current || busy) return;
         busy = true; current = key;
@@ -90,6 +111,11 @@
             h1.textContent = b.line;
             if (!reduce) h1.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'forwards' });
         };
+        if (phone.matches && !reduce && hull.getBoundingClientRect().bottom <= 0) {
+            await passBoat(b, swapLine);
+            busy = false;
+            return;
+        }
         swapLine();
         if (!reduce) await lane.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(-110vh)', opacity: 1 }], { duration: 650, easing: 'cubic-bezier(.55,0,.75,.2)', fill: 'forwards' }).finished;   // the boat sails off the top
         try { await pre.decode(); } catch (e) { /* the swap still happens */ }
@@ -150,12 +176,13 @@
         // as in the finale: the plate first, then the facts one by one, each on its own stretch, like steps
         const n = steps.length;
         let shown = 0;
+        plateOff += (plateOffTo - plateOff) * 0.16;
         steps.forEach((s, i) => {
             const t = solo ? smooth(seg(p, 0.33 + i * 0.075, 0.4 + i * 0.075)) : smooth(seg(p, 0.16 + i * 0.09, 0.24 + i * 0.09));
             const o = smooth(seg(p, 0.8 + i * (0.12 / n), 0.86 + i * (0.12 / n)));
             if (i > 0 && t > 0.5) shown = i;
-            s.style.opacity = (t * (1 - o)).toFixed(3);
-            s.style.transform = `translate3d(0, ${((1 - t) * 56 - o * 90).toFixed(1)}px, 0)`;
+            s.style.opacity = (t * (1 - o) * (1 - plateOff)).toFixed(3);
+            s.style.transform = `translate3d(0, ${((1 - t) * 56 - o * 90 - plateOff * 24).toFixed(1)}px, 0)`;
         });
         // a short phone: the plate rides up as the last facts arrive, so the last one is on screen
         const factsEl = P('facts'), spill = solo ? Math.max(0, factsEl.offsetTop + factsEl.offsetHeight + 16 - innerHeight) : 0;
@@ -166,7 +193,7 @@
         countEl.textContent = String(Math.max(1, shown)).padStart(2, '0');
         countOf.textContent = '/ ' + String(facts).padStart(2, '0');
         railBox.style.opacity = (seg(p, 0.12, 0.2) * (1 - seg(p, 0.84, 0.94))).toFixed(3);
-        plate.classList.toggle('is-live', p > (solo ? 0.36 : 0.3) && p < 0.85);
+        plate.classList.toggle('is-live', p > (solo ? 0.36 : 0.3) && p < 0.85 && !plateOffTo);
         // the boat sails up from its bow to its stern, rocking a little
         const hh = hull.offsetHeight;
         // before the page moves: the bow just above the pills (the phone: under the buttons), the stern off the
