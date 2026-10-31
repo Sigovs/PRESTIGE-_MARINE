@@ -485,3 +485,34 @@ main > .panel { overflow-x: clip; }
   .vhero--boat .vhero__pin::after { background: linear-gradient(to bottom, rgba(3, 26, 44, .55) 0, rgba(3, 26, 44, 0) 18%), linear-gradient(to top, #06202F 0, #06202F 38%, rgba(6, 32, 47, 0) 62%); }
   .vdrail { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* specifications: two fixed columns; a card opens and closes softly (js animates the height); the title keeps a quiet focus, no box after a click */
+.vdspecs__grid { columns: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3) var(--s-6); align-items: start; }
+.vdspecs__col { display: grid; gap: var(--s-3); min-width: 0; }
+.spec { margin-bottom: 0; overflow: hidden; transition: border-color .3s var(--ease), box-shadow .3s var(--ease); }
+.spec:hover { border-color: var(--line-2); }
+.spec[open] { box-shadow: 0 18px 36px -30px rgba(6, 40, 67, .4); }
+.spec summary { border-radius: 8px; outline: none; }
+.spec summary:focus { outline: none; }
+.spec summary:focus-visible { outline: none; color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.spec summary .ico { transition: transform .55s cubic-bezier(.22, .61, .36, 1); }
+@media (max-width: 720px) { .vdspecs__grid { grid-template-columns: minmax(0, 1fr); } }
+.spec.is-closing summary .ico { transform: none; }
+
+/* boat first screen: arrows at the sides move through the photos, one at a time */
+.harrow { position: absolute; z-index: 2; top: 42%; display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; margin-top: -28px; padding: 0; border: 0; border-radius: 50%; background: rgba(3, 26, 44, .34); color: var(--white); cursor: pointer; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background-color .25s var(--ease), color .25s var(--ease), transform .35s cubic-bezier(.22, .61, .36, 1); }
+.harrow[hidden] { display: none; }
+.harrow .ico { width: 24px; height: 24px; }
+.harrow--prev { left: var(--edge); }
+.harrow--next { right: var(--edge); }
+.harrow:hover { background: var(--white); color: var(--navy); }
+.harrow--prev:hover { transform: translateX(-3px); }
+.harrow--next:hover { transform: translateX(3px); }
+.harrow:focus { outline: none; }
+.harrow:focus-visible { outline: none; background: var(--white); color: var(--navy); box-shadow: 0 0 0 3px rgba(255, 255, 255, .5); }
+@media (max-width: 720px) {
+  .harrow { top: 31%; width: 48px; height: 48px; margin-top: -24px; }
+  .harrow--prev { left: var(--s-3); }
+  .harrow--next { right: var(--s-3); }
+}
+@media (prefers-reduced-motion: reduce) { .harrow { transition: none; } .harrow:hover { transform: none; } }

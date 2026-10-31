@@ -113,6 +113,7 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   on a flexing spine, after Alex's reference (CodeCanyon "Fish Animation"; own drawing, no copied sprites). Two kinds take
   turns: a school of small fish and a few larger ones (not very large), every few seconds, because nobody watches a screen for
   a minute. Each pass draws its own route, count, size and density, and they are slightly blurred, under the water.
+- **Whole site scored 8/10 by Alex (31 Oct): "a very good site".** The bar for this project: brand film first, list pages that show the boats at once, the client's own words, stepped slide-ins.
 - **Inner pages (30 Oct), template:** `templates/` holds `shell.html` (head, header, menu, footer, film dialog), `brand.html` and one JSON per
   brand; `python templates/build.py` writes `site/brand-<slug>.html`, add the slug to `BUILT`. Never edit a built page by hand. Alex's reference is
   vanquish-yachts.com/yachts/vq40-outboard, as a principle only: **the home's sea does not come to a brand page** (Alex: "I wouldn't drag our hero

@@ -1,6 +1,8 @@
   <section class="vhero vhero--boat" id="top" aria-labelledby="h1" data-vhero>
     <div class="vhero__pin">
-      <img class="vhero__film" src="{{hero}}" alt="{{title}}" fetchpriority="high">
+      <img class="vhero__film" src="{{hero}}" alt="{{title}}" fetchpriority="high" data-hero-img>
+      <button class="harrow harrow--prev" type="button" aria-label="Previous photo" data-hero-prev hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="harrow harrow--next" type="button" aria-label="Next photo" data-hero-next hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
       <div class="vhero__copy wrap vdtop" data-vhero-copy>
         <nav class="crumbs" aria-label="Breadcrumb"><a href="index_blue.html">Home</a><span aria-hidden="true">/</span><a href="inventory.html">Inventory</a><span aria-hidden="true">/</span><span aria-current="page">{{title}}</span></nav>
         <div class="vdtop__row">

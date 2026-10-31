@@ -149,7 +149,7 @@
        is in the middle of the screen. ── */
     if (!reduce) {
         const views = [...document.querySelectorAll('.view img')];
-        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide, .vdg, .vdabout__lists > div, .spec')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list')).map((el) => {
+        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide, .vdg, .vdabout__lists > div')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list')).map((el) => {
             el.classList.remove('rise', 'is-in');
             const sibs = [...el.parentElement.children];
             const v = views.indexOf(el);
@@ -383,6 +383,68 @@
         if (sort) sort.addEventListener('change', apply);
         invBox.querySelector('[data-inv-clear]').addEventListener('click', () => { clear(); apply(); });
         apply();
+    }
+
+    /* ── specifications: a card opens and closes softly, its height and its contents moving together; a click mid-way simply turns it round ── */
+    document.querySelectorAll('.spec').forEach((d) => {
+        const head = d.querySelector('summary'), body = d.querySelector('summary ~ *');
+        let run = null, closing = false;
+        const EASE = 'cubic-bezier(.22, .61, .36, 1)';
+        const go = (from, to, onEnd) => {
+            const a = d.animate({ height: [`${from}px`, `${to}px`] }, { duration: 520, easing: EASE });
+            run = a;
+            a.onfinish = () => { if (run === a) { run = null; onEnd(); } };
+        };
+        head.addEventListener('click', (e) => {
+            if (reduce || !d.animate) return;
+            e.preventDefault();
+            const now = d.offsetHeight;   // where it is right now, mid-way or not
+            if (run) { const old = run; run = null; old.cancel(); }
+            if (d.open && !closing) {
+                closing = true;
+                body.animate({ opacity: [1, 0], transform: ['none', 'translateY(-6px)'] }, { duration: 260, easing: 'ease-in', fill: 'forwards' });
+                head.querySelector('.ico').style.transform = '';
+                d.classList.add('is-closing');
+                go(now, head.offsetHeight + 2, () => { d.open = false; closing = false; d.classList.remove('is-closing'); body.getAnimations().forEach((a) => a.cancel()); });
+            } else {
+                closing = false; d.classList.remove('is-closing');
+                d.open = true;
+                body.getAnimations().forEach((a) => a.cancel());
+                const full = d.offsetHeight;
+                body.animate({ opacity: [0, 1], transform: ['translateY(10px)', 'none'] }, { duration: 460, delay: 90, easing: EASE, fill: 'backwards' });
+                go(now, full, () => {});
+            }
+        });
+    });
+
+    /* ── boat first screen: the arrows move through the photos; the last picture leaves before the next arrives, never two boats at once ── */
+    const heroImg = $('[data-hero-img]');
+    if (heroImg) {
+        const list = [...document.querySelectorAll('.vdg img')].map((im) => im.getAttribute('src'));
+        const prev = $('[data-hero-prev]'), next = $('[data-hero-next]');
+        if (list.length > 1) {
+            prev.hidden = false; next.hidden = false;
+            let at = 0, want = 0, busy = false;
+            const load = (src) => { const im = new Image(); im.src = src; return im.decode ? im.decode().catch(() => {}) : Promise.resolve(); };
+            const swap = async () => {
+                if (busy) return;
+                busy = true;
+                while (at !== want) {
+                    at = want;
+                    const src = list[at];
+                    await load(src);
+                    if (!reduce) await heroImg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 240, easing: 'ease-in', fill: 'forwards' }).finished;
+                    heroImg.src = src;
+                    if (!reduce) { heroImg.getAnimations().forEach((a) => a.cancel()); await heroImg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.22, .61, .36, 1)' }).finished; }
+                }
+                busy = false;
+                load(list[(at + 1) % list.length]);
+            };
+            const step = (d) => { want = (want + d + list.length) % list.length; swap(); };
+            prev.addEventListener('click', () => step(-1));
+            next.addEventListener('click', () => step(1));
+            load(list[1]);
+        }
     }
 
     /* ── boat page: every photo opens full size; arrows, Escape and a swipe move through them ── */

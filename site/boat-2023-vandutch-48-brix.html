@@ -11,9 +11,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Inter+Tight:wght@300..700&amp;display=swap">
 <link rel="stylesheet" href="assets/css/marine_finale.css?v=8">
 <link rel="stylesheet" href="assets/css/marine_blue.css?v=55">
-<link rel="stylesheet" href="assets/css/marine_inner.css?v=30">
+<link rel="stylesheet" href="assets/css/marine_inner.css?v=32">
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
-<script src="assets/js/marine_inner.js?v=22" defer></script>
+<script src="assets/js/marine_inner.js?v=25" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -67,7 +67,9 @@
 <main id="main" data-main>
   <section class="vhero vhero--boat" id="top" aria-labelledby="h1" data-vhero>
     <div class="vhero__pin">
-      <img class="vhero__film" src="assets/img/boats/2023-vandutch-48-brix-00.webp" alt="2023 VanDutch 48 BRIX" fetchpriority="high">
+      <img class="vhero__film" src="assets/img/boats/2023-vandutch-48-brix-00.webp" alt="2023 VanDutch 48 BRIX" fetchpriority="high" data-hero-img>
+      <button class="harrow harrow--prev" type="button" aria-label="Previous photo" data-hero-prev hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="harrow harrow--next" type="button" aria-label="Next photo" data-hero-next hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
       <div class="vhero__copy wrap vdtop" data-vhero-copy>
         <nav class="crumbs" aria-label="Breadcrumb"><a href="index_blue.html">Home</a><span aria-hidden="true">/</span><a href="inventory.html">Inventory</a><span aria-hidden="true">/</span><span aria-current="page">2023 VanDutch 48 BRIX</span></nav>
         <div class="vdtop__row">
@@ -145,14 +147,18 @@
     <div class="wrap">
       <h2 class="h2" id="specs-h">Specifications</h2>
       <div class="vdspecs__grid">
+        <div class="vdspecs__col">
         <details class="spec" open><summary>Dimensions<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><dl><div><dt>Length</dt><dd>48 ft</dd></div><div><dt>Length overall</dt><dd>48 ft</dd></div><div><dt>Beam</dt><dd>13′2″</dd></div><div><dt>Max draft</dt><dd>3′5″</dd></div><div><dt>Displacement</dt><dd>33,070 lb</dd></div><div><dt>Dry weight</dt><dd>27,500 lb</dd></div><div><dt>Cabins</dt><dd>2</dd></div><div><dt>Heads</dt><dd>1</dd></div></dl></details>
         <details class="spec" open><summary>Engines<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><dl><div><dt>Engines</dt><dd>2</dd></div><div><dt>Make</dt><dd>Volvo Penta</dd></div><div><dt>Model</dt><dd>D11</dd></div><div><dt>Fuel</dt><dd>Diesel</dd></div><div><dt>Power</dt><dd>725 hp each</dd></div><div><dt>Type</dt><dd>Inboard</dd></div><div><dt>Drive</dt><dd>V</dd></div><div><dt>Hours</dt><dd>180</dd></div></dl></details>
+        </div>
+        <div class="vdspecs__col">
         <details class="spec"><summary>Tanks<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><dl><div><dt>Water</dt><dd>106 gal</dd></div></dl></details>
         <details class="spec"><summary>Electronics<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><ul><li>Depthsounder</li><li>Log-Speedometer</li><li>TV Set</li><li>Navigation Center</li><li>Plotter</li><li>Autopilot</li><li>Radio</li><li>Compass</li><li>GPS</li><li>Cockpit Speakers</li><li>VHF</li><li>Flat Screen TV</li><li>Wi-Fi</li><li>Touch Screen</li><li>Chartplotters</li></ul></details>
         <details class="spec"><summary>Inside equipment<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><ul><li>Stern Thruster</li><li>Bow Thruster</li><li>Electric Bilge Pump</li><li>Manual Bilge Pump</li><li>Microwave Oven</li><li>Air Conditioning</li><li>Electric Head</li><li>Hot Water</li><li>Refrigerator</li><li>Sea Water Pump</li><li>Battery Charger</li></ul></details>
         <details class="spec"><summary>Electrical<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><ul><li>Shore Power Inlet, 50A</li><li>Generator, Kohler 9kw</li><li>Inverter</li></ul></details>
         <details class="spec"><summary>Outside<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><ul><li>Teak Cockpit, Synthetic</li><li>Cockpit Shower</li><li>Electric Winch</li><li>Teak Sidedecks, Synthetic</li><li>Cockpit Cushions</li><li>Cockpit Table</li><li>Swimming Ladder</li><li>Hydraulic Bathing Platform</li><li>Underwater Lights</li></ul></details>
         <details class="spec"><summary>Covers<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><ul><li>Bimini Top</li><li>Cockpit Cover</li></ul></details>
+        </div>
       </div>
       <p class="vdlegal">The Company offers the details of this vessel in good faith but cannot guarantee or warrant the accuracy of this information nor warrant the condition of the vessel. A buyer should instruct his agents, or his surveyors, to investigate such details as the buyer desires validated. This vessel is offered subject to prior sale, price change, or withdrawal without notice.</p>
     </div>

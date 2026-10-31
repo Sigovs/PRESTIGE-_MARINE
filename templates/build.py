@@ -297,6 +297,16 @@ def all_cards():
     return out
 
 
+def spec_columns(groups, render):
+    weight = lambda g: 1 + (len(g.get('rows', g.get('items', []))) if g.get('open') else 0)
+    half, run, left, right = sum(weight(g) for g in groups) / 2, 0, [], []
+    for g in groups:
+        (left if run < half else right).append(g)
+        run += weight(g)
+    col = lambda part: '        <div class="vdspecs__col">\n' + '\n'.join(render(g) for g in part) + '\n        </div>'
+    return col(left) + '\n' + col(right)
+
+
 def build_vdp(x):
     title = f"{x['year']} {x['name']}"
     tel = x['broker'][1]
@@ -332,7 +342,7 @@ def build_vdp(x):
         'tag': tag_html(x['tag']).replace('class="tag ', 'class="tag vdtop__tag ') if x['tag'] else '', 'broker_tel': tel, 'broker_tel_raw': '+1' + tel.replace('-', ''), 'broker_name': e(x['broker'][0]),
         'gallery': gallery, 'count': len(x['photos']), 'photos_note': f'        <p class="vdgal__note">{e(x["photos_note"])}</p>' if x.get('photos_note') else '',
         'figs': '\n'.join(f'          <div><dt>{e(k)}</dt><dd class="num">{e(v)}</dd></div>' for k, v in x['figs']), 'power': e(x['power']),
-        'lead': '\n'.join(f'        <p>{e(p)}</p>' for p in x['lead']), 'lists': lists, 'quote': quote, 'specs': '\n'.join(group(g) for g in x['specs']),
+        'lead': '\n'.join(f'        <p>{e(p)}</p>' for p in x['lead']), 'lists': lists, 'quote': quote, 'specs': spec_columns(x['specs'], group),
         'more': '\n'.join(boat(c, n) for c, n in others[:4]), 'short': e(x['name']),
         'options': '\n'.join(f'            <option>{e(o)}</option>' for o in [title] + [f"{c['year']} {c['name']}" for c, _ in others] + ['Brokerage: selling my boat']),
         'brand_links': brand_links(None),
