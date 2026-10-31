@@ -409,3 +409,6 @@ body { font-family: var(--sans); }
   .bplate__card .bplate__cta { padding-top: var(--s-1); }
   .bfacts .ice.card { padding: var(--s-2) var(--s-3); line-height: 1.35; }
 }
+
+/* a dropdown's text never touches its field: clear room on the left, the arrow clear of the right edge (Alex, 31 Oct, binding) */
+.field select { min-height: 52px; padding: 0 var(--s-7) 0 var(--s-3); background-position: right var(--s-3) center; }

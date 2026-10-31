@@ -149,7 +149,7 @@
        is in the middle of the screen. ── */
     if (!reduce) {
         const views = [...document.querySelectorAll('.view img')];
-        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .others__more, .absplit__img, .absplit__copy, .absvc__head p, .absvc__list li')].filter((el) => !el.closest('.inv--list')).map((el) => {
+        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list')).map((el) => {
             el.classList.remove('rise', 'is-in');
             const sibs = [...el.parentElement.children];
             const v = views.indexOf(el);

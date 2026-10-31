@@ -94,6 +94,7 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   rises; the headline, plate, facts, link and counter take the new boat's words (blue's BOATS data; Tecnomar keeps
   its Size card, so 05 facts, the others 04).
 - **Footer line "Powered by All Auto Network"** at the very bottom (Alex, 27 Oct) — on the finale and on blue.
+- **RULE (Alex, 31 Oct, "never!"): in a dropdown the text never touches the field.** Every `select` keeps at least `--s-3` clear on the left and its arrow `--s-3` from the right edge, on every page. Check the computed padding after any form or filter change.
 - **RULE, repeated by Alex (27 Oct: "the rule is gone again, why every time the same"): no text ever sits against a
   rule, bar or edge.** Anything under the header keeps at least `--s-8` clear of the header's bottom hairline (the
   menu overlay starts `--s-9` below both header rows); and the menu, the section row and every header-anchored block
@@ -119,7 +120,7 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   views, the home's standard stock cards (the heading takes the columns the cards leave), other brands, contact, surf footer, page bar with Inquire.
   Facts come from the brand's own site (vandutch.com, midnightboats.com, iguana-yachts.com, tecnomar.com/fleet) or our own copy; no links out to brand sites;
   New inventory and brokerage are one section, Inventory, on one page (Alex, 31 Oct); the menu has no separate Brokerage.
-  `site/about.html` carries the current site's About content only (prestigemarine.co/about-us, Alex 31 Oct), by sections; no Prestige Aviation, no family history from the Imports site. The film opens behind the three words.
+  **`site/about.html` carries the client's About text word for word (Alex, 31 Oct: never rewrite copy we were told to take).** One paragraph to a section, no headings of ours. It keeps the client's spelling, including "recourses", until they correct it.
   Inventory has a short search: year and make menus, length and price two-handled sliders; a boat on request stays until the price is narrowed.
   **Inventory and Sold are list pages (Alex, 31 Oct): the film is a band half the screen high with the title on it, filters below, the cards right after, no float.** Clients and managers must see the boats at once.
   Tags on cards: `"tag"` per boat (Available now, New, Sale pending, Sold). Never set a status we have not been told.

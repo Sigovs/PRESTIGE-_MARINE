@@ -337,3 +337,23 @@ main > .panel { position: relative; z-index: 2; }
 .form [hidden] { display: none !important; }
 @media (max-width: 1100px) { .isearch { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .isearch { gap: var(--s-2) var(--s-5); padding-block: var(--s-3); } .isearch__f--wide { grid-column: 1 / -1; } }
+
+/* about: the client's own paragraphs, set large, one to a section */
+.abpara { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.75rem, 1.35rem + 1vw, 2.5rem); line-height: 1.28; color: var(--navy); text-wrap: pretty; }
+.absplit__copy .abpara { max-width: none; margin-top: -.2em; font-size: clamp(1.625rem, 1.3rem + .75vw, 2.125rem); color: var(--navy); }
+.abpara--wide { max-width: 26em; margin-bottom: var(--s-8); }
+.abpara--end { margin-bottom: 0; }
+.chap__line.chap__line--para { max-width: 24em; font-size: clamp(1.75rem, 1.2rem + 1.5vw, 3rem); line-height: 1.2; color: var(--white); text-wrap: pretty; }
+@media (max-width: 720px) { .abpara--wide { margin-bottom: var(--s-6); } .chap__line.chap__line--para { font-size: 1.625rem; } }
+
+/* a dropdown's text never touches its field: clear room on the left, the arrow clear of the right edge (Alex, 31 Oct, binding) */
+select { text-indent: 0; }
+.field select, .isearch select, .ifilter__sort select { padding: 0 var(--s-7) 0 var(--s-3); background-position: right var(--s-3) center; }
+.field select { min-height: 52px; }
+
+/* whatever is still sliding in stays inside its own section; a split below 900 stands in one column, so its words keep a readable width */
+main > .panel { overflow-x: clip; }
+@media (max-width: 900px) {
+  .absplit__grid, .absplit--flip .absplit__grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
+  .absplit--flip .absplit__img, .absplit--flip .absplit__copy { grid-column: 1; grid-row: auto; }
+}
