@@ -149,7 +149,7 @@
        is in the middle of the screen. ── */
     if (!reduce) {
         const views = [...document.querySelectorAll('.view img')];
-        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide, .vdg, .vdabout__lists > div')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list')).map((el) => {
+        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide, .vdg, .vdabout__lists > div')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list') && !(phone.matches && el.closest('.vdmore'))).map((el) => {
             el.classList.remove('rise', 'is-in');
             const sibs = [...el.parentElement.children];
             const v = views.indexOf(el);
@@ -267,7 +267,7 @@
         ];
         const paint = (it) => {
             const r = it.el.getBoundingClientRect(), vh = innerHeight, n = it.words.length;
-            const fin = clamp((vh * 0.95 - r.top) / (vh * 0.33), 0, 1), fout = clamp((vh * 0.22 - r.bottom) / (vh * 0.22), 0, 1);
+            const fin = clamp((vh * (phone.matches ? 0.99 : 0.95) - r.top) / (vh * (phone.matches ? 0.14 : 0.33)), 0, 1), fout = clamp((vh * 0.22 - r.bottom) / (vh * 0.22), 0, 1);
             const k = it.kind === 'head' ? 1.1 : 5;
             it.words.forEach((w, i) => {
                 const a = clamp((fin * (n + k) - i) / k, 0, 1), b = clamp((fout * (n + k) - i) / k, 0, 1);
@@ -416,6 +416,9 @@
             }
         });
     });
+
+    /* ── on the phone only the first spec group stands open: the rest are a tap away ── */
+    if (phone.matches) document.querySelectorAll('.vdspecs .spec').forEach((d, i) => { if (i) d.open = false; });
 
     /* ── boat first screen: the arrows move through the photos; the last picture leaves before the next arrives, never two boats at once ── */
     const heroImg = $('[data-hero-img]');

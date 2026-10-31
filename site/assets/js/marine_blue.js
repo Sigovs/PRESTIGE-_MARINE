@@ -724,7 +724,7 @@ void main(){
             const r = it.el.getBoundingClientRect(), vh = innerHeight, n = it.words.length;
             // in: from the moment the block's top passes 95% of the screen until it reaches 62%;
             // out: from the moment its bottom passes 22% of the screen until it reaches the top
-            const fin = clamp((vh * 0.95 - r.top) / (vh * 0.33), 0, 1);
+            const fin = clamp((vh * (phone.matches ? 0.99 : 0.95) - r.top) / (vh * (phone.matches ? 0.14 : 0.33)), 0, 1);
             const fout = clamp((vh * 0.22 - r.bottom) / (vh * 0.22), 0, 1);
             const k = it.kind === 'head' ? 1.1 : 5;   // headings step in a word at a time; paragraphs flow
             it.words.forEach((w, i) => {

@@ -412,3 +412,13 @@ body { font-family: var(--sans); }
 
 /* a dropdown's text never touches its field: clear room on the left, the arrow clear of the right edge (Alex, 31 Oct, binding) */
 .field select { min-height: 52px; padding: 0 var(--s-7) 0 var(--s-3); background-position: right var(--s-3) center; }
+
+/* phone footer: every word on clear sand, the surf opens below the last line; links sized for a thumb */
+@media (max-width: 720px) {
+  .foot__panel { padding-bottom: 46vw; background: linear-gradient(to bottom, #fff 0, rgba(255, 255, 255, .94) calc(100% - 46vw - 70px), rgba(255, 255, 255, 0) calc(100% - 46vw + 30px)); }
+  .foot__col a, .foot__col p, .foot__meta, .foot__div, .foot__powered { color: var(--navy); }
+  .foot__meta a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot__bar { row-gap: 0; }
+  .foot__bar .foot__powered { margin-left: 0 !important; }
+}
+@media (max-width: 720px) { .boat__name a { display: inline-block; padding-block: 9px; margin-block: -9px; } }
