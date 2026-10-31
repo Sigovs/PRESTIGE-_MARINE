@@ -108,7 +108,7 @@
 
   .brows__grid { display: block; }
   .bframe__hold { display: none; }
-  .brows { display: grid; grid-auto-flow: column; grid-auto-columns: 82vw; gap: var(--s-4); overflow-x: auto; scroll-snap-type: x mandatory;
+  .brows { display: grid; grid-auto-flow: column; grid-auto-columns: 82vw; gap: var(--s-4); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
     margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--s-4); overscroll-behavior-x: contain; }
   .brow { min-height: 0; scroll-snap-align: start; align-content: start; border: 0; padding: 0; }
   .brow:last-child { border: 0; }

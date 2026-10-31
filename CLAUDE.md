@@ -31,6 +31,8 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
 
 - **The phone has its own motion, not the desktop's made smaller (Alex, 31 Oct).** Home stage on the phone: the boat in the
   middle, straight up with the finger, never sideways off the screen; the plate arrives after it on open water.
+- **Everything on the phone happens faster (Alex, 31 Oct):** short intervals, quick passes (the fish come about every second).
+- **A snapping rail needs `scroll-padding-inline: var(--gutter)`,** or its cards and words stop against the edge of the screen.
 - **Pinned screens use `--pin` (100lvh), never 100svh with `overflow: hidden`:** Safari hiding its bar cuts them short.
   Desktop emulation cannot show this. Words that must be read stay above the bar with `--pin-gap`.
 - **27 Oct 2026 · Finale is the working base** (Alex: "finale nash poslednij, budem rabotatj s nim").

@@ -379,7 +379,7 @@ main, .foot { position: relative; z-index: 1; }
   .sec-head { margin-bottom: var(--s-7); }
   .sec-head__aside { justify-items: start; }
   .sec-head__aside .lede { text-align: left; }
-  .tiles { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 80vw; gap: var(--s-4); overflow-x: auto; scroll-snap-type: x mandatory;
+  .tiles { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 80vw; gap: var(--s-4); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
     margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--s-4); overscroll-behavior-x: contain; }
   .tile { scroll-snap-align: start; }
   .boats { grid-template-columns: 1fr; row-gap: var(--s-8); }

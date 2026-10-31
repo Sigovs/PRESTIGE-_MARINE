@@ -225,7 +225,7 @@
         }
         fx.fill();
     }
-    const school = { kind: 1, on: false, next: performance.now() + 2500 + Math.random() * 1500, fish: [], t0: 0, dur: 11000, route: null };
+    const school = { kind: 1, on: false, next: performance.now() + (phone.matches ? 600 + Math.random() * 500 : 2500 + Math.random() * 1500), fish: [], t0: 0, dur: 11000, route: null };
     let ptrX = -9999, ptrY = -9999;
     if (!reduce) window.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') { ptrX = e.clientX; ptrY = e.clientY; } }, { passive: true });
     function spawnSchool(now) {
@@ -259,7 +259,7 @@
         school.last = open.length ? open[Math.floor(Math.random() * open.length)] : (school.last === 0 ? 1 : 0);
         school.route = routes[school.last];
         const [a, b, c] = school.route, way = Math.hypot(b[0] - a[0], b[1] - a[1]) + Math.hypot(c[0] - b[0], c[1] - b[1]);
-        school.dur = (way / (type.speed * k * pick([0.85, 1.2]))) * 1000;
+        school.dur = (way / (type.speed * k * pick([0.85, 1.2]) * (phone.matches ? 1.6 : 1))) * 1000;
         school.soft = type.soft;
         school.t0 = now; school.on = true;
         const [sx, sy] = a;
@@ -309,7 +309,7 @@
         });
         if (raw > 1 && !visible) {
             school.on = false;
-            school.next = now + (3000 + Math.random() * 2000) * (phone.matches ? 1.4 : 1);   // often: nobody stays on this screen for long
+            school.next = now + (phone.matches ? 700 + Math.random() * 700 : 3000 + Math.random() * 2000);   // often: nobody stays on this screen for long, least of all on the phone
             return null;
         }
         return fishC;
