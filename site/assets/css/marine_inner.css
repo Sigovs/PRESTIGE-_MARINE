@@ -516,3 +516,11 @@ main > .panel { overflow-x: clip; }
   .harrow--next { right: var(--s-3); }
 }
 @media (prefers-reduced-motion: reduce) { .harrow { transition: none; } .harrow:hover { transform: none; } }
+
+/* boat first screen: the way down to the details */
+.vdtop__more { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; margin-top: var(--s-1); font-size: var(--t-16); font-weight: 600; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .5); text-decoration-thickness: 1px; text-underline-offset: 6px; transition: text-decoration-color .25s var(--ease); }
+.vdtop__more .ico { transition: transform .35s cubic-bezier(.22, .61, .36, 1); }
+.vdtop__more:hover { text-decoration-color: currentColor; }
+.vdtop__more:hover .ico { transform: translateY(3px); }
+@media (prefers-reduced-motion: reduce) { .vdtop__more .ico { transition: none; } .vdtop__more:hover .ico { transform: none; } }
+.vdabout__lead p.vdlegal { margin-top: var(--s-5); font-size: var(--t-14); line-height: 1.6; }
