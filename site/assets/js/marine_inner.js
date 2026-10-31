@@ -46,7 +46,7 @@
     /* ── the hero's words leave upward as the panel rises; the film drifts; each chapter settles back as the next rides over it ── */
     const vhero = $('[data-vhero]'), chaps = [...document.querySelectorAll('[data-chap]')];
     if (!reduce && (vhero || chaps.length)) {
-        const copy = $('[data-vhero-copy]'), film = vhero && vhero.querySelector('video');
+        const copy = $('[data-vhero-copy]'), film = vhero && vhero.querySelector('video, img');
         const parts = chaps.map((c) => ({ el: c, frame: c.querySelector('.chap__frame'), vid: c.querySelector('[data-chap-media]'), line: c.querySelector('.chap__line') }));
         const draw = () => {
             const vh = innerHeight;
@@ -149,7 +149,7 @@
        is in the middle of the screen. ── */
     if (!reduce) {
         const views = [...document.querySelectorAll('.view img')];
-        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list')).map((el) => {
+        const floats = [...document.querySelectorAll('.view img, .range--one .model__img, .range--one .model__body, .boat, .sold, .others__grid > li, .inv__none, .others .h2, .absplit__img, .absplit__copy, .abpara--wide, .vdg, .vdabout__lists > div, .spec')].filter((el) => !el.closest('.chap')).filter((el) => !el.closest('.inv--list')).map((el) => {
             el.classList.remove('rise', 'is-in');
             const sibs = [...el.parentElement.children];
             const v = views.indexOf(el);
@@ -157,7 +157,9 @@
             let side = v < 0 ? 0 : v === 4 ? 0 : v % 2 ? 1 : -1;
             if (el.matches('.range--one .model__img, .others .h2, .sold, .absplit:not(.absplit--flip) .absplit__img, .absplit--flip .absplit__copy')) side = -1;
             if (el.matches('.range--one .model__body, .absplit:not(.absplit--flip) .absplit__copy, .absplit--flip .absplit__img')) side = 1;
-            return { el, ty: 0, side, lag: v >= 0 ? (v % 2 ? 0.14 : 0) : el.matches('.boat, li') ? (sibs.indexOf(el) % 4) * 0.07 : el.matches('.model__body, .absplit__copy') ? 0.1 : 0 };
+            const g = el.matches('.vdg') ? sibs.indexOf(el) % 5 : -1;   // the photos go in steps: the first from below, then a pair at a time, the second a beat later
+            if (g > 0) side = g % 2 ? -1 : 1;
+            return { el, ty: 0, side, lag: g >= 0 ? (g === 2 || g === 4 ? 0.12 : 0) : v >= 0 ? (v % 2 ? 0.14 : 0) : el.matches('.boat, li') ? (sibs.indexOf(el) % 4) * 0.07 : el.matches('.model__body, .absplit__copy') ? 0.1 : 0 };
         });
         const float = () => {
             const vh = innerHeight, reach = phone.matches ? 0.22 : 0.09;
@@ -381,6 +383,32 @@
         if (sort) sort.addEventListener('change', apply);
         invBox.querySelector('[data-inv-clear]').addEventListener('click', () => { clear(); apply(); });
         apply();
+    }
+
+    /* ── boat page: every photo opens full size; arrows, Escape and a swipe move through them ── */
+    const lb = $('[data-lb]');
+    if (lb && lb.showModal) {
+        const shots = [...document.querySelectorAll('.vdg img')].map((im) => ({ src: im.getAttribute('src'), alt: im.alt }));
+        const pic = lb.querySelector('[data-lb-img]'), cnt = lb.querySelector('[data-lb-count]');
+        let at = 0, back = null, x0 = null;
+        const show = (i) => {
+            at = (i + shots.length) % shots.length;
+            pic.src = shots[at].src; pic.alt = shots[at].alt;
+            cnt.textContent = `${at + 1} / ${shots.length}`;
+            if (!reduce) pic.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 320, easing: 'ease-out' });
+            const n = new Image(); n.src = shots[(at + 1) % shots.length].src;
+        };
+        const open = (i, from) => { back = from; show(i); if (lenis) lenis.stop(); lb.showModal(); };
+        const close = () => { lb.close(); };
+        lb.addEventListener('close', () => { if (lenis) lenis.start(); if (back) back.focus(); });
+        document.querySelectorAll('[data-lb-open]').forEach((b) => b.addEventListener('click', () => open(+b.dataset.lbOpen, b)));
+        lb.querySelector('[data-lb-close]').addEventListener('click', close);
+        lb.querySelector('[data-lb-prev]').addEventListener('click', () => show(at - 1));
+        lb.querySelector('[data-lb-next]').addEventListener('click', () => show(at + 1));
+        lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(at - 1); if (e.key === 'ArrowRight') show(at + 1); });
+        lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+        lb.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+        lb.addEventListener('pointerup', (e) => { if (x0 === null) return; const d = e.clientX - x0; x0 = null; if (Math.abs(d) > 50 && !e.target.closest('button')) show(at + (d < 0 ? 1 : -1)); });
     }
 
     /* ── contact: today's row and whether the showroom is open now, on Miami's clock ── */

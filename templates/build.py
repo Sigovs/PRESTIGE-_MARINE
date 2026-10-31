@@ -23,6 +23,15 @@ BRANDS = {
 NAV = [('Inventory', 'inventory.html'),
        ('Sold', 'sold.html'), ('About Us', 'about.html'), ('Contact Us', 'contact.html')]
 e = html.escape
+BOATS = json.loads((HERE / 'boats.json').read_text(encoding='utf-8')) if (HERE / 'boats.json').exists() else []
+
+
+def vdp_of(url):
+    m = re.search(r'-(\d+)/?$', url or '')
+    for x in BOATS:
+        if m and x['id'] == m.group(1):
+            return f"boat-{x['slug']}.html"
+    return url
 
 
 def page_of(slug):
@@ -75,13 +84,13 @@ def boat(b, name):
     nick_html = f' <span class="boat__nick">{e(b["nick"])}</span>' if b['nick'] else ''
     tag = b.get('tag') or b.get('note') or ''
     return f'''          <li class="boat rise" data-brand="{e(name)}" data-year="{b['year']}" data-price="{price_of(b)}" data-len="{len_of(b)}">
-            <a class="boat__img" href="{b['url']}" rel="noopener" aria-label="{e(title + nick)}, listing">
+            <a class="boat__img" href="{vdp_of(b['url'])}" aria-label="{e(title + nick)}, listing">
               <img class="boat__plan" src="{b['plan']}" width="960" height="640" loading="lazy" alt="{e(b['alt'])}">
               <img class="boat__side" data-src="{b['side']}" width="960" height="640" alt="" aria-hidden="true">
               {tag_html(tag)}
             </a>
             <p class="boat__brand">{e(name)} · <span class="num">{b['year']}</span></p>
-            <h3 class="boat__name"><a href="{b['url']}" rel="noopener">{e(b['name'])}</a>{nick_html}</h3>
+            <h3 class="boat__name"><a href="{vdp_of(b['url'])}">{e(b['name'])}</a>{nick_html}</h3>
             <p class="boat__paint">{e(b['paint'])}</p>
             <div class="boat__row"><p class="boat__price num">{e(b['price'])}</p></div>
             <dl class="boat__spec">
@@ -279,6 +288,65 @@ def all_stock():
     return sorted(names)
 
 
+def all_cards():
+    out = []
+    for s in BUILT:
+        j = json.loads((HERE / f'{s}.json').read_text(encoding='utf-8'))
+        out += [(x, j['name']) for x in j['stock']]
+    out += [(o, o['brand']) for o in json.loads((HERE / 'stock-other.json').read_text(encoding='utf-8'))]
+    return out
+
+
+def build_vdp(x):
+    title = f"{x['year']} {x['name']}"
+    tel = x['broker'][1]
+    gallery = '\n'.join(f'        <button class="vdg vdg--{i % 5}" type="button" data-lb-open="{i}" aria-label="Open photo {i + 1} of {len(x["photos"])}"><img src="{p}" loading="{"eager" if i < 2 else "lazy"}" alt="{e(title)}, photo {i + 1}"></button>' for i, p in enumerate(x['photos']))
+    lists = ''
+    if x['lists']:
+        lists = '      <div class="vdabout__lists">\n' + '\n'.join('        <div><h3>' + e(g['h']) + '</h3><ul>' + ''.join(f'<li>{e(i)}</li>' for i in g['items']) + '</ul></div>' for g in x['lists']) + '\n      </div>'
+    quote = ''
+    if x.get('quote'):
+        q = x['photos'][min(len(x['photos']) - 1, 3)]
+        quote = f'''
+  <div class="chaps" data-chaps>
+    <section class="chap" aria-label="The broker's thoughts" data-chap>
+      <div class="chap__frame">
+        <img src="{q}" alt="" data-chap-media>
+        <div class="wrap chap__copy"><div class="chap__line chap__line--para vdquote"><p class="vdquote__k">Broker\'s thoughts</p><p>{e(x['quote'])}</p></div></div>
+      </div>
+    </section>
+  </div>
+'''
+    def group(g):
+        o = ' open' if g.get('open') else ''
+        if 'rows' in g:
+            body = '<dl>' + ''.join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in g['rows']) + '</dl>'
+        else:
+            body = '<ul>' + ''.join(f'<li>{e(i)}</li>' for i in g['items']) + '</ul>'
+        return f'        <details class="spec"{o}><summary>{e(g["h"])}<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>{body}</details>'
+    others = [c for c in all_cards() if vdp_of(c[0]['url']) != f"boat-{x['slug']}.html"]
+    others.sort(key=lambda c: (c[1] != x['brand'], abs(len_of(c[0]) - 45)))
+    fill = {
+        'title': e(title), 'description': e(f"{title} at Prestige Marine: {x['price']}, {x['location']}. 15050 Biscayne Blvd, North Miami Beach. 305-947-1000."),
+        'hero': x['photos'][0], 'year': x['year'], 'name': e(x['name']), 'brand': e(x['brand']), 'location': e(x['location']), 'price': e(x['price']),
+        'tag': tag_html(x['tag']).replace('class="tag ', 'class="tag vdtop__tag ') if x['tag'] else '', 'broker_tel': tel, 'broker_tel_raw': '+1' + tel.replace('-', ''), 'broker_name': e(x['broker'][0]),
+        'gallery': gallery, 'count': len(x['photos']), 'photos_note': f'        <p class="vdgal__note">{e(x["photos_note"])}</p>' if x.get('photos_note') else '',
+        'figs': '\n'.join(f'          <div><dt>{e(k)}</dt><dd class="num">{e(v)}</dd></div>' for k, v in x['figs']), 'power': e(x['power']),
+        'lead': '\n'.join(f'        <p>{e(p)}</p>' for p in x['lead']), 'lists': lists, 'quote': quote, 'specs': '\n'.join(group(g) for g in x['specs']),
+        'more': '\n'.join(boat(c, n) for c, n in others[:4]), 'short': e(x['name']),
+        'options': '\n'.join(f'            <option>{e(o)}</option>' for o in [title] + [f"{c['year']} {c['name']}" for c, _ in others] + ['Brokerage: selling my boat']),
+        'brand_links': brand_links(None),
+        'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a>' for label, u in NAV),
+        'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a></li>' for label, u in NAV),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+    }
+    t = (HERE / 'shell.html').read_text(encoding='utf-8').replace('{{main}}', (HERE / 'vdp.html').read_text(encoding='utf-8').rstrip('\n'))
+    for k, v in fill.items():
+        t = t.replace('{{' + k + '}}', str(v))
+    assert '{{' not in t, t[t.index('{{'):][:40]
+    (SITE / f"boat-{x['slug']}.html").write_text(t, encoding='utf-8', newline='\n')
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 3:
         build(json.loads(Path(sys.argv[1]).read_text(encoding='utf-8')), sys.argv[2])
@@ -291,3 +359,6 @@ if __name__ == '__main__':
         build_simple('contact', 'Contact Us | Prestige Marine, North Miami Beach', 'Prestige Marine, 15050 Biscayne Blvd, North Miami Beach, FL 33181. 305-947-1000. Sea trials and viewings by appointment.', ['A new boat'] + all_stock() + ['Brokerage: selling my boat', 'Something else'])
         build_simple('sitemap', 'Sitemap | Prestige Marine', 'Every page of the Prestige Marine site.')
         build_simple('privacy', 'Your Privacy Choices | Prestige Marine', 'Your privacy choices at Prestige Marine.')
+        for x in BOATS:
+            build_vdp(x)
+        print('built', len(BOATS), 'boat pages')

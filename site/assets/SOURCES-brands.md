@@ -92,3 +92,4 @@ The brands' own films and pictures, used by Prestige Marine as authorised dealer
 - sold-14.webp: https://images.boatsgroupwebsites.com/resize/1/36/53/8433653_0_050820220802_0.jpg
 - pm-inventory: prestige-iguana-miami.mp4, 12.1–15.9 s
 - pm-sold: prestige-iguana-miami.mp4, 8.1–11.9 s
+- assets/img/boats/: the photos of each listing on prestigemarine.co/boats-for-sale (Boats Group images), read 31 Oct 2026

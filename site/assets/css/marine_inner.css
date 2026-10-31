@@ -357,3 +357,131 @@ main > .panel { overflow-x: clip; }
   .absplit__grid, .absplit--flip .absplit__grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
   .absplit--flip .absplit__img, .absplit--flip .absplit__copy { grid-column: 1; grid-row: auto; }
 }
+
+/* ── boat page: the boat first, with its name and price on it; then the photos beside a rail that stays, the story, the numbers, the people ── */
+.vhero--boat { height: 186vh; height: 186svh; }
+.vhero--boat + .panel { margin-top: -86vh; margin-top: -86svh; }
+.vhero--boat .vhero__copy { padding-bottom: calc(14vh + var(--s-5)); }
+.vdtop { gap: var(--s-2); justify-items: stretch; width: 100%; }
+.vdtop__row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--s-5) var(--s-8); }
+.tag.vdtop__tag { position: static; display: inline-flex; margin-bottom: var(--s-3); }
+.vdtop__h { margin: 0; max-width: 14em; font-family: var(--serif); font-weight: 400; font-size: clamp(2.75rem, 1.6rem + 4vw, 5.5rem); line-height: 1.02; text-wrap: balance; }
+.vdtop__loc { margin: var(--s-3) 0 0; font-size: var(--t-18); font-weight: 500; }
+.vdtop__buy { display: grid; justify-items: end; gap: var(--s-2); }
+.vdtop__price { margin: 0; font-family: var(--serif); font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem); line-height: 1.05; }
+.vdtop .vhero__cta { margin-top: var(--s-2); }
+
+.vdmain { padding-block: var(--s-8) var(--s-9); }
+.vdmain__grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 3.4fr); gap: var(--s-7); align-items: start; }
+.vdgal { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-4); align-items: start; }
+.vdg { display: block; padding: 0; border: 0; overflow: hidden; border-radius: 6px; background: var(--mist); cursor: zoom-in; will-change: transform, opacity; }
+.vdg img { display: block; width: 100%; aspect-ratio: 3 / 2; height: auto; object-fit: cover; transition: transform 1.2s cubic-bezier(.22, .61, .36, 1); }
+.vdg:hover img, .vdg:focus-visible img { transform: scale(1.04); }
+.vdg:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+.vdg--0 { grid-column: 1 / -1; }
+.vdg--1 { grid-column: 1 / span 5; margin-top: var(--s-7); }
+.vdg--2 { grid-column: 6 / span 7; }
+.vdg--3 { grid-column: 1 / span 7; }
+.vdg--4 { grid-column: 8 / span 5; margin-top: var(--s-7); }
+.vdgal__note { grid-column: 1 / -1; margin: var(--s-2) 0 0; font-size: var(--t-14); color: var(--ink-2); }
+.vdrail { position: sticky; top: calc(var(--bar-h) + var(--s-5)); display: grid; gap: var(--s-3); padding: var(--s-5); border: 1px solid var(--line); border-radius: 10px; background: var(--white); }
+.vdrail .boat__brand { margin: 0; }
+.vdrail__h { margin: 0; font-family: var(--serif); font-weight: 400; font-size: var(--t-h3); line-height: 1.12; }
+.vdrail__price { margin: 0; font-size: var(--t-price); font-weight: 600; }
+.vdfigs { margin: var(--s-2) 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3) var(--s-4); }
+.vdfigs dt { font-size: var(--t-14); color: var(--ink-2); }
+.vdfigs dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.625rem; line-height: 1.15; color: var(--navy); }
+.vdrail__power { margin: 0 0 var(--s-2); font-size: var(--t-16); line-height: 1.5; color: var(--ink-2); }
+.vdrail__go { width: 100%; min-height: 48px; }
+.vdrail .btn--solid { background: var(--navy); }
+.vdrail .btn--solid:hover { background: var(--accent); }
+.vdrail__all { justify-self: start; font-size: var(--t-16); }
+
+.vdabout { padding-block: var(--s-8) var(--s-9); }
+.vdabout__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s-8); align-items: start; }
+.vdabout__lead { display: grid; gap: var(--s-4); }
+.vdabout__lead .h2 { margin-bottom: var(--s-3); }
+.vdabout__lead p { margin: 0; max-width: 62ch; font-size: var(--t-18); line-height: 1.7; color: var(--ink-2); }
+.vdabout__lists { display: grid; gap: var(--s-7); }
+.vdabout__lists h3 { margin: 0 0 var(--s-3); font-size: var(--t-18); font-weight: 600; color: var(--navy); }
+.vdabout__lists ul, .spec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+.vdabout__lists li, .spec li { position: relative; padding-left: var(--s-4); font-size: var(--t-16); line-height: 1.5; color: var(--ink-2); }
+.vdabout__lists li::before, .spec li::before { content: ""; position: absolute; left: 0; top: .68em; width: 6px; height: 1px; background: var(--navy); }
+
+.vdquote { display: grid; gap: var(--s-3); max-width: 30em !important; font-family: var(--serif); }
+.vdquote p { margin: 0; }
+.vdquote__k { font-family: var(--sans); font-size: var(--t-16); font-weight: 600; }
+.chap__line--para.vdquote { font-size: clamp(1.375rem, 1.05rem + 1vw, 2.125rem); line-height: 1.28; }
+
+.vdspecs { padding-block: var(--s-9); }
+.vdspecs .h2 { margin-bottom: var(--s-7); }
+.vdspecs__grid { columns: 2; column-gap: var(--s-6); }
+.spec { break-inside: avoid; margin-bottom: var(--s-3); padding-inline: var(--s-5); border: 1px solid var(--line); border-radius: 10px; }
+.spec summary { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); min-height: 60px; font-size: var(--t-18); font-weight: 600; color: var(--navy); cursor: pointer; list-style: none; transition: color .2s var(--ease); }
+.spec summary::-webkit-details-marker { display: none; }
+.spec summary:hover { color: var(--accent); }
+.spec summary .ico { transition: transform .3s var(--ease); }
+.spec[open] summary .ico { transform: rotate(180deg); }
+.spec > dl, .spec > ul { margin: 0 0 var(--s-5); }
+.spec dl { display: grid; gap: var(--s-2); }
+.spec dl div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--s-3); font-size: var(--t-16); line-height: 1.45; }
+.spec dt { color: var(--ink-2); }
+.spec dd { margin: 0; color: var(--navy); }
+.vdlegal { margin: var(--s-6) 0 0; max-width: 92ch; font-size: var(--t-14); line-height: 1.6; color: var(--ink-2); }
+.vdmore { padding-block: var(--s-9); }
+.vdmore .boats { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: var(--s-6); }
+
+/* the photos, full size: one at a time, on deep navy */
+.lb { width: 100vw; height: 100vh; height: 100svh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #041825; color: var(--white); overflow: hidden; }
+.lb::backdrop { background: #041825; }
+.lb[open] { display: grid; place-items: center; }
+.lb__img { max-width: min(100vw, 1800px); max-height: 100vh; max-height: 100svh; width: auto; height: auto; object-fit: contain; }
+.lb__count { position: absolute; left: var(--s-5); top: var(--s-4); margin: 0; min-height: 44px; display: flex; align-items: center; font-size: var(--t-16); font-weight: 600; text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
+.lb__btn { position: absolute; display: inline-flex; align-items: center; justify-content: center; min-width: 52px; min-height: 52px; padding: 0 var(--s-4); border: 0; border-radius: 999px; background: rgba(255, 255, 255, .14); color: var(--white); font-size: var(--t-16); font-weight: 600; cursor: pointer; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background-color .2s var(--ease), color .2s var(--ease); }
+.lb__btn:hover, .lb__btn:focus-visible { background: var(--white); color: var(--navy); }
+.lb__close { right: var(--s-5); top: var(--s-4); }
+.lb__prev { left: var(--s-5); top: 50%; margin-top: -26px; padding: 0; }
+.lb__next { right: var(--s-5); top: 50%; margin-top: -26px; padding: 0; }
+
+@media (max-width: 1100px) {
+  .vdmain__grid { grid-template-columns: minmax(0, 1fr); }
+  .vdrail { position: static; order: -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vdrail > :not(.vdrail__go) { grid-column: 1 / -1; }
+  .vdfigs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .vdabout__grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-7); }
+  .vdmore .boats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .vhero--boat .vhero__copy { padding-bottom: calc(14vh + var(--s-3)); }
+  .vdtop__row { display: grid; gap: var(--s-3); }
+  .vdtop__buy { justify-items: start; }
+  .vdtop .vhero__cta .btn { padding-inline: var(--s-5); }
+  .vdmain { padding-block: var(--s-6) var(--s-7); }
+  .vdrail { padding: var(--s-4); }
+  .vdfigs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vdg, .vdg--1, .vdg--2, .vdg--3, .vdg--4 { grid-column: 1 / -1; margin-top: 0; }
+  .vdgal { gap: var(--s-3); }
+  .vdabout, .vdspecs, .vdmore { padding-block: var(--s-7); }
+  .vdspecs__grid { columns: 1; }
+  .vdmore .boats { grid-template-columns: minmax(0, 1fr); }
+  .spec { padding-inline: var(--s-4); }
+  .lb__prev, .lb__next { top: auto; bottom: var(--s-4); margin: 0; }
+  .lb__prev { left: var(--s-4); } .lb__next { right: var(--s-4); }
+}
+@media (prefers-reduced-motion: reduce) { .vhero--boat { height: auto; } .vhero--boat + .panel { margin-top: 0; } .vdg img, .spec summary .ico { transition: none; } }
+
+/* boat first screen: the name on one line where it fits, clear of the boat; a lighter shade on the phone so the boat is seen; the broker's words on a deeper ground */
+.vdtop__row { flex-wrap: nowrap; }
+.vdtop__row > :first-child { min-width: 0; }
+.vdtop__buy { flex: none; }
+.vdtop__h { max-width: none; font-size: clamp(2.25rem, 1.2rem + 2.9vw, 4.5rem); }
+.vhero--boat .vhero__pin::after { background: linear-gradient(to bottom, rgba(3, 26, 44, .6) 0, rgba(3, 26, 44, .12) 22%, rgba(3, 26, 44, 0) 36%), linear-gradient(to top, rgba(3, 26, 44, .88) 0, rgba(3, 26, 44, .72) 30%, rgba(3, 26, 44, .5) 46%, rgba(3, 26, 44, 0) 64%); }
+.chap:has(.vdquote) .chap__frame::after { background: linear-gradient(to top, rgba(3, 26, 44, .86) 0, rgba(3, 26, 44, .72) 55%, rgba(3, 26, 44, .3) 100%); }
+@media (max-width: 720px) {
+  .vdtop__row { flex-wrap: wrap; }
+  .vdtop__h { font-size: clamp(2rem, 9vw, 2.625rem); }
+  .vhero--boat .vhero__film { height: 62%; object-position: 50% 50%; }
+  .vhero--boat .vhero__pin { background: #06202F; }
+  .vhero--boat .vhero__pin::after { background: linear-gradient(to bottom, rgba(3, 26, 44, .55) 0, rgba(3, 26, 44, 0) 18%), linear-gradient(to top, #06202F 0, #06202F 38%, rgba(6, 32, 47, 0) 62%); }
+  .vdrail { grid-template-columns: minmax(0, 1fr); }
+}
