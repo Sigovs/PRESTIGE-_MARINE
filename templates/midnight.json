@@ -1,0 +1,226 @@
+{
+  "slug": "midnight",
+  "name": "Midnight Express",
+  "title": "Midnight Express | Prestige Marine, North Miami Beach",
+  "description": "Midnight Express at Prestige Marine: performance center consoles built in Miami, and a 2026 Midnight Express 52 Vitesse in stock, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.",
+  "logo": "midnight.svg",
+  "logo_ratio": "7",
+  "sub": "High performance center consoles, built in Miami, Florida, and made to order.",
+  "hero": {
+    "src": "assets/video/brands/mn-hero.mp4",
+    "phone": "assets/video/brands/mn-hero-m.mp4",
+    "poster": "assets/img/brands/mn-hero-poster.jpg",
+    "from": 0,
+    "to": 9999,
+    "pos": "50% 50%",
+    "alt": "Midnight Express boats running fast, from the air."
+  },
+  "range_h": "The range",
+  "range": [
+    {
+      "name": "Midnight Express 37′ Open",
+      "line": "The do-it-all boat: fish, cruise, cross the ocean.",
+      "above": "assets/img/brands/mn-midnight-0064-2-0d3d7.webp",
+      "side": "assets/img/brands/mn-midnight-0051-4-f7c30.webp",
+      "alt": "A 37′ Open from above, running",
+      "figs": [
+        [
+          "Length",
+          "37′2″"
+        ],
+        [
+          "Beam",
+          "11′6″"
+        ],
+        [
+          "Fuel",
+          "365 gal"
+        ]
+      ],
+      "power": "Triple or quad power"
+    },
+    {
+      "name": "Midnight Express 43′ Solstice",
+      "line": "An extended console and a twin-step hull.",
+      "above": "assets/img/brands/mn-midnight-0074-3-29fe2.webp",
+      "side": "assets/img/brands/mn-midnight-0017-4-4709f.webp",
+      "alt": "A 43′ Solstice from above",
+      "figs": [
+        [
+          "Length",
+          "43′"
+        ],
+        [
+          "Beam",
+          "12′6″"
+        ],
+        [
+          "Fuel",
+          "450 gal"
+        ]
+      ],
+      "power": "Quad or quint Mercury Racing 500R"
+    },
+    {
+      "name": "Midnight Express 43′ Open",
+      "line": "A bow U that turns into a sun-pad or a table.",
+      "above": "assets/img/brands/mn-midnight-express-0077-c18a6.webp",
+      "side": "assets/img/brands/mn-midnight-0076-6-61eb6.webp",
+      "alt": "A 43′ Open from above",
+      "figs": [
+        [
+          "Length",
+          "43′"
+        ],
+        [
+          "Beam",
+          "12′6″"
+        ],
+        [
+          "Fuel",
+          "450 gal"
+        ]
+      ],
+      "power": "Quad or quint Mercury Racing 500R"
+    },
+    {
+      "name": "Midnight Express 49′ Nyx",
+      "line": "A hydraulic swim platform and a full cabin below.",
+      "above": "assets/img/brands/mn-midnight-49-05-0243-46137.webp",
+      "side": "assets/img/brands/mn-midnight-49-04-0189-81c16.webp",
+      "alt": "A 49′ Nyx from above",
+      "figs": [
+        [
+          "Length",
+          "49′"
+        ],
+        [
+          "Beam",
+          "12′8″"
+        ],
+        [
+          "Fuel",
+          "600 gal"
+        ]
+      ],
+      "power": "Quad or quint power"
+    },
+    {
+      "name": "Midnight Express 52′ Vitesse",
+      "line": "A queen bed in the master suite and a full separate head.",
+      "above": "assets/img/brands/mn-midnight-0060-2-419d1.webp",
+      "side": "assets/img/brands/mn-image-2-1-4e240.webp",
+      "alt": "A 52′ Vitesse from above",
+      "figs": [
+        [
+          "Length",
+          "52′"
+        ],
+        [
+          "Beam",
+          "13′8″"
+        ],
+        [
+          "Fuel",
+          "800 gal"
+        ]
+      ],
+      "power": "Mercury Racing 500R outboards"
+    },
+    {
+      "name": "Midnight Express 60′ Pied-A-Mer",
+      "line": "Twin master cabins in a 30-foot console.",
+      "above": "assets/img/brands/mn-midnight-0026-2-364c2.webp",
+      "side": "assets/img/brands/mn-60-1a9a6.webp",
+      "alt": "A 60′ Pied-A-Mer from above, running",
+      "figs": [
+        [
+          "Length",
+          "60′"
+        ],
+        [
+          "Beam",
+          "15′"
+        ],
+        [
+          "Fuel",
+          "1,000 gal"
+        ]
+      ],
+      "power": "Inboard or outboard power"
+    }
+  ],
+  "chapters": [
+    {
+      "line": "Built in Miami.",
+      "image": "assets/img/brands/mn-midnight-0075-14f96.webp",
+      "pos": "50% 40%",
+      "alt": "A Midnight Express 43′ Open running past the Miami skyline."
+    },
+    {
+      "line": "Yours, down to the stitching.",
+      "image": "assets/img/brands/mn-midnight-0077-c1f2c.webp",
+      "pos": "50% 50%",
+      "alt": "The stitched orange leather of a Midnight Express cockpit."
+    },
+    {
+      "line": "Family owned and operated.",
+      "image": "assets/img/brands/mn-midnight-0058-1-e1741794985537-2810b.webp",
+      "pos": "50% 60%",
+      "alt": "A row of Midnight Express boats on turquoise water off a white beach."
+    }
+  ],
+  "views_h": "Built for this water.",
+  "views": [
+    {
+      "src": "assets/img/brands/mn-midnight-0082-8d531.webp",
+      "w": 1920,
+      "h": 1281,
+      "alt": "Midnight Express boats rafted up off a white beach."
+    },
+    {
+      "src": "assets/img/brands/mn-midnight-49-05-0212-5c691.webp",
+      "w": 1920,
+      "h": 1280,
+      "alt": "A 49′ Nyx with the Miami skyline behind."
+    },
+    {
+      "src": "assets/img/brands/mn-midnight-0022-d0fe5.webp",
+      "w": 1800,
+      "h": 1200,
+      "alt": "A blue Midnight Express running over a white wake."
+    },
+    {
+      "src": "assets/img/brands/mn-midnight-0022-1-6c921.webp",
+      "w": 1800,
+      "h": 1200,
+      "alt": "A 60′ Pied-A-Mer turning hard on blue water."
+    },
+    {
+      "src": "assets/img/brands/mn-midnight-0049-1-ef9e7.webp",
+      "w": 1800,
+      "h": 1200,
+      "alt": "A 60′ Pied-A-Mer from above, its wake spreading."
+    }
+  ],
+  "stock": [
+    {
+      "name": "Midnight Express 52 Vitesse",
+      "nick": "",
+      "year": "2026",
+      "note": "Available now",
+      "paint": "Lamborghini Grigio Lynx, camel seating",
+      "price": "$2,500,000",
+      "hours": "Not listed",
+      "power": "Mercury Racing 500R outboards",
+      "size": "52′ × 13′8″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/",
+      "plan": "assets/img/slip-me52-plan.webp",
+      "side": "assets/img/slip-me52-side.webp",
+      "alt": "2026 Midnight Express 52 Vitesse running, seen from high above"
+    }
+  ],
+  "sold": [
+    "2023 Midnight Express 43 Solstice"
+  ]
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "brand": "Wally",
+    "name": "Wallytender 43",
+    "nick": "",
+    "year": "2012",
+    "note": "",
+    "paint": "Miami, Florida",
+    "price": "$475,000",
+    "hours": "70",
+    "power": "2 × Yanmar 8LV-370Z, 370 hp",
+    "size": "43′ × 11′6″",
+    "url": "https://www.prestigemarine.co/boats-for-sale/2012-wally-wallytender43-miami-florida-10003115/",
+    "plan": "assets/img/brands/st-wally-a.webp",
+    "side": "assets/img/brands/st-wally-b.webp",
+    "alt": "2012 Wally Wallytender 43"
+  },
+  {
+    "brand": "Riva",
+    "name": "Riva El-Iseo",
+    "nick": "",
+    "year": "2026",
+    "note": "",
+    "paint": "Fort Lauderdale, Florida",
+    "price": "Request price",
+    "hours": "15",
+    "power": "Electric, Parker GVM310",
+    "size": "27′5″ × 8′2″",
+    "url": "https://www.prestigemarine.co/boats-for-sale/2026-riva-el-iseo-fort-lauderdale-florida-10381245/",
+    "plan": "assets/img/brands/st-riva-a.webp",
+    "side": "assets/img/brands/st-riva-b.webp",
+    "alt": "2026 Riva El-Iseo"
+  }
+]

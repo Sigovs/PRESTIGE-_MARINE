@@ -1,0 +1,265 @@
+{
+  "slug": "vandutch",
+  "name": "VanDutch",
+  "title": "VanDutch | Prestige Marine, North Miami Beach",
+  "description": "VanDutch at Prestige Marine: the 2021 VanDutch 40.2 and the 2023 VanDutch 48 in stock, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.",
+  "logo": "vandutch.svg",
+  "stock": [
+    {
+      "name": "VanDutch 40.2",
+      "nick": "",
+      "year": "2021",
+      "note": "",
+      "paint": "Super Jet Black hull, Pagani Silver bootstripe",
+      "price": "$698,500",
+      "hours": "Under 140",
+      "power": "2 × Volvo Penta D6, 440 hp",
+      "size": "40′11″ × 11′5″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/",
+      "plan": "assets/img/slip-vd402-plan.webp",
+      "side": "assets/img/slip-vd402-side.webp",
+      "alt": "2021 VanDutch 40.2 from above on green water"
+    },
+    {
+      "name": "VanDutch 48",
+      "nick": "BRIX",
+      "year": "2023",
+      "note": "",
+      "paint": "Custom Audi Nardo Grey",
+      "price": "$1,129,000",
+      "hours": "180",
+      "power": "2 × Volvo Penta D11, 725 hp",
+      "size": "48′ × 13′2″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2023-vandutch-48-north-miami-beach-florida-9561670/",
+      "plan": "assets/img/slip-vd48-plan.webp",
+      "side": "assets/img/slip-vd48-side.webp",
+      "alt": "2023 VanDutch 48 BRIX from above, Nardo Grey hull"
+    },
+    {
+      "name": "VanDutch 48",
+      "nick": "",
+      "year": "2027",
+      "note": "",
+      "tag": "New",
+      "paint": "Miami, Florida",
+      "price": "Request price",
+      "hours": "New",
+      "power": "Volvo Penta D11",
+      "size": "48′ × 13′2″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2027-vandutch-48-miami-florida-8534412/",
+      "plan": "assets/img/brands/st-vd48n-a.webp",
+      "side": "assets/img/brands/st-vd48n-b.webp",
+      "alt": "2027 VanDutch 48"
+    },
+    {
+      "name": "VanDutch 56",
+      "nick": "",
+      "year": "2027",
+      "note": "",
+      "tag": "New",
+      "paint": "Miami, Florida",
+      "price": "Request price",
+      "hours": "New",
+      "power": "Volvo Penta D11, IPS 950",
+      "size": "56′ × 14′8″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2027-vandutch-56-miami-florida-8577130/",
+      "plan": "assets/img/brands/st-vd56n-a.webp",
+      "side": "assets/img/brands/st-vd56n-b.webp",
+      "alt": "2027 VanDutch 56"
+    }
+  ],
+  "sold": [
+    "2024 VanDutch 56",
+    "2015 VanDutch 55",
+    "2022 VanDutch VD32"
+  ],
+  "logo_ratio": "3.6",
+  "sub": "From the compact VanDutch 32 to the VanDutch 75, built by Cantiere del Pardo in Italy.",
+  "hero": {
+    "src": "assets/video/brands/vd-hero.mp4",
+    "phone": "assets/video/brands/vd-hero-m.mp4",
+    "from": 0,
+    "to": 9999,
+    "poster": "assets/img/brands/vd-hero-poster.jpg",
+    "pos": "50% 50%",
+    "alt": "The wake of a VanDutch 48 running out toward a golden sunset."
+  },
+  "chapters": [
+    {
+      "line": "Essential lines.",
+      "src": "assets/video/brands/vd-lines.mp4",
+      "from": 0,
+      "to": 9999,
+      "poster": "assets/img/brands/vd-lines-poster.jpg",
+      "pos": "60% 50%",
+      "alt": "The polished hull of a VanDutch 40 close to the water, then running along a green shore.",
+      "phone": "assets/video/brands/vd-lines-m.mp4"
+    },
+    {
+      "line": "Refined power.",
+      "src": "assets/video/brands/vd-power.mp4",
+      "from": 0,
+      "to": 9999,
+      "poster": "assets/img/brands/vd-power-poster.jpg",
+      "pos": "60% 50%",
+      "alt": "The bow of a VanDutch 40 cutting the water, then spray thrown up along its side.",
+      "phone": "assets/video/brands/vd-power-m.mp4"
+    },
+    {
+      "line": "Uncompromising luxury.",
+      "src": "assets/video/brands/vd-luxury.mp4",
+      "from": 0,
+      "to": 9999,
+      "poster": "assets/img/brands/vd-luxury-poster.jpg",
+      "pos": "55% 50%",
+      "alt": "A VanDutch 40 from above on green water, then its orange cockpit.",
+      "phone": "assets/video/brands/vd-luxury-m.mp4"
+    }
+  ],
+  "range_h": "The range",
+  "range": [
+    {
+      "name": "VanDutch 32",
+      "line": "The compact day boat of the range.",
+      "above": "assets/img/brands/vd-2-navigation-914c6.webp",
+      "side": "assets/img/brands/vd-3-navigation-fa11e.webp",
+      "alt": "A VanDutch 32 from directly above, running",
+      "figs": [
+        [
+          "Length",
+          "32.2 ft"
+        ],
+        [
+          "Beam",
+          "9.5 ft"
+        ],
+        [
+          "Fuel",
+          "106 gal"
+        ]
+      ],
+      "power": "Volvo V8 gasoline, or Volvo diesel options"
+    },
+    {
+      "name": "VanDutch 40",
+      "line": "A sunpad, a cockpit bar and a full cabin below.",
+      "above": "assets/img/brands/vd-1-navigation-a65a7695-10d3-4704-99ca-c7a-7c443.webp",
+      "side": "assets/img/brands/vd-2-navigation-4705b30f-0dfa-478e-bbb0-91b-1f0bf.webp",
+      "alt": "A VanDutch 40 from directly above, running",
+      "figs": [
+        [
+          "Length",
+          "40.9 ft"
+        ],
+        [
+          "Beam",
+          "11.1 ft"
+        ],
+        [
+          "Fuel",
+          "224 gal"
+        ]
+      ],
+      "power": "2 × Volvo Penta D6, 380 or 440 hp"
+    },
+    {
+      "name": "VanDutch 48",
+      "line": "An extended swim platform, a separate shower below.",
+      "above": "assets/img/brands/vd-2-exterior-aerials-f25dc.webp",
+      "side": "assets/img/brands/vd-1-navigation2-1c473.webp",
+      "alt": "A VanDutch 48 from directly above",
+      "figs": [
+        [
+          "Length",
+          "47.9 ft"
+        ],
+        [
+          "Beam",
+          "13.1 ft"
+        ],
+        [
+          "Fuel",
+          "396 gal"
+        ]
+      ],
+      "power": "2 × Volvo Penta D11, 625 or 725 hp"
+    },
+    {
+      "name": "VanDutch 56",
+      "line": "A bow lounge, and two layouts below.",
+      "above": "assets/img/brands/vd-2-exterior-aerials2-23d82.webp",
+      "side": "assets/img/brands/vd-0-hero-b6e3a.webp",
+      "alt": "A VanDutch 56 from directly above",
+      "figs": [
+        [
+          "Length",
+          "54.1 ft"
+        ],
+        [
+          "Beam",
+          "14.8 ft"
+        ],
+        [
+          "Fuel",
+          "634 gal"
+        ]
+      ],
+      "power": "2 × Volvo D11 IPS, 625 or 725 hp"
+    },
+    {
+      "name": "VanDutch 75",
+      "line": "The largest VanDutch, with a full-beam owner’s cabin.",
+      "above": "assets/img/brands/vd-vandutch75-dji-20250709174023-0286-d-c7f70.webp",
+      "side": "assets/img/brands/vd-vandutch75-dji-20250711141508-0246-d-b64ae.webp",
+      "alt": "A VanDutch 75 from directly above, running",
+      "figs": [
+        [
+          "Length",
+          "73.3 ft"
+        ],
+        [
+          "Beam",
+          "19 ft"
+        ],
+        [
+          "Fuel",
+          "1,057 gal"
+        ]
+      ],
+      "power": "3 × Volvo D13 IPS"
+    }
+  ],
+  "views": [
+    {
+      "src": "assets/img/brands/vd-0-1-hero-d1a78.webp",
+      "w": 1920,
+      "h": 1122,
+      "alt": "A VanDutch 48 below a green hillside and a stone tower."
+    },
+    {
+      "src": "assets/img/brands/vd-vandutch75-dji-20250711132001-0133-d-d12d3.webp",
+      "w": 2160,
+      "h": 1440,
+      "alt": "A VanDutch 75 at rest on blue water beneath a rocky island."
+    },
+    {
+      "src": "assets/img/brands/vd-1-10-navigation-bdbe1.webp",
+      "w": 1920,
+      "h": 1226,
+      "alt": "A VanDutch 48 passing a lighthouse on a headland."
+    },
+    {
+      "src": "assets/img/brands/vd-vandutch75-dji-20250709174213-0297-d-9d97e.webp",
+      "w": 2160,
+      "h": 1440,
+      "alt": "The teak stern and sunpad of a VanDutch 75 from above."
+    },
+    {
+      "src": "assets/img/brands/vd-3-navigation-fa11e.webp",
+      "w": 1600,
+      "h": 1199,
+      "alt": "A white VanDutch 32 running at dusk over still water."
+    }
+  ],
+  "views_h": "Where she takes you."
+}

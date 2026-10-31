@@ -112,6 +112,22 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   on a flexing spine, after Alex's reference (CodeCanyon "Fish Animation"; own drawing, no copied sprites). Two kinds take
   turns: a school of small fish and a few larger ones (not very large), every few seconds, because nobody watches a screen for
   a minute. Each pass draws its own route, count, size and density, and they are slightly blurred, under the water.
+- **Inner pages (30 Oct), template:** `templates/` holds `shell.html` (head, header, menu, footer, film dialog), `brand.html` and one JSON per
+  brand; `python templates/build.py` writes `site/brand-<slug>.html`, add the slug to `BUILT`. Never edit a built page by hand. Alex's reference is
+  vanquish-yachts.com/yachts/vq40-outboard, as a principle only: **the home's sea does not come to a brand page** (Alex: "I wouldn't drag our hero
+  video into brand"). One template; the data sets the size: hero film, range (many models: a held sideways reel; one: a large plate), full-screen chapters,
+  views, the home's standard stock cards (the heading takes the columns the cards leave), other brands, contact, surf footer, page bar with Inquire.
+  Facts come from the brand's own site (vandutch.com, midnightboats.com, iguana-yachts.com, tecnomar.com/fleet) or our own copy; no links out to brand sites;
+  New inventory and brokerage are one section, Inventory, on one page (Alex, 31 Oct); the menu has no separate Brokerage.
+  `site/about.html` carries the current site's About content only (prestigemarine.co/about-us, Alex 31 Oct), by sections; no Prestige Aviation, no family history from the Imports site. The film opens behind the three words.
+  Inventory has a short search: year and make menus, length and price two-handled sliders; a boat on request stays until the price is narrowed.
+  **Inventory and Sold are list pages (Alex, 31 Oct): the film is a band half the screen high with the title on it, filters below, the cards right after, no float.** Clients and managers must see the boats at once.
+  Tags on cards: `"tag"` per boat (Available now, New, Sale pending, Sold). Never set a status we have not been told.
+  Stock and sold come from prestigemarine.co/boats-for-sale and /sold (9 and 15 boats, 31 Oct). The site answers 403 to scripts; it opens in Alex's own Chrome, which is how it was read. Boats from brands without a page live in `templates/stock-other.json`.
+  `contact.html` (monochrome OpenStreetMap, sample hours marked as such until confirmed, the form), `sitemap.html`, `privacy.html` (placeholder until the client's text arrives).
+  Panels must stay above held films (`main > .panel` carries the z-index): a short panel otherwise lets the next one run under the sticky frame. Test the whole scroll, not one stretch.
+  Motion (Alex, 30 Oct): pictures may stand side by side in groups but slide in a step apart (from the side or below) and float away upward with the scroll; chapter words drive in, hold, and drive away upward before the next chapter rides over.
+  a figure that disagrees with itself is left out. Brand media is downloaded and cut locally with ffmpeg (authorised dealer, no fal), listed in `site/assets/SOURCES-brands.md`. Rewrite brand copy, never paste it.
 - **Alex's standing rules from the explore round (26 Oct, `EXPLORE-BRIEF.md`):**
   - the boat over the water video stays; water stays saturated azure, never pale shallows;
   - texts are not bolted to the boat: they rise from below in steps, in legible ice cards;

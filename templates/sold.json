@@ -1,0 +1,105 @@
+{
+  "boats": [
+    {
+      "year": "2024",
+      "name": "VanDutch 56",
+      "brand": "VanDutch",
+      "price": "$2,196,670"
+    },
+    {
+      "year": "2022",
+      "name": "Pardo Yachts 50",
+      "brand": "Pardo Yachts",
+      "price": "$1,745,000",
+      "pic": "assets/img/brands/sold-01.webp"
+    },
+    {
+      "year": "2023",
+      "name": "Midnight Express 43 Solstice",
+      "brand": "Midnight Express",
+      "price": "$1,300,000",
+      "pic": "assets/img/brands/sold-02.webp"
+    },
+    {
+      "year": "2015",
+      "name": "VanDutch 55",
+      "brand": "VanDutch",
+      "price": "$895,000",
+      "pic": "assets/img/brands/sold-03.webp"
+    },
+    {
+      "year": "2021",
+      "name": "Pardo Yachts P43",
+      "brand": "Pardo Yachts",
+      "price": "$760,000",
+      "pic": "assets/img/brands/sold-04.webp"
+    },
+    {
+      "year": "2022",
+      "name": "VanDutch VD32",
+      "brand": "VanDutch",
+      "price": "$604,200",
+      "pic": "assets/img/brands/sold-05.webp"
+    },
+    {
+      "year": "2021",
+      "name": "Sea Ray SLX 350 Outboard",
+      "brand": "Sea Ray",
+      "price": "$375,000"
+    },
+    {
+      "year": "2020",
+      "name": "Iguana Commuter",
+      "brand": "Iguana Yachts",
+      "price": "$365,000"
+    },
+    {
+      "year": "2019",
+      "name": "Iguana Commuter",
+      "brand": "Iguana Yachts",
+      "price": "$365,000",
+      "pic": "assets/img/brands/sold-08.webp"
+    },
+    {
+      "year": "2021",
+      "name": "Sea Ray SLX 350 Outboard",
+      "brand": "Sea Ray",
+      "price": "$289,000",
+      "pic": "assets/img/brands/sold-09.webp"
+    },
+    {
+      "year": "2023",
+      "name": "VanDutch 40",
+      "brand": "VanDutch",
+      "price": "Request price",
+      "pic": "assets/img/brands/sold-10.webp"
+    },
+    {
+      "year": "2024",
+      "name": "Iguana Sport",
+      "brand": "Iguana Yachts",
+      "price": "Request price",
+      "pic": "assets/img/brands/sold-11.webp"
+    },
+    {
+      "year": "2023",
+      "name": "Iguana Sport",
+      "brand": "Iguana Yachts",
+      "price": "Request price",
+      "pic": "assets/img/brands/sold-12.webp"
+    },
+    {
+      "year": "2024",
+      "name": "Iguana Knight Series",
+      "brand": "Iguana Yachts",
+      "price": "Request price"
+    },
+    {
+      "year": "2022",
+      "name": "Iguana X100 White Edition",
+      "brand": "Iguana Yachts",
+      "price": "Request price",
+      "pic": "assets/img/brands/sold-14.webp"
+    }
+  ]
+}

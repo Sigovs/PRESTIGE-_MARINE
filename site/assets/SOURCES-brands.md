@@ -1,0 +1,94 @@
+# Brand media on the brand pages
+
+The brands' own films and pictures, used by Prestige Marine as authorised dealer (Alex, 30 Oct 2026). Cut and resized locally with ffmpeg and Pillow, no generation.
+
+- vd-hero: vandutch48.mp4, 88.4–91.2 s
+- vd-lines: vandutch40.mp4, 4.1–7.9 s
+- vd-power: vandutch40.mp4, 19.1–23.9 s
+- vd-luxury: vandutch40.mp4, 14.1–17.9 s
+- vd-2-navigation-914c6.webp: https://vandutch.com/cdn/shop/files/2-Navigation.jpg
+- vd-3-navigation-fa11e.webp: https://vandutch.com/cdn/shop/files/3-Navigation.jpg
+- vd-1-navigation-a65a7695-10d3-4704-99ca-c7a-7c443.webp: https://vandutch.com/cdn/shop/files/1-Navigation_a65a7695-10d3-4704-99ca-c7ac1318b400.jpg
+- vd-2-navigation-4705b30f-0dfa-478e-bbb0-91b-1f0bf.webp: https://vandutch.com/cdn/shop/files/2-Navigation_4705b30f-0dfa-478e-bbb0-91b16c2031b5.jpg
+- vd-2-exterior-aerials-f25dc.webp: https://vandutch.com/cdn/shop/files/2-Exterior-Aerials.jpg
+- vd-1-navigation2-1c473.webp: https://vandutch.com/cdn/shop/files/1-Navigation2.jpg
+- vd-2-exterior-aerials2-23d82.webp: https://vandutch.com/cdn/shop/files/2-Exterior-Aerials2.jpg
+- vd-0-hero-b6e3a.webp: https://vandutch.com/cdn/shop/files/0-HERO.jpg
+- vd-vandutch75-dji-20250709174023-0286-d-c7f70.webp: https://vandutch.com/cdn/shop/files/VANDUTCH75_DJI_20250709174023_0286_D.jpg
+- vd-vandutch75-dji-20250711141508-0246-d-b64ae.webp: https://vandutch.com/cdn/shop/files/VANDUTCH75_DJI_20250711141508_0246_D.jpg
+- vd-0-1-hero-d1a78.webp: https://vandutch.com/cdn/shop/files/0_1-HERO.jpg
+- vd-vandutch75-dji-20250711132001-0133-d-d12d3.webp: https://vandutch.com/cdn/shop/files/VANDUTCH75_DJI_20250711132001_0133_D.jpg
+- vd-1-10-navigation-bdbe1.webp: https://vandutch.com/cdn/shop/files/1_10-Navigation.jpg
+- vd-vandutch75-dji-20250709174213-0297-d-9d97e.webp: https://vandutch.com/cdn/shop/files/VANDUTCH75_DJI_20250709174213_0297_D.jpg
+- tc-hero: tecnomar-home.mp4, 62.2–73 s
+- tc-dsc-5843-modifica-edit-scaled-ac376.webp: https://tecnomar.com/wp-content/uploads/2025/09/DSC_5843-Modifica-Edit-scaled.jpg
+- tc-dji-0058-modifica-edit-copia-scaled-3caca.webp: https://tecnomar.com/wp-content/uploads/2025/09/DJI_0058-Modifica-Edit-Copia-scaled.jpg
+- tc-de8a4054-edit-scaled-1295c.webp: https://tecnomar.com/wp-content/uploads/2025/09/DE8A4054_edit-scaled.jpg
+- tc-0l5a5193-scaled-f4553.webp: https://tecnomar.com/wp-content/uploads/2025/09/0L5A5193-scaled.jpg
+- tc-trc6754-edit-scaled-2f4e6.webp: https://tecnomar.com/wp-content/uploads/2025/09/TRC6754_EDIT-scaled.jpg
+- tc-4-lambo-40-edit-1-scaled-2c492.webp: https://tecnomar.com/wp-content/uploads/2025/09/4-Lambo-40-EDIT-1-scaled.jpg
+- tc-de8a3387-copia-scaled-e3a2b.webp: https://tecnomar.com/wp-content/uploads/2025/09/DE8A3387-copia-scaled.jpg
+- tc-trc6399-edit-scaled-ccf93.webp: https://tecnomar.com/wp-content/uploads/2025/09/TRC6399_EDIT-scaled.jpg
+- tc-trc6743-edit-2-scaled-d1622.webp: https://tecnomar.com/wp-content/uploads/2025/09/TRC6743_EDIT-2-scaled.jpg
+- vd-luxury: vandutch40.mp4, 14.1–16.9 s
+- mn-hero: midnight.mp4, 0–10.9 s
+- mn-midnight-0064-2-0d3d7.webp: https://www.midnightboats.com/static/d7bd5c33988ca21196c6fc8b5a8dc5da/4c215/Midnight_0064-2.webp
+- mn-midnight-0051-4-f7c30.webp: https://www.midnightboats.com/static/311129047be2cd0a565a134e7d47b413/4c215/Midnight_0051-4.webp
+- mn-midnight-0074-3-29fe2.webp: https://www.midnightboats.com/static/90cd95206f8e89e830017ddc6668b9ff/4c215/Midnight_0074-3.webp
+- mn-midnight-0017-4-4709f.webp: https://www.midnightboats.com/static/a3a60deb47b7627bac80a92e36c972e5/4c215/Midnight_0017-4.webp
+- mn-midnight-express-0077-c18a6.webp: https://www.midnightboats.com/static/5958a90ea70cfec04ba942376ef66406/4c215/Midnight-Express_0077.webp
+- mn-midnight-0076-6-61eb6.webp: https://www.midnightboats.com/static/11787b79c6cff4ed936c8c59a1d7d485/4c215/Midnight_0076-6.webp
+- mn-midnight-49-05-0243-46137.webp: https://www.midnightboats.com/static/2c66ac8eb1ef3a61acbd7c7b922d3f2c/d85eb/Midnight_49-05_0243.webp
+- mn-midnight-49-04-0189-81c16.webp: https://www.midnightboats.com/static/4e5bec7aa7d143cce8608d23338382fd/d85eb/Midnight_49-04_0189.webp
+- mn-midnight-0060-2-419d1.webp: https://www.midnightboats.com/static/132407a94a97a7df87e5562a8308e02d/4c215/Midnight_0060-2.webp
+- mn-image-2-1-4e240.webp: https://www.midnightboats.com/static/540968e0ff4679bfbdf8e4f7c1d5fbac/4c215/image-2-1.webp
+- mn-midnight-0026-2-364c2.webp: https://www.midnightboats.com/static/9a20984c82512c12a918ec16be9a55e1/4c215/Midnight_0026-2.webp
+- mn-60-1a9a6.webp: https://www.midnightboats.com/static/f125e0e052d61410c4cca0cf51829c45/4c215/60.webp
+- mn-midnight-0075-14f96.webp: https://www.midnightboats.com/static/622fa341f348d44ae4f1d69ab7d89395/e6cb3/Midnight_0075.webp
+- mn-midnight-0077-c1f2c.webp: https://www.midnightboats.com/static/a511d96ad2eb23058dcd75422ca94efb/e6cb3/Midnight_0077.webp
+- mn-midnight-0058-1-e1741794985537-2810b.webp: https://www.midnightboats.com/static/cb17090b14897803de8f9b590be15ae9/d9690/Midnight_0058-1-e1741794985537.webp
+- mn-midnight-0082-8d531.webp: https://www.midnightboats.com/static/5c4f5187fd844a8bd6017b7679562226/62ede/Midnight_0082.webp
+- mn-midnight-49-05-0212-5c691.webp: https://www.midnightboats.com/static/97b4d4e51e6eda731e8cf9d35b8cbab3/d85eb/Midnight_49-05_0212.webp
+- mn-midnight-0022-d0fe5.webp: https://www.midnightboats.com/static/e14d68d64808a13e4b7f65e4563df78d/4c215/Midnight_0022.webp
+- mn-midnight-0022-1-6c921.webp: https://www.midnightboats.com/static/78a9009e8d658af457067ae9523959b2/4c215/Midnight_0022-1.webp
+- mn-midnight-0049-1-ef9e7.webp: https://www.midnightboats.com/static/6f6272e25e2369184e324d44aab78cc4/4c215/Midnight_0049-1.webp
+- ig-hero: prestige-iguana-miami.mp4, 16–21.9 s
+- ig-land: prestige-iguana-miami.mp4, 0.1–3.9 s
+- ig-beach: prestige-iguana-miami.mp4, 4.1–7.9 s
+- ig-1-b5c98.webp: https://www.iguana-yachts.com/wp-content/uploads/2023/08/1.png
+- ig-iguana-x100-family-1-scaled-f2b38.webp: https://www.iguana-yachts.com/wp-content/uploads/2021/10/Iguana-X100-family-1-scaled.jpg
+- ig-sport-header-site-eca57.webp: https://www.iguana-yachts.com/wp-content/uploads/2023/07/Sport-Header-site.png
+- ig-3-6a237.webp: https://www.iguana-yachts.com/wp-content/uploads/2020/09/3.png
+- ig-iguana-bow-rider-header-ed771.webp: https://www.iguana-yachts.com/wp-content/uploads/2024/08/Iguana-Bow-rider-header.png
+- ig-wordpress-corps-paysage-br-shooting--5493d.webp: https://www.iguana-yachts.com/wp-content/uploads/2024/08/Wordpress-Corps-Paysage-BR-Shooting-7-1.png
+- ig-header-site-web-fisher-246a9.webp: https://www.iguana-yachts.com/wp-content/uploads/2024/02/Header-Site-Web-Fisher.png
+- ig-test-accueil-x-fisher-3-32185.webp: https://www.iguana-yachts.com/wp-content/uploads/2021/01/test-accueil-x-fisher-3.png
+- ig-copy-of-iguana-yachts-commuter-exclu-7c505.webp: https://www.iguana-yachts.com/wp-content/uploads/2020/07/Copy-of-Iguana-Yachts-Commuter-ExclusiveIMG_0658-scaled-e1595947379862.jpg
+- ig-commuter-iguana-yachts-running-8444a.webp: https://www.iguana-yachts.com/wp-content/uploads/2020/10/Commuter-Iguana-Yachts-running.jpg
+- ig-2-e2687.webp: https://www.iguana-yachts.com/wp-content/uploads/2020/09/2.png
+- ig-iguana-rib-superyacht-scaled-f6bc9.webp: https://www.iguana-yachts.com/wp-content/uploads/2020/06/iGUANA_-rib-superyacht-scaled.jpg
+- ig-wordpress-corps-paysage-knight-deliv-54a23.webp: https://www.iguana-yachts.com/wp-content/uploads/2024/07/Wordpress-Corps-Paysage-Knight-delivery-bahamas-lloyd.png
+- ig-commuter-scaled-e1595947828422-4f050.webp: https://www.iguana-yachts.com/wp-content/uploads/2020/06/Commuter-scaled-e1595947828422.jpg
+- st-tec26-a.webp: https://images.boatsgroupwebsites.com/resize/1/8/32/2025-tecnomar-lamborghini-63-power-9980832-20251015061240779-0.jpg
+- st-tec26-b.webp: https://images.boatsgroupwebsites.com/resize/1/8/32/2025-tecnomar-lamborghini-63-power-9980832-20251015061240760-1.jpg
+- st-vd48n-a.webp: https://images.boatsgroupwebsites.com/resize/1/44/12/8534412_0_101020221400_0.jpg
+- st-vd48n-b.webp: https://images.boatsgroupwebsites.com/resize/1/44/12/8534412_0_101020221400_1.jpg
+- st-vd56n-a.webp: https://images.boatsgroupwebsites.com/resize/1/71/30/8577130_0_071220221427_6.jpg
+- st-vd56n-b.webp: https://images.boatsgroupwebsites.com/resize/1/71/30/8577130_0_071220221426_0.jpg
+- st-wally-a.webp: https://images.boatsgroupwebsites.com/resize/1/3/45/2012-wally-wallyone-power-9470345-20240716150714358-1_LARGE.jpg
+- st-wally-b.webp: https://images.boatsgroupwebsites.com/resize/1/3/45/2012-wally-wallyone-power-9470345-20240716150724800-1_LARGE.jpg
+- st-riva-a.webp: https://images.boatsgroupwebsites.com/resize/1/12/45/2026-riva-el-iseo-power-10381245-20261028112234802-2.jpg
+- st-riva-b.webp: https://images.boatsgroupwebsites.com/resize/1/12/45/2026-riva-el-iseo-power-10381245-20261028112236096-3.jpg
+- sold-01.webp: https://images.boatsgroupwebsites.com/resize/1/99/69/2022-pardo-yachts-pardo-50-power-8939969-964333169-0-110620241024-22.jpg
+- sold-02.webp: https://images.boatsgroupwebsites.com/resize/1/21/19/2023-midnight-express-43-solstice-power-9642119-972090493-0-201220241403-0.jpg
+- sold-03.webp: https://images.boatsgroupwebsites.com/resize/1/89/31/8738931_0_170320230548_2.jpg
+- sold-04.webp: https://images.boatsgroupwebsites.com/resize/1/54/92/2021-pardo-43-power-10165492-20260428142223454-3.jpg
+- sold-05.webp: https://images.boatsgroupwebsites.com/resize/1/83/14/8958314_948295937_0_180720231012_0.jpg
+- sold-08.webp: https://images.boatsgroupwebsites.com/resize/1/76/79/2019-iguana-yachts-commuter-power-9907679-20250812113518427-1.jpg
+- sold-09.webp: https://images.boatsgroupwebsites.com/resize/1/85/55/2021-sea-ray-350-slx-ob-power-9758555-20250414121418608-1_LARGE.jpg
+- sold-10.webp: https://images.boatsgroupwebsites.com/resize/1/39/81/8653981_0_120120231209_0.jpg
+- sold-11.webp: https://images.boatsgroupwebsites.com/resize/1/94/80/2024-iguana-sport-power-8929480-966803406-0-080820241507-28.jpg
+- sold-12.webp: https://images.boatsgroupwebsites.com/resize/1/15/83/8501583_0_280420231057_0.jpg
+- sold-14.webp: https://images.boatsgroupwebsites.com/resize/1/36/53/8433653_0_050820220802_0.jpg
+- pm-inventory: prestige-iguana-miami.mp4, 12.1–15.9 s
+- pm-sold: prestige-iguana-miami.mp4, 8.1–11.9 s

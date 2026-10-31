@@ -1,0 +1,131 @@
+{
+  "slug": "tecnomar",
+  "name": "Tecnomar for Lamborghini 63",
+  "title": "Tecnomar for Lamborghini 63 | Prestige Marine, North Miami Beach",
+  "description": "The Tecnomar for Lamborghini 63 at Prestige Marine: a 2022 in Verde Gea in stock, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.",
+  "logo": "tecnomar-w.svg",
+  "logo_ratio": "5",
+  "sub": "Conceived in synergy between Automobili Lamborghini and The Italian Sea Group.",
+  "hero": {
+    "src": "assets/video/brands/tc-hero.mp4",
+    "phone": "assets/video/brands/tc-hero-m.mp4",
+    "from": 0,
+    "to": 9999,
+    "poster": "assets/img/brands/tc-hero-poster.jpg",
+    "pos": "50% 50%",
+    "alt": "A Lamborghini Sián on the shore with a Tecnomar for Lamborghini 63 running behind it.",
+    "side": "right"
+  },
+  "range_h": "The boat",
+  "range": [
+    {
+      "name": "Tecnomar for Lamborghini 63",
+      "line": "Terzo Millennio and Sián FKP 37 are its main inspirations. Carbon fibre keeps her among the ultralight boats.",
+      "above": "assets/img/brands/tc-dsc-5843-modifica-edit-scaled-ac376.webp",
+      "side": "assets/img/brands/tc-dji-0058-modifica-edit-copia-scaled-3caca.webp",
+      "alt": "A Tecnomar for Lamborghini 63 running past white cliffs at sunset",
+      "figs": [
+        [
+          "Length",
+          "63 ft"
+        ],
+        [
+          "Beam",
+          "17.8 ft"
+        ],
+        [
+          "On board",
+          "12 + 2 crew"
+        ]
+      ],
+      "power": "2 × MAN V12, 2,000 hp each"
+    }
+  ],
+  "chapters": [
+    {
+      "line": "A silhouette from the super sports car.",
+      "image": "assets/img/brands/tc-de8a4054-edit-scaled-1295c.webp",
+      "pos": "50% 50%",
+      "alt": "A Tecnomar for Lamborghini 63 running at speed, seen from the side."
+    },
+    {
+      "line": "A hard top from the roadsters.",
+      "image": "assets/img/brands/tc-0l5a5193-scaled-f4553.webp",
+      "pos": "50% 50%",
+      "alt": "The hard top and angular stern of a Tecnomar for Lamborghini 63."
+    },
+    {
+      "line": "Hexagons, Y-shapes, sharp lines.",
+      "image": "assets/img/brands/tc-trc6754-edit-scaled-2f4e6.webp",
+      "pos": "50% 50%",
+      "alt": "Yellow leather and hexagon stitching inside a Tecnomar for Lamborghini 63."
+    }
+  ],
+  "views_h": "Every one a Lamborghini.",
+  "views": [
+    {
+      "src": "assets/img/brands/tc-4-lambo-40-edit-1-scaled-2c492.webp",
+      "w": 2200,
+      "h": 1236,
+      "alt": "Tecnomar for Lamborghini 63 yachts at anchor under a pink sky."
+    },
+    {
+      "src": "assets/img/brands/tc-de8a3387-copia-scaled-e3a2b.webp",
+      "w": 2200,
+      "h": 1339,
+      "alt": "Tecnomar for Lamborghini 63 yachts in a row, each a different colour."
+    },
+    {
+      "src": "assets/img/brands/tc-trc6399-edit-scaled-ccf93.webp",
+      "w": 2200,
+      "h": 1467,
+      "alt": "The helm of a Tecnomar for Lamborghini 63."
+    },
+    {
+      "src": "assets/img/brands/tc-trc6743-edit-2-scaled-d1622.webp",
+      "w": 2200,
+      "h": 1466,
+      "alt": "A cabin in black and yellow."
+    },
+    {
+      "src": "assets/img/brands/tc-dji-0058-modifica-edit-copia-scaled-3caca.webp",
+      "w": 1600,
+      "h": 1067,
+      "alt": "A Tecnomar for Lamborghini 63 from above, its stern lit."
+    }
+  ],
+  "stock": [
+    {
+      "name": "Tecnomar Lamborghini 63",
+      "nick": "",
+      "year": "2022",
+      "note": "Available now",
+      "paint": "Verde Gea, the Sián launch colour, with gold accents",
+      "price": "Request price",
+      "hours": "96",
+      "power": "2 × MAN V12, 2,000 hp each",
+      "size": "63′ × 17′8″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/",
+      "plan": "assets/img/slip-tec63-plan.webp",
+      "side": "assets/img/slip-tec63-side.webp",
+      "alt": "2022 Tecnomar Lamborghini 63 in Verde Gea, stern lit, at the dock"
+    },
+    {
+      "name": "Tecnomar Lamborghini 63",
+      "nick": "",
+      "year": "2026",
+      "note": "",
+      "tag": "New",
+      "paint": "A new build, North Miami Beach, Florida",
+      "price": "Request price",
+      "hours": "New",
+      "power": "2 × MAN V12, 2,000 hp each",
+      "size": "63′ × 17′9″",
+      "url": "https://www.prestigemarine.co/boats-for-sale/2026-tecnomar-lamborghini-63-north-miami-beach-florida-9980832/",
+      "plan": "assets/img/brands/st-tec26-a.webp",
+      "side": "assets/img/brands/st-tec26-b.webp",
+      "alt": "2026 Tecnomar Lamborghini 63"
+    }
+  ],
+  "sold": []
+}

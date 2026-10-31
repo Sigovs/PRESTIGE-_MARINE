@@ -1,0 +1,198 @@
+{
+  "slug": "iguana",
+  "name": "Iguana Yachts",
+  "title": "Iguana Yachts | Prestige Marine, North Miami Beach",
+  "description": "Iguana Yachts at Prestige Marine: French luxury amphibious boats, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.",
+  "logo": "iguana.png",
+  "logo_ratio": "6",
+  "sub": "French luxury amphibious boats, invented and built in Normandy.",
+  "hero": {
+    "src": "assets/video/brands/ig-hero.mp4",
+    "phone": "assets/video/brands/ig-hero-m.mp4",
+    "poster": "assets/img/brands/ig-hero-poster.jpg",
+    "from": 0,
+    "to": 9999,
+    "pos": "50% 50%",
+    "alt": "A Prestige Marine Iguana Commuter running past the Miami skyline.",
+    "side": "right"
+  },
+  "range_h": "The range",
+  "range": [
+    {
+      "name": "Iguana RIB",
+      "line": "An adventure boat with Hypalon tubes and a secure ladder.",
+      "above": "assets/img/brands/ig-1-b5c98.webp",
+      "side": "assets/img/brands/ig-iguana-x100-family-1-scaled-f2b38.webp",
+      "alt": "An Iguana RIB standing on its tracks in the shallows",
+      "figs": [
+        [
+          "Length",
+          "31′"
+        ],
+        [
+          "Beam",
+          "11′"
+        ],
+        [
+          "On board",
+          "16"
+        ]
+      ],
+      "power": "600 hp"
+    },
+    {
+      "name": "Iguana Sport",
+      "line": "An open deck, all-around seating, an electric head.",
+      "above": "assets/img/brands/ig-sport-header-site-eca57.webp",
+      "side": "assets/img/brands/ig-3-6a237.webp",
+      "alt": "An Iguana Sport on its tracks on a beach",
+      "figs": [
+        [
+          "Length",
+          "30′"
+        ],
+        [
+          "Beam",
+          "10′"
+        ],
+        [
+          "On board",
+          "10"
+        ]
+      ],
+      "power": "600 hp"
+    },
+    {
+      "name": "Iguana Bow Rider",
+      "line": "Seats fore and aft behind a full-beam windshield.",
+      "above": "assets/img/brands/ig-iguana-bow-rider-header-ed771.webp",
+      "side": "assets/img/brands/ig-wordpress-corps-paysage-br-shooting--5493d.webp",
+      "alt": "An Iguana Bow Rider on its tracks on a pebble beach",
+      "figs": [
+        [
+          "Length",
+          "30′"
+        ],
+        [
+          "Beam",
+          "9.2′"
+        ],
+        [
+          "On board",
+          "10"
+        ]
+      ],
+      "power": "600 hp"
+    },
+    {
+      "name": "Iguana Fisher",
+      "line": "Livewell, fish box and rod storage as standard. Available in 2027.",
+      "above": "assets/img/brands/ig-header-site-web-fisher-246a9.webp",
+      "side": "assets/img/brands/ig-test-accueil-x-fisher-3-32185.webp",
+      "alt": "An Iguana Fisher on its tracks on the sand",
+      "figs": [
+        [
+          "Length",
+          "30′"
+        ],
+        [
+          "Beam",
+          "10′"
+        ],
+        [
+          "On board",
+          "12"
+        ]
+      ],
+      "power": "600 hp"
+    },
+    {
+      "name": "Iguana Commuter",
+      "line": "A convertible hard top and a cabin with its own head. Available in 2027.",
+      "above": "assets/img/brands/ig-copy-of-iguana-yachts-commuter-exclu-7c505.webp",
+      "side": "assets/img/brands/ig-commuter-iguana-yachts-running-8444a.webp",
+      "alt": "An Iguana Commuter on the sand with its guests",
+      "figs": [
+        [
+          "Length",
+          "30′"
+        ],
+        [
+          "Beam",
+          "10′"
+        ],
+        [
+          "On board",
+          "12"
+        ]
+      ],
+      "power": "600 hp"
+    }
+  ],
+  "chapters": [
+    {
+      "src": "assets/video/brands/ig-land.mp4",
+      "phone": "assets/video/brands/ig-land-m.mp4",
+      "poster": "assets/img/brands/ig-land-poster.jpg",
+      "from": 0,
+      "to": 9999,
+      "line": "From land to sea in seconds.",
+      "pos": "50% 50%",
+      "alt": "An Iguana’s track on the sand, then the boat leaving the beach, from above."
+    },
+    {
+      "src": "assets/video/brands/ig-beach.mp4",
+      "phone": "assets/video/brands/ig-beach-m.mp4",
+      "poster": "assets/img/brands/ig-beach-poster.jpg",
+      "from": 0,
+      "to": 9999,
+      "line": "No dock, no port, no marina.",
+      "pos": "70% 50%",
+      "alt": "An Iguana Commuter in the shallows off a Miami beach."
+    },
+    {
+      "line": "Tracks that fold into the hull.",
+      "image": "assets/img/brands/ig-2-e2687.webp",
+      "pos": "50% 50%",
+      "alt": "The track of an Iguana folded down at dusk."
+    }
+  ],
+  "views_h": "Where the beach is the marina.",
+  "views": [
+    {
+      "src": "assets/img/brands/ig-iguana-rib-superyacht-scaled-f6bc9.webp",
+      "w": 2200,
+      "h": 1876,
+      "alt": "Iguanas moored beside a yacht at sunset."
+    },
+    {
+      "src": "assets/img/brands/ig-commuter-iguana-yachts-running-8444a.webp",
+      "w": 1200,
+      "h": 633,
+      "alt": "An Iguana Commuter running below a green headland."
+    },
+    {
+      "src": "assets/img/brands/ig-wordpress-corps-paysage-knight-deliv-54a23.webp",
+      "w": 1650,
+      "h": 1179,
+      "alt": "An Iguana on its tracks on a pine-lined beach."
+    },
+    {
+      "src": "assets/img/brands/ig-commuter-scaled-e1595947828422-4f050.webp",
+      "w": 2200,
+      "h": 1160,
+      "alt": "An Iguana Commuter on dark blue water beneath the hills."
+    },
+    {
+      "src": "assets/img/brands/ig-iguana-x100-family-1-scaled-f2b38.webp",
+      "w": 1600,
+      "h": 1067,
+      "alt": "An Iguana RIB running with its guests aboard."
+    }
+  ],
+  "stock": [],
+  "sold": [
+    "2020 Iguana Commuter",
+    "2019 Iguana Commuter"
+  ]
+}

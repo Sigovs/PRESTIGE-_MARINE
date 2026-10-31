@@ -1,0 +1,101 @@
+  <section class="vhero vhero--{{hero_side}}" id="top" aria-labelledby="h1" data-vhero>
+    <div class="vhero__pin">
+      <video class="vhero__film" muted playsinline preload="none" poster="{{hero_poster}}" style="object-position: {{hero_pos}}" aria-label="{{hero_alt}}" loop data-film-loop data-from="{{hero_from}}" data-to="{{hero_to}}">
+        <source media="(max-width: 720px)" data-src="{{hero_phone}}" type="video/mp4">
+        <source data-src="{{hero_src}}" type="video/mp4">
+      </video>
+      <div class="vhero__copy wrap" data-vhero-copy>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index_blue.html">Home</a><span aria-hidden="true">/</span><a href="index_blue.html#brands">Brands</a><span aria-hidden="true">/</span><span aria-current="page">{{name}}</span></nav>
+        <h1 class="vhero__h1" id="h1"><span class="vhero__logo" style="--logo: url(../img/logos/{{logo}}); --logo-r: {{logo_ratio}}" aria-hidden="true"></span><span class="sr-only">{{name}}</span></h1>
+        <p class="vhero__sub">{{sub}}</p>
+        <div class="vhero__cta">
+          <a class="btn btn--solid" href="#inventory">View inventory</a>
+          <a class="btn btn--ghost" href="tel:+13059471000"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4.2-2 1.3a12 12 0 0 0 6 6l1.3-2 4.2 1.4v3a2 2 0 0 1-2.1 2A16.5 16.5 0 0 1 4.6 5.6a2 2 0 0 1 2-2.1Z"/></svg>305-947-1000</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="range range--{{range_n}} panel" id="range" aria-labelledby="range-h" data-reel>
+    <div class="reel__pin" data-reel-pin>
+      <div class="reel__head" data-reel-head><h2 class="h2" id="range-h">{{range_h}}</h2></div>
+      <ol class="reel__track" data-reel-track>
+{{range}}
+      </ol>
+      <span class="reel__line" aria-hidden="true"><i data-reel-line></i></span>
+    </div>
+  </section>
+
+  <div class="chaps" id="water" data-chaps>
+{{chapters}}
+  </div>
+
+  <section class="views panel" id="views" aria-labelledby="views-h" data-views-wall>
+    <div class="wrap">
+      <h2 class="h2 views__h" id="views-h">{{views_h}}</h2>
+      <div class="views__wall">
+{{views}}
+      </div>
+    </div>
+  </section>
+
+  <section class="inv inv--{{stock_n}} panel" id="inventory" aria-labelledby="inv-h">
+    <div class="wrap">
+      <div class="inv__split">
+        <div class="sec-head">
+          <div><h2 class="h2" id="inv-h">In stock now</h2></div>
+          <div class="sec-head__aside"><a class="btn btn--line" href="inventory.html">View all inventory</a></div>
+        </div>
+{{stock}}
+      </div>
+{{sold}}
+    </div>
+  </section>
+
+  <section class="others panel" aria-labelledby="others-h">
+    <div class="wrap">
+      <h2 class="h2" id="others-h">Also at Prestige Marine</h2>
+      <ul class="others__grid">
+{{others}}
+      </ul>
+    </div>
+  </section>
+
+  <section class="contact panel" id="contact" aria-labelledby="contact-h">
+    <div class="wrap contact__grid">
+      <div class="contact__info">
+        <p class="eyebrow eyebrow--ink">Contact</p>
+        <h2 class="h2" id="contact-h">Talk to us</h2>
+        <p class="contact__tel"><a href="tel:+13059471000">305-947-1000</a></p>
+        <p>15050 Biscayne Blvd<br>North Miami Beach, FL 33181</p>
+        <dl class="hours">
+          <dt>Mon–Fri</dt><dd>9:00 am – 7:00 pm</dd>
+          <dt>Saturday</dt><dd>10:00 am – 6:00 pm</dd>
+          <dt>Sunday</dt><dd>By appointment</dd>
+        </dl>
+        <p class="contact__note">Sea trials and viewings by appointment at Marina Palms, North Miami Beach.</p>
+      </div>
+      <form class="form" data-form novalidate aria-describedby="form-note">
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required aria-describedby="e-name"><p class="field__err" id="e-name" hidden></p></div>
+        <div class="field field--half"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="e-phone"><p class="field__err" id="e-phone" hidden></p></div>
+        <div class="field field--half"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email"><p class="field__err" id="e-email" hidden></p></div>
+        <div class="field field--select"><label for="f-interest">I'm interested in</label>
+          <select id="f-interest" name="interest">
+{{options}}
+          </select>
+        </div>
+        <div class="field"><label for="f-msg">Message <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" rows="3"></textarea></div>
+        <button class="btn btn--solid form__send" type="submit">Send</button>
+        <p class="form__note" id="form-note">Mock-up: this form is not connected yet.</p>
+        <p class="form__done" data-form-done hidden tabindex="-1">Thank you. A Prestige Marine advisor will call you shortly.</p>
+      </form>
+    </div>
+  </section>
+
+  <nav class="pbar" aria-label="{{name}} page" data-pbar>
+    <a class="pbar__name" href="#top">{{name}}</a>
+    <a class="pbar__link" href="#range" data-pbar-link>{{range_h}}</a>
+    <a class="pbar__link" href="#views" data-pbar-link>Views</a>
+    <a class="pbar__link" href="#inventory" data-pbar-link>In stock</a>
+    <a class="pbar__go" href="#contact">Inquire</a>
+  </nav>
