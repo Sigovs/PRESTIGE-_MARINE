@@ -649,6 +649,24 @@ void main(){
     }
     const rail = $('[data-brands]');
     if (rail && phone.matches) rail.setAttribute('data-lenis-prevent', '');
+    const railGo = $('[data-brands-go]');
+    if (rail && railGo) {
+        railGo.hidden = false;
+        const atEnd = () => rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 8;
+        const mark = () => {
+            const back = atEnd();
+            railGo.classList.toggle('is-back', back);
+            railGo.setAttribute('aria-label', back ? 'Back to the first brand' : 'Next brand');
+        };
+        rail.addEventListener('scroll', mark, { passive: true });
+        railGo.addEventListener('click', () => {
+            const edge = parseFloat(getComputedStyle(rail).paddingLeft), left = rail.getBoundingClientRect().left + edge;
+            const next = [...rail.children].find((c) => c.getBoundingClientRect().left > left + 12);
+            const to = atEnd() || !next ? 0 : rail.scrollLeft + next.getBoundingClientRect().left - left;
+            rail.scrollTo({ left: to, behavior: reduce ? 'auto' : 'smooth' });
+        });
+        mark();
+    }
 
     /* ── the inventory cards rise as their row arrives ── */
     const risers = [...document.querySelectorAll('.boat.rise')];
