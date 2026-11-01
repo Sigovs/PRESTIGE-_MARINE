@@ -37,6 +37,7 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
 - **Phone footer (Alex, 31 Oct):** the tide must show. The surf's whole frame stands below the last line of text, on the home and the inner pages.
 - **The client's film (Alex, 31 Oct, angry):** the Land, Air & now Sea picture on the home and the film pictures on About play the file he gave (`prestige-iguana-full.mp4`), not our cuts of it.
 - **Boat page, first screen (Alex, 31 Oct):** See details is a glass circle with a down arrow, in the middle at the foot of the screen; it lands on the next screen with the panel just under the header. Title, price and buttons stay on the first screen at any height.
+- **Menu mark (Alex, 31 Oct, his drawing):** three waves in step, a wave and a half wide; they run on hover and roll back to rest as drawn; a straight cross when open.
 - **Everything on the phone happens faster (Alex, 31 Oct):** short intervals, quick passes (the fish come about every second).
 - **A snapping rail needs `scroll-padding-inline: var(--gutter)`,** or its cards and words stop against the edge of the screen.
 - **Pinned screens use `--pin` (100lvh), never 100svh with `overflow: hidden`:** Safari hiding its bar cuts them short.
