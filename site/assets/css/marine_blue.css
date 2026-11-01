@@ -446,3 +446,16 @@ body { font-family: var(--sans); }
   .brows__go.is-back .ico { transform: rotate(180deg); }
 }
 @media (prefers-reduced-motion: reduce) { .brows__go .ico { transition: none; } }
+
+/* the full film, on the picture that shows a moment of it: the plate's glass, the words beside the sign */
+.land__img--film, .absplit__img--film { position: relative; }
+.absplit__img--film video { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.filmgo { position: absolute; z-index: 2; left: var(--s-4); bottom: var(--s-4); display: inline-flex; align-items: center; gap: var(--s-2); min-height: 52px; padding: 0 var(--s-5) 0 var(--s-4); border: 0; border-radius: 999px; color: var(--navy); font: inherit; font-size: var(--t-16); font-weight: 600; cursor: pointer;
+  background: linear-gradient(140deg, rgba(255, 255, 255, .62) 0%, rgba(255, 255, 255, .44) 55%, rgba(255, 255, 255, .5) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(165%) brightness(1.08); backdrop-filter: blur(24px) saturate(165%) brightness(1.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .65), inset 0 0 0 1px rgba(255, 255, 255, .12), 0 24px 48px -28px rgba(2, 40, 48, .6);
+  transition: background-color .25s var(--ease), color .25s var(--ease); }
+.filmgo:hover { background: var(--white); }
+.filmgo .ico { width: 22px; height: 22px; fill: currentColor; stroke: none; }
+@media (max-width: 720px) { .filmgo { left: var(--s-3); bottom: var(--s-3); } }
+.film__close { text-transform: none; letter-spacing: normal; }

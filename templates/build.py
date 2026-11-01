@@ -98,7 +98,7 @@ def boat(b, name):
               <div><dt>Power</dt><dd>{e(b['power'])}</dd></div>
               <div><dt>Length × beam</dt><dd class="num">{e(b['size'])}</dd></div>
             </dl>
-            <a class="btn btn--line boat__enq" href="#contact" data-enquire="{e(title)}">Inquire</a>
+            <a class="btn btn--line boat__enq" href="{vdp_of(b['url'])}" aria-label="{e(title + nick)}, full particulars">View full particulars</a>
           </li>'''
 
 

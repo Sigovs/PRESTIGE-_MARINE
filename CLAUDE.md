@@ -87,7 +87,7 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   case at normal spacing (only the logotype's small subline keeps caps). Facts cards on the stage are plain cards
   with a background blur (26px, like Figma) and a small radius — the shader lens look was rejected (1/10:
   "outlined boxes, can't see glass"). Inventory cards: no scale line, no dimensions row; length × beam lives in
-  the specs; "Inquire" (American spelling) is a full-width button; the plan→side photo swap is slow (.9s);
+  the specs; the card's full-width button reads "View full particulars" and opens the boat's page (Alex, 31 Oct; it was "Inquire"; Inquire, American spelling, stays on the stage, the boat's page and the page bar); the plan→side photo swap is slow (.9s);
   radii small (card 10px, photo 6px).
 - **BLUE, round 5 (27 Oct):** navbar = the current prestigemarine.co menu (Home · Brands ▾ · New Inventory · Brokerage ·
   Sold · About Us · Contact Us, their URLs). Small grey brand logos (the brands' own files, `assets/img/logos/`, as

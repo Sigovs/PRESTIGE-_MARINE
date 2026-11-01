@@ -93,3 +93,5 @@ The brands' own films and pictures, used by Prestige Marine as authorised dealer
 - pm-inventory: prestige-iguana-miami.mp4, 12.1–15.9 s
 - pm-sold: prestige-iguana-miami.mp4, 8.1–11.9 s
 - assets/img/boats/: the photos of each listing on prestigemarine.co/boats-for-sale (Boats Group images), read 31 Oct 2026
+
+- `video/prestige-iguana-full.mp4`: Prestige Marine's own Iguana Commuter film, 94 s, from the home page of prestigemarine.co, supplied by Alex 31 Oct 2026; remuxed for streaming only, not re-encoded.

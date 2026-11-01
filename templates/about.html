@@ -21,7 +21,13 @@
 
   <section class="absplit absplit--flip panel" aria-label="A division of Prestige Imports">
     <div class="wrap absplit__grid">
-      <figure class="absplit__img"><img src="assets/img/brands/ig-hero-poster.jpg" loading="lazy" alt="A Prestige Marine Iguana Commuter running past the Miami skyline."></figure>
+      <figure class="absplit__img absplit__img--film">
+        <video muted playsinline loop preload="none" poster="assets/img/brands/ig-land-poster.jpg" aria-label="A Prestige Marine Iguana Commuter on the sand at Miami Beach." data-film-loop data-from="0" data-to="9999">
+          <source media="(max-width: 720px)" data-src="assets/video/brands/ig-land-m.mp4" type="video/mp4">
+          <source data-src="assets/video/brands/ig-land.mp4" type="video/mp4">
+        </video>
+        <button class="filmgo" type="button" data-film="assets/video/prestige-iguana-full.mp4" data-film-title="Prestige Marine film"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>Watch full video</button>
+      </figure>
       <div class="absplit__copy"><p class="abpara">Prestige Marine, a division of Prestige Imports, is not your typical marine dealership. At Prestige Marine, we bring the same passion and drive to the marine industry that has made Prestige Imports so successful in the automobile industry for over 45 years.</p></div>
     </div>
   </section>
