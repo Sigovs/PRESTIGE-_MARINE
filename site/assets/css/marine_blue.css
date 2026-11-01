@@ -469,24 +469,16 @@ body { font-family: var(--sans); }
 .inq.is-in { transform: none; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
 .inq::backdrop { background: rgba(2, 30, 45, .2); opacity: 0; transition: opacity .42s var(--ease); }
 .inq.is-in::backdrop { opacity: 1; }
-.inq__in { display: flex; flex-direction: column; justify-content: center; gap: var(--s-7); width: min(460px, 100%); min-height: 100%; margin-inline: auto; padding: var(--s-8) var(--gutter); box-sizing: border-box; }
+.inq__in { display: flex; flex-direction: column; justify-content: center; gap: var(--s-7); width: min(620px, 100%); min-height: 100%; margin-inline: auto; padding: var(--s-8) var(--gutter); box-sizing: border-box; }
 .inq__head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
 .inq__h { margin: 0; font-family: var(--serif); font-size: var(--t-h2); line-height: 1.08; font-weight: 400; letter-spacing: -.01em; }
 .inq__x { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 6px; background: var(--navy); color: var(--white); cursor: pointer; transition: background-color .25s var(--ease); }
 .inq__x:hover { background: var(--accent); }
 .inq__x .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
-.inq .form { grid-template-columns: 1fr; gap: var(--s-4); }
-.inq .field--half { grid-column: 1 / -1; }
-.inq .field label, .inq .opt { color: var(--navy); }
-.inq .field input, .inq .field select, .inq .field textarea { min-height: 52px; color: var(--navy); background-color: rgba(255, 255, 255, .5); border-bottom-color: rgba(6, 40, 67, .5); border-radius: 4px 4px 0 0; transition: background-color .2s var(--ease), border-color .2s var(--ease); }
-.inq .field input, .inq .field textarea { padding-inline: var(--s-3); }
-.inq .field input:focus, .inq .field select:focus, .inq .field textarea:focus { background-color: rgba(255, 255, 255, .78); }
-.inq .field textarea { display: block; min-height: 88px; }
-.inq .form__send { justify-self: stretch; margin-top: var(--s-4); min-height: 52px; background: var(--navy); color: var(--white); }
-.inq .form__send:hover { background: var(--accent); }
-.inq .form__note { margin: 0; color: var(--navy); }
+.inq .field label, .inq .opt, .inq .field input, .inq .field select, .inq .field textarea, .inq .form__done { color: var(--navy); }
+.inq .field input, .inq .field select, .inq .field textarea { border-bottom-color: rgba(6, 40, 67, .5); }
+.inq .field input:hover, .inq .field select:hover, .inq .field textarea:hover { border-bottom-color: var(--navy); }
 .inq .field__err { color: #7A1F19; }
-.inq .form__done { color: var(--navy); }
 .inq .form__done:focus { outline: none; }
 .inq__head, .inq .form > * { opacity: 0; transform: translate3d(36px, 0, 0); transition: opacity .15s linear, transform 0s .42s; }
 .inq.is-in .inq__head, .inq.is-in .form > * { opacity: 1; transform: none; transition: opacity .6s var(--ease) calc(.14s + var(--i, 0) * .055s), transform .8s cubic-bezier(.16, 1, .3, 1) calc(.14s + var(--i, 0) * .055s); }
@@ -503,24 +495,35 @@ body { font-family: var(--sans); }
   .inq__head, .inq .form > *, .inq.is-in .inq__head, .inq.is-in .form > * { opacity: 1; transform: none; transition: none; }
 }
 
-/* the menu's two lines are waves (Alex, 31 Oct): they run under the pointer and stop where they are when it leaves, out of step like water; open, they settle into a straight cross */
-.hdr__burger { gap: 5px; width: 24px; }
-.hdr__burger i { position: relative; height: 6px; overflow: hidden; background: none; }
-.hdr__burger i::before { content: ""; position: absolute; top: 0; left: 0; width: 48px; height: 6px; background: currentColor;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M0 3Q3 0 6 3T12 3T18 3T24 3T30 3T36 3T42 3T48 3'/%3E%3C/svg%3E") left top / 48px 6px no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M0 3Q3 0 6 3T12 3T18 3T24 3T30 3T36 3T42 3T48 3'/%3E%3C/svg%3E") left top / 48px 6px no-repeat;
-  animation: swell 1.4s linear infinite paused; transition: opacity .2s var(--ease); }
-.hdr__burger i:last-child::before { animation-duration: 1.9s; animation-delay: -.95s; }
-.hdr__burger i::after { content: ""; position: absolute; left: 0; right: 0; top: 2.25px; height: 1.5px; background: currentColor; opacity: 0; transition: opacity .2s var(--ease); }
-@keyframes swell { to { transform: translate3d(-12px, 0, 0); } }
-@media (hover: hover) { .hdr__menu:hover .hdr__burger i::before { animation-play-state: running; } }
+/* the menu's three lines are waves, after Alex's drawing (31 Oct): in step, a wave and a half wide. They run under the pointer, rippling down, and roll on to where they began when it leaves; open, a straight cross */
+.hdr__burger { gap: 0; width: 28px; grid-auto-rows: 4.4px; padding-bottom: 2.1px; }
+.hdr__burger i { position: relative; height: 6.5px; overflow: hidden; background: none; transition: transform .3s var(--ease), opacity .2s var(--ease); }
+.hdr__burger i::before { content: ""; position: absolute; top: 0; left: 0; width: 46px; height: 6.5px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='6.5' viewBox='0 0 46 6.5' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M-8.5 3.25Q-4 6.75 .5 3.25T9.5 3.25T18.5 3.25T27.5 3.25T36.5 3.25T45.5 3.25T54.5 3.25'/%3E%3C/svg%3E") left top / 46px 6.5px no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='6.5' viewBox='0 0 46 6.5' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M-8.5 3.25Q-4 6.75 .5 3.25T9.5 3.25T18.5 3.25T27.5 3.25T36.5 3.25T45.5 3.25T54.5 3.25'/%3E%3C/svg%3E") left top / 46px 6.5px no-repeat; transition: opacity .2s var(--ease); }
+.hdr__burger i::after { content: ""; position: absolute; left: 0; right: 0; top: 2.5px; height: 1.5px; background: currentColor; opacity: 0; transition: opacity .2s var(--ease); }
+@keyframes swell { to { transform: translate3d(-18px, 0, 0); } }
 /* a phone has no pointer to follow: the same water, drifting slowly */
-@media (hover: none) {
-  .hdr__burger i::before { animation-duration: 3.6s; animation-play-state: running; }
-  .hdr__burger i:last-child::before { animation-duration: 4.8s; animation-delay: -2.4s; }
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .hdr__burger i::before { animation: swell 3.6s linear infinite; }
+  .hdr__burger i:nth-child(2)::before { animation-delay: -.25s; }
+  .hdr__burger i:nth-child(3)::before { animation-delay: -.5s; }
 }
 .hdr__menu[aria-expanded="true"] .hdr__burger i { overflow: visible; }
 .hdr__menu[aria-expanded="true"] .hdr__burger i::before { opacity: 0; animation-play-state: paused; }
-.hdr__menu[aria-expanded="true"] .hdr__burger i::after { opacity: 1; }
-.hdr__menu[aria-expanded="true"] .hdr__burger i:first-child { transform: translateY(5.5px) rotate(45deg); }
-.hdr__menu[aria-expanded="true"] .hdr__burger i:last-child { transform: translateY(-5.5px) rotate(-45deg); }
-@media (prefers-reduced-motion: reduce) { .hdr__burger i::before, .hdr__menu:hover .hdr__burger i::before { animation-play-state: paused; } }
+.hdr__menu[aria-expanded="true"] .hdr__burger i::after { left: 2.5px; right: 2.5px; opacity: 1; }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:first-child { transform: translateY(4.4px) rotate(45deg); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:nth-child(2) { opacity: 0; }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:last-child { transform: translateY(-4.4px) rotate(-45deg); }
+
+/* phone footer: the whole frame of the surf stands under the last line, sand fading into the page, then the tide coming in, then open water */
+@media (max-width: 720px) {
+  .foot { background: var(--white); }
+  .foot__surf { inset: auto 0 0; height: 125vw; object-position: 50% 50%; }
+  .foot__panel { padding-bottom: 100vw; background: linear-gradient(to bottom, #fff 0, #fff calc(100% - 125vw), rgba(255, 255, 255, 0) calc(100% - 92vw)); }
+}
+
+/* one form on the whole site, on the page and in the panel: lines, every field the dropdown's height, all text on one edge clear of the line's start */
+.field input, .field textarea { padding-inline: var(--s-3); }
+.field input { min-height: 52px; }
+/* the phone footer's address on one line */
+@media (max-width: 720px) { .foot__grid > .foot__col:nth-child(4) { grid-column: 1 / -1; } }

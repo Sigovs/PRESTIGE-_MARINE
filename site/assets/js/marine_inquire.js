@@ -31,7 +31,6 @@
         });
         f.querySelectorAll('.field__err').forEach((p) => { p.hidden = true; p.textContent = ''; });
         f.querySelector('[data-form-done]').hidden = true;
-        f.querySelector('.form__send').textContent = 'Send to Prestige Marine';
 
         const check = (input) => {
             const msg = rules[input.name](input.value), err = document.getElementById(input.getAttribute('aria-describedby'));

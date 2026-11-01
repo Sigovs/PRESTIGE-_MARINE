@@ -33,7 +33,10 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   middle, straight up with the finger, never sideways off the screen; the plate arrives after it on open water.
 - **Switching boats on the phone's plate (Alex, 31 Oct):** a boat passing unseen under the cards is pointless. The cards step
   aside, the boat sails the open water, the cards return with her words.
-- **Inquire (Alex, 31 Oct, from his reference):** every Inquire opens a panel sliding in from the right, half the screen, the page frosted behind it, the fields stepping in after it; our serif, our fields, sentence case. `marine_inquire.js` copies the page's own form. Without the script the link goes to the form on the page.
+- **Inquire (Alex, 31 Oct, from his reference):** every Inquire opens a panel sliding in from the right, half the screen, the page frosted behind it, the fields stepping in after it; our serif, sentence case. **One form on the whole site (Alex, 31 Oct, repeated):** the panel's form and the page's form are the same, plain lines; never give one of them its own fields. `marine_inquire.js` copies the page's own form. Without the script the link goes to the form on the page.
+- **Phone footer (Alex, 31 Oct):** the tide must show. The surf's whole frame stands below the last line of text, on the home and the inner pages.
+- **The client's film (Alex, 31 Oct, angry):** the Land, Air & now Sea picture on the home and the film pictures on About play the file he gave (`prestige-iguana-full.mp4`), not our cuts of it.
+- **Boat page, first screen (Alex, 31 Oct):** See details is a glass circle with a down arrow, in the middle at the foot of the screen; it lands on the next screen with the panel just under the header. Title, price and buttons stay on the first screen at any height.
 - **Everything on the phone happens faster (Alex, 31 Oct):** short intervals, quick passes (the fish come about every second).
 - **A snapping rail needs `scroll-padding-inline: var(--gutter)`,** or its cards and words stop against the edge of the screen.
 - **Pinned screens use `--pin` (100lvh), never 100svh with `overflow: hidden`:** Safari hiding its bar cuts them short.

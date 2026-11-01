@@ -559,3 +559,30 @@ main > .panel { overflow-x: clip; }
   .cmap__credit a { display: inline-flex; align-items: center; min-height: 32px; }
 }
 @media (max-width: 720px) { .boat__name a { display: inline-block; padding-block: 9px; margin-block: -9px; } }
+
+/* the phone footer's surf needs its room here too */
+@media (max-width: 720px) { .foot__panel { padding-bottom: 100vw; } }
+
+/* See details: the brands rail's glass circle at the foot of the first screen, in the middle; the words and the buttons stand above it at any height. It leads to the next screen, its panel just under the header */
+.vdgo { position: absolute; z-index: 2; left: 50%; bottom: calc(var(--pin-gap) + var(--s-5)); display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin-left: -32px; border-radius: 50%; color: var(--navy); text-decoration: none;
+  background: linear-gradient(140deg, rgba(255, 255, 255, .62) 0%, rgba(255, 255, 255, .44) 55%, rgba(255, 255, 255, .5) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(165%) brightness(1.08); backdrop-filter: blur(24px) saturate(165%) brightness(1.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .65), inset 0 0 0 1px rgba(255, 255, 255, .12), 0 24px 48px -28px rgba(2, 40, 48, .6);
+  transition: background-color .25s var(--ease); }
+.vdgo:hover { background: var(--white); }
+.vdgo .ico { width: 26px; height: 26px; transition: transform .35s cubic-bezier(.22, .61, .36, 1); }
+.vdgo:hover .ico { transform: translateY(3px); }
+.vhero--boat .vhero__copy { padding-bottom: calc(64px + var(--s-5) * 2); }
+@media (max-height: 640px) and (min-width: 721px) {
+  .vdtop__h { font-size: clamp(2rem, 1rem + 2.4vw, 3rem); }
+  .vdtop__loc { margin-top: var(--s-1); }
+}
+@media (max-width: 720px) {
+  .vdgo { bottom: calc(var(--pin-gap) + var(--s-4)); }
+  .vhero--boat .vhero__copy { padding-bottom: calc(64px + var(--s-4) * 2); }
+}
+@media (prefers-reduced-motion: reduce) { .vdgo .ico { transition: none; } .vdgo:hover .ico { transform: none; } }
+
+/* the film moves through bright frames: the shade holds the whole paragraph, whatever passes behind it */
+.chap:has(.abpara) .chap__frame::after { background: linear-gradient(to top, rgba(3, 26, 44, .9) 0, rgba(3, 26, 44, .74) 44%, rgba(3, 26, 44, 0) 78%); }
+@media (max-width: 720px) { .chap:has(.abpara) .chap__frame::after { background: linear-gradient(to top, rgba(3, 26, 44, .92) 0, rgba(3, 26, 44, .76) 60%, rgba(3, 26, 44, 0) 86%); } }

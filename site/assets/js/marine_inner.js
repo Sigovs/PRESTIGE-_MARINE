@@ -297,6 +297,18 @@
         if (open) menu.querySelector('a').focus();
     };
     toggle.addEventListener('click', () => setMenu(menu.hidden));
+    /* the menu's waves run under the pointer; when it leaves, each rolls on to the end of its wave, so the mark always comes to rest as drawn */
+    if (!reduce && window.matchMedia('(hover: hover)').matches) {
+        const WAVE = 1600, RIPPLE = 90, lines = [...toggle.querySelectorAll('.hdr__burger i')];
+        let runs = null;
+        toggle.addEventListener('mouseenter', () => {
+            if (toggle.getAttribute('aria-expanded') === 'true') return;
+            if (runs) { runs.forEach((a) => a.effect.updateTiming({ iterations: Infinity })); return; }
+            const set = runs = lines.map((l, i) => l.animate([{ transform: 'none' }, { transform: 'translate3d(-18px, 0, 0)' }], { duration: WAVE, delay: i * RIPPLE, iterations: Infinity, pseudoElement: '::before' }));
+            Promise.all(set.map((a) => a.finished)).then(() => { if (runs === set) runs = null; set.forEach((a) => a.cancel()); }).catch(() => {});
+        });
+        toggle.addEventListener('mouseleave', () => runs?.forEach((a, i) => a.effect.updateTiming({ iterations: Math.max(1, Math.ceil((a.currentTime - i * RIPPLE) / WAVE)) })));
+    }
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); toggle.focus(); } });
     menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
@@ -489,6 +501,17 @@
         hoursNow.classList.toggle('is-closed', !open);
         hoursNow.hidden = false;
     }
+
+    /* ── See details: to the next screen, its panel's top just under the header ── */
+    const vdGo = $('[data-vd-go]');
+    if (vdGo) vdGo.addEventListener('click', (e) => {
+        const panel = document.querySelector(vdGo.getAttribute('href'));
+        if (!panel) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const y = panel.getBoundingClientRect().top + window.scrollY - hdr.querySelector('.hdr__bar').offsetHeight - 16;
+        if (lenis) lenis.scrollTo(y, { duration: 1.2 }); else window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    });
 
     /* ── form (mock-up) ── */
     const form = $('[data-form]');

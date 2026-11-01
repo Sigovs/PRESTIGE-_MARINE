@@ -791,6 +791,10 @@ void main(){
     /* ── the About us film loads and plays only while it is near the screen; reduced motion keeps the poster ── */
     const landFilm = $('[data-land-film]');
     if (landFilm && !reduce && 'IntersectionObserver' in window) {
+        // past the film's title card and black bars, and round again before its end
+        const LAND_FROM = 4, LAND_TO = 92;
+        landFilm.addEventListener('loadedmetadata', () => { landFilm.currentTime = LAND_FROM; });
+        landFilm.addEventListener('timeupdate', () => { if (landFilm.currentTime >= LAND_TO) landFilm.currentTime = LAND_FROM; });
         new IntersectionObserver((es) => es.forEach((e) => {
             if (e.isIntersecting) {
                 const src = landFilm.querySelectorAll('source[data-src]');
@@ -815,6 +819,18 @@ void main(){
         if (open) menu.querySelector('a').focus();
     };
     toggle.addEventListener('click', () => setMenu(menu.hidden));
+    /* the menu's waves run under the pointer; when it leaves, each rolls on to the end of its wave, so the mark always comes to rest as drawn */
+    if (!reduce && window.matchMedia('(hover: hover)').matches) {
+        const WAVE = 1600, RIPPLE = 90, lines = [...toggle.querySelectorAll('.hdr__burger i')];
+        let runs = null;
+        toggle.addEventListener('mouseenter', () => {
+            if (toggle.getAttribute('aria-expanded') === 'true') return;
+            if (runs) { runs.forEach((a) => a.effect.updateTiming({ iterations: Infinity })); return; }
+            const set = runs = lines.map((l, i) => l.animate([{ transform: 'none' }, { transform: 'translate3d(-18px, 0, 0)' }], { duration: WAVE, delay: i * RIPPLE, iterations: Infinity, pseudoElement: '::before' }));
+            Promise.all(set.map((a) => a.finished)).then(() => { if (runs === set) runs = null; set.forEach((a) => a.cancel()); }).catch(() => {});
+        });
+        toggle.addEventListener('mouseleave', () => runs?.forEach((a, i) => a.effect.updateTiming({ iterations: Math.max(1, Math.ceil((a.currentTime - i * RIPPLE) / WAVE)) })));
+    }
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); toggle.focus(); } });
     menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
