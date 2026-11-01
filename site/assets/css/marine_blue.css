@@ -459,3 +459,68 @@ body { font-family: var(--sans); }
 .filmgo .ico { width: 22px; height: 22px; fill: currentColor; stroke: none; }
 @media (max-width: 720px) { .filmgo { left: var(--s-3); bottom: var(--s-3); } }
 .film__close { text-transform: none; letter-spacing: normal; }
+
+/* Inquire: half the screen slides in from the right, the page frosted behind it, the steps following; our serif, our fields */
+.inq { position: fixed; inset: 0 0 0 auto; width: clamp(520px, 50vw, 960px); max-width: 100%; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; color: var(--navy); overflow-y: auto; overscroll-behavior: contain;
+  background: linear-gradient(140deg, rgba(255, 255, 255, .72) 0%, rgba(255, 255, 255, .62) 55%, rgba(255, 255, 255, .68) 100%);
+  -webkit-backdrop-filter: blur(36px) saturate(165%) brightness(1.08); backdrop-filter: blur(36px) saturate(165%) brightness(1.08);
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, .65);
+  transform: translate3d(100%, 0, 0); transition: transform .42s cubic-bezier(.55, 0, .85, .4); }
+.inq.is-in { transform: none; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
+.inq::backdrop { background: rgba(2, 30, 45, .2); opacity: 0; transition: opacity .42s var(--ease); }
+.inq.is-in::backdrop { opacity: 1; }
+.inq__in { display: flex; flex-direction: column; justify-content: center; gap: var(--s-7); width: min(460px, 100%); min-height: 100%; margin-inline: auto; padding: var(--s-8) var(--gutter); box-sizing: border-box; }
+.inq__head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
+.inq__h { margin: 0; font-family: var(--serif); font-size: var(--t-h2); line-height: 1.08; font-weight: 400; letter-spacing: -.01em; }
+.inq__x { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 6px; background: var(--navy); color: var(--white); cursor: pointer; transition: background-color .25s var(--ease); }
+.inq__x:hover { background: var(--accent); }
+.inq__x .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.inq .form { grid-template-columns: 1fr; gap: var(--s-4); }
+.inq .field--half { grid-column: 1 / -1; }
+.inq .field label, .inq .opt { color: var(--navy); }
+.inq .field input, .inq .field select, .inq .field textarea { min-height: 52px; color: var(--navy); background-color: rgba(255, 255, 255, .5); border-bottom-color: rgba(6, 40, 67, .5); border-radius: 4px 4px 0 0; transition: background-color .2s var(--ease), border-color .2s var(--ease); }
+.inq .field input, .inq .field textarea { padding-inline: var(--s-3); }
+.inq .field input:focus, .inq .field select:focus, .inq .field textarea:focus { background-color: rgba(255, 255, 255, .78); }
+.inq .field textarea { display: block; min-height: 88px; }
+.inq .form__send { justify-self: stretch; margin-top: var(--s-4); min-height: 52px; background: var(--navy); color: var(--white); }
+.inq .form__send:hover { background: var(--accent); }
+.inq .form__note { margin: 0; color: var(--navy); }
+.inq .field__err { color: #7A1F19; }
+.inq .form__done { color: var(--navy); }
+.inq .form__done:focus { outline: none; }
+.inq__head, .inq .form > * { opacity: 0; transform: translate3d(36px, 0, 0); transition: opacity .15s linear, transform 0s .42s; }
+.inq.is-in .inq__head, .inq.is-in .form > * { opacity: 1; transform: none; transition: opacity .6s var(--ease) calc(.14s + var(--i, 0) * .055s), transform .8s cubic-bezier(.16, 1, .3, 1) calc(.14s + var(--i, 0) * .055s); }
+@media (max-width: 720px) {
+  .inq { width: 100%; }
+  .inq.is-in { transition-duration: .55s; }
+  .inq__in { justify-content: flex-start; gap: var(--s-6); padding-block: var(--s-6) var(--s-7); }
+  .inq.is-in .inq__head, .inq.is-in .form > * { transition-delay: calc(.08s + var(--i, 0) * .035s); transition-duration: .4s, .55s; }
+}
+@media (pointer: coarse) { .inq-open { overflow: hidden; } }
+@media (prefers-reduced-motion: reduce) {
+  .inq, .inq.is-in { transform: none; transition: none; }
+  .inq::backdrop { transition: none; }
+  .inq__head, .inq .form > *, .inq.is-in .inq__head, .inq.is-in .form > * { opacity: 1; transform: none; transition: none; }
+}
+
+/* the menu's two lines are waves (Alex, 31 Oct): they run under the pointer and stop where they are when it leaves, out of step like water; open, they settle into a straight cross */
+.hdr__burger { gap: 5px; width: 24px; }
+.hdr__burger i { position: relative; height: 6px; overflow: hidden; background: none; }
+.hdr__burger i::before { content: ""; position: absolute; top: 0; left: 0; width: 48px; height: 6px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M0 3Q3 0 6 3T12 3T18 3T24 3T30 3T36 3T42 3T48 3'/%3E%3C/svg%3E") left top / 48px 6px no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M0 3Q3 0 6 3T12 3T18 3T24 3T30 3T36 3T42 3T48 3'/%3E%3C/svg%3E") left top / 48px 6px no-repeat;
+  animation: swell 1.4s linear infinite paused; transition: opacity .2s var(--ease); }
+.hdr__burger i:last-child::before { animation-duration: 1.9s; animation-delay: -.95s; }
+.hdr__burger i::after { content: ""; position: absolute; left: 0; right: 0; top: 2.25px; height: 1.5px; background: currentColor; opacity: 0; transition: opacity .2s var(--ease); }
+@keyframes swell { to { transform: translate3d(-12px, 0, 0); } }
+@media (hover: hover) { .hdr__menu:hover .hdr__burger i::before { animation-play-state: running; } }
+/* a phone has no pointer to follow: the same water, drifting slowly */
+@media (hover: none) {
+  .hdr__burger i::before { animation-duration: 3.6s; animation-play-state: running; }
+  .hdr__burger i:last-child::before { animation-duration: 4.8s; animation-delay: -2.4s; }
+}
+.hdr__menu[aria-expanded="true"] .hdr__burger i { overflow: visible; }
+.hdr__menu[aria-expanded="true"] .hdr__burger i::before { opacity: 0; animation-play-state: paused; }
+.hdr__menu[aria-expanded="true"] .hdr__burger i::after { opacity: 1; }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:first-child { transform: translateY(5.5px) rotate(45deg); }
+.hdr__menu[aria-expanded="true"] .hdr__burger i:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .hdr__burger i::before, .hdr__menu:hover .hdr__burger i::before { animation-play-state: paused; } }

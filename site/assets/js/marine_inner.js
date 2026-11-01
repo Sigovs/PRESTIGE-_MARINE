@@ -11,7 +11,7 @@
     const smooth = (t) => t * t * (3 - 2 * t);
 
     let lenis = null;
-    const boot = () => { if (reduce || !window.Lenis || lenis) return; lenis = new window.Lenis({ anchors: { offset: -64 }, autoRaf: true }); };
+    const boot = () => { if (reduce || !window.Lenis || lenis) return; lenis = new window.Lenis({ anchors: { offset: -64 }, autoRaf: true }); window.__lenis = lenis; };
     if (window.Lenis) boot(); else window.addEventListener('load', boot, { once: true });
 
     /* header: always on screen; bare on the water, then it takes the ground of whatever is under it */

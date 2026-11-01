@@ -33,6 +33,7 @@ Not in the repo (gitignored, on the Mac only): `research/` (~600 MB brand media 
   middle, straight up with the finger, never sideways off the screen; the plate arrives after it on open water.
 - **Switching boats on the phone's plate (Alex, 31 Oct):** a boat passing unseen under the cards is pointless. The cards step
   aside, the boat sails the open water, the cards return with her words.
+- **Inquire (Alex, 31 Oct, from his reference):** every Inquire opens a panel sliding in from the right, half the screen, the page frosted behind it, the fields stepping in after it; our serif, our fields, sentence case. `marine_inquire.js` copies the page's own form. Without the script the link goes to the form on the page.
 - **Everything on the phone happens faster (Alex, 31 Oct):** short intervals, quick passes (the fish come about every second).
 - **A snapping rail needs `scroll-padding-inline: var(--gutter)`,** or its cards and words stop against the edge of the screen.
 - **Pinned screens use `--pin` (100lvh), never 100svh with `overflow: hidden`:** Safari hiding its bar cuts them short.
