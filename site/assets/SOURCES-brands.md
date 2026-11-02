@@ -96,3 +96,6 @@ The brands' own films and pictures, used by Prestige Marine as authorised dealer
 
 - `video/prestige-iguana-full.mp4`: Prestige Marine's own Iguana Commuter film, 94 s, from the home page of prestigemarine.co, supplied by Alex 31 Oct 2026; remuxed for streaming only, not re-encoded.
 - `video/prestige-iguana-full-m.mp4`: the same film scaled to 960 wide, no sound, for phones.
+- The About film, home and About us: the Prestige Imports film "Tecnomar Dock", embedded from YouTube (ZRMBnz5zAfc) as on the client's current site, not hosted here (Alex, 1 Nov 2026). It carries a Lamborghini Miami mark in the corner.
+- `img/about-film-{home,port,chap}.jpg`: frames of that film at 5.2, 186.8 and 195.6 s from Alex's download, posters for the film's stretches.
+- `video/about-hero-cut.mp4`, `-m.mp4`, `img/about-hero-cut.jpg`: About's first screen, our cut of Alex's `ABOUT US VIDEO.mp4` (Tecnomar Dock) at his request, 1 Nov 2026; no presenter, no sound, 13% cropped off the right and bottom edges, 3% off the left and top, so the Lamborghini Miami corner mark falls outside. Source stretches: 204.29-206.12, 11.35-15.05, 0.04-1.38, 188.39-189.19, 189.81-190.82, 191.56-192.19, 192.27-192.86, 192.94-193.69, 21.35-23.9, 5.71-7.05, 196.85-197.7, 198.99-199.66, 201.78-202.16, 202.87-203.5, 203.58-204.21, 206.2-207.38, 207.46-209.84 s.

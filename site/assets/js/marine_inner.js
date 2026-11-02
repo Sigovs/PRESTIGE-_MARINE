@@ -74,25 +74,27 @@
         requestAnimationFrame(draw);
     }
 
-    /* ── about: the three words on navy, the film opening behind them from a slit to the whole screen, scrubbed; without the script or with reduced motion the film simply stands behind the words ── */
+    /* ── about: the three words on navy, then the film opens behind them by itself, from a slit to the whole screen; it does not wait for the scroll. Without the script or with reduced motion the film simply stands behind the words ── */
     const abi = $('[data-abintro]');
     if (abi && !reduce) {
-        const media = $('[data-abmedia]'), vid = media.querySelector('video'), words = [...$('[data-abwords]').children], hint = $('[data-abhint]');
-        const held = abi.querySelector('.abintro__pin');
-        const draw = () => {
-            const r = abi.getBoundingClientRect(), vh = held.offsetHeight;
-            if (r.bottom > 0) {
-                const p = clamp(-r.top / Math.max(1, r.height - 2 * vh), 0, 1), o = smooth(seg(p, 0, 0.75));
-                const iy = (1 - o) * 46, ix = (1 - o) * 30;
-                media.style.clipPath = `inset(${iy.toFixed(2)}% ${ix.toFixed(2)}% round ${((1 - o) * 10).toFixed(1)}px)`;
-                vid.style.transform = `scale(${(1.3 - o * 0.3).toFixed(4)})`;
-                // the lines start closed up around the slit and stand apart as it opens
-                words.forEach((w, i) => { w.style.transform = `translate3d(0, ${((i - 1) * o * 10).toFixed(2)}vh, 0)`; });
-                hint.style.opacity = (1 - seg(p, 0, 0.2)).toFixed(3);
-            }
-            requestAnimationFrame(draw);
+        const media = $('[data-abmedia]'), vid = media.querySelector('video, .ytfilm');
+        const DELAY = 700, OPEN = 2600;
+        const set = (o) => {
+            media.style.clipPath = `inset(${((1 - o) * 46).toFixed(2)}% ${((1 - o) * 30).toFixed(2)}% round ${((1 - o) * 10).toFixed(1)}px)`;
+            vid.style.transform = `scale(${(1.3 - o * 0.3).toFixed(4)})`;
         };
-        requestAnimationFrame(draw);
+        if (abi.getBoundingClientRect().top < -innerHeight / 2) set(1);   // reloaded further down the page: already open
+        else {
+            set(0);
+            let t0 = 0;
+            const run = (t) => {
+                t0 = t0 || t;
+                const o = smooth(clamp((t - t0 - DELAY) / OPEN, 0, 1));
+                set(o);
+                if (o < 1) requestAnimationFrame(run);
+            };
+            requestAnimationFrame(run);
+        }
     }
 
     /* ── the range: with several models the page holds while they pass sideways; each picture drifts in its frame ── */
@@ -315,11 +317,15 @@
     /* ── films ── */
     const box = $('[data-film-box]'), vid = $('[data-film-video]');
     let opener = null;
-    const closeFilm = () => { vid.pause(); vid.removeAttribute('src'); vid.load(); if (box.open) box.close(); if (lenis) lenis.start(); opener?.focus(); };
+    const closeFilm = () => { box.querySelector('.film__yt')?.remove(); vid.hidden = false; vid.pause(); vid.removeAttribute('src'); vid.load(); if (box.open) box.close(); if (lenis) lenis.start(); opener?.focus(); };
     document.querySelectorAll('[data-film]').forEach((b) => b.addEventListener('click', () => {
         if (!box.showModal) { window.open(b.dataset.film, '_blank', 'noopener'); return; }
-        opener = b; box.setAttribute('aria-label', b.dataset.filmTitle || 'Film'); vid.src = b.dataset.film;
-        if (lenis) lenis.stop(); box.showModal(); vid.play().catch(() => {});
+        opener = b; box.setAttribute('aria-label', b.dataset.filmTitle || 'Film');
+        if (b.dataset.filmYt) {
+            const f = document.createElement('iframe'); f.className = 'film__yt'; f.title = b.dataset.filmTitle || 'Film'; f.allow = 'autoplay; fullscreen; encrypted-media'; f.allowFullscreen = true;
+            f.src = `https://www.youtube-nocookie.com/embed/${b.dataset.filmYt}?autoplay=1&rel=0`; vid.hidden = true; box.append(f);
+        } else { vid.src = b.dataset.film; }
+        if (lenis) lenis.stop(); box.showModal(); if (!b.dataset.filmYt) vid.play().catch(() => {});
     }));
     $('[data-film-close]').addEventListener('click', closeFilm);
     box.addEventListener('cancel', (e) => { e.preventDefault(); closeFilm(); });

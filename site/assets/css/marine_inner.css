@@ -216,16 +216,18 @@ main > .panel { position: relative; z-index: 2; }
   .inv .boat--sold { grid-row: auto; }
 }
 
-/* ── about: the three words first, the film opening behind them as the page moves; the first panel slides over ── */
-.abintro { position: relative; height: calc(var(--pin) * 3); background: var(--navy); color: var(--white); }
+/* ── about: the three words first, the film opening behind them by itself; the first panel slides over ── */
+.abintro { position: relative; height: calc(var(--pin) * 2); background: var(--navy); color: var(--white); }
 .abintro + .panel { position: relative; z-index: 3; margin-top: calc(var(--pin) * -1); border-radius: 32px 32px 0 0; }
 .abintro__pin { position: sticky; top: 0; height: var(--pin); padding-bottom: var(--pin-gap); overflow: hidden; display: grid; place-items: center; }
 .abintro__media { position: absolute; inset: 0; will-change: clip-path; }
 .abintro__media video { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .abintro__shade { position: absolute; inset: 0; background: rgba(3, 26, 44, .5); }
-.abintro__h { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; font-family: var(--serif); font-weight: 400; font-size: clamp(3.5rem, 2rem + 9vw, 11rem); line-height: 1; letter-spacing: -.012em; text-align: center; }
+.abintro__h { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; font-family: var(--serif); font-weight: 400; font-size: clamp(3.5rem, min(2rem + 9vw, 17svh), 11rem); line-height: 1; letter-spacing: -.012em; text-align: center; }
 .abintro__h span { display: block; will-change: transform; }
-.abintro__hint { position: absolute; z-index: 1; left: 0; right: 0; bottom: calc(var(--s-7) + var(--pin-gap)); margin: 0; text-align: center; font-size: var(--t-16); font-weight: 500; }
+.abintro__foot { position: absolute; z-index: 1; left: 0; right: 0; bottom: calc(var(--s-6) + var(--pin-gap)); display: grid; justify-items: center; gap: var(--s-3); }
+.abintro__hint { margin: 0; text-align: center; font-size: var(--t-16); font-weight: 500; }
+.abintro__foot .filmgo { position: static; }
 
 /* one thought per section: a picture and its words, top edges together, the sides trading places */
 .absplit { padding-block: var(--s-9); }

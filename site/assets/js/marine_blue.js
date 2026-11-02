@@ -788,22 +788,6 @@ void main(){
         requestAnimationFrame(tick);
     }
 
-    /* ── the About us film loads and plays only while it is near the screen; reduced motion keeps the poster ── */
-    const landFilm = $('[data-land-film]');
-    if (landFilm && !reduce && 'IntersectionObserver' in window) {
-        // past the film's title card and black bars, and round again before its end
-        const LAND_FROM = 4, LAND_TO = 92;
-        landFilm.addEventListener('loadedmetadata', () => { landFilm.currentTime = LAND_FROM; });
-        landFilm.addEventListener('timeupdate', () => { if (landFilm.currentTime >= LAND_TO) landFilm.currentTime = LAND_FROM; });
-        new IntersectionObserver((es) => es.forEach((e) => {
-            if (e.isIntersecting) {
-                const src = landFilm.querySelectorAll('source[data-src]');
-                if (src.length) { src.forEach((s) => { s.src = s.dataset.src; s.removeAttribute('data-src'); }); landFilm.load(); }
-                landFilm.play().catch(() => {});
-            } else landFilm.pause();
-        }), { rootMargin: '300px 0px' }).observe(landFilm);
-    }
-
     /* ── menu (the page behind it is inert) ── */
     const menu = $('[data-menu]');
     const toggle = $('[data-menu-toggle]');
@@ -838,11 +822,15 @@ void main(){
     const box = $('[data-film-box]');
     const vid = $('[data-film-video]');
     let opener = null;
-    const closeFilm = () => { vid.pause(); vid.removeAttribute('src'); vid.load(); if (box.open) box.close(); if (lenis) lenis.start(); opener?.focus(); };
+    const closeFilm = () => { box.querySelector('.film__yt')?.remove(); vid.hidden = false; vid.pause(); vid.removeAttribute('src'); vid.load(); if (box.open) box.close(); if (lenis) lenis.start(); opener?.focus(); };
     document.querySelectorAll('[data-film]').forEach((b) => b.addEventListener('click', () => {
         if (!box.showModal) { window.open(b.dataset.film, '_blank', 'noopener'); return; }
-        opener = b; box.setAttribute('aria-label', b.dataset.filmTitle || 'Film'); vid.src = b.dataset.film;
-        if (lenis) lenis.stop(); box.showModal(); vid.play().catch(() => {});
+        opener = b; box.setAttribute('aria-label', b.dataset.filmTitle || 'Film');
+        if (b.dataset.filmYt) {
+            const f = document.createElement('iframe'); f.className = 'film__yt'; f.title = b.dataset.filmTitle || 'Film'; f.allow = 'autoplay; fullscreen; encrypted-media'; f.allowFullscreen = true;
+            f.src = `https://www.youtube-nocookie.com/embed/${b.dataset.filmYt}?autoplay=1&rel=0`; vid.hidden = true; box.append(f);
+        } else { vid.src = b.dataset.film; }
+        if (lenis) lenis.stop(); box.showModal(); if (!b.dataset.filmYt) vid.play().catch(() => {});
     }));
     $('[data-film-close]').addEventListener('click', closeFilm);
     box.addEventListener('cancel', (e) => { e.preventDefault(); closeFilm(); });
