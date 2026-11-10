@@ -2,7 +2,7 @@
   "slug": "midnight",
   "name": "Midnight Express",
   "title": "Midnight Express | Prestige Marine, North Miami Beach",
-  "description": "Midnight Express at Prestige Marine: performance center consoles built in Miami, and a 2026 Midnight Express 52 Vitesse in stock, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.",
+  "description": "Midnight Express at Prestige Marine: performance center consoles built in Miami, and a 2026 Midnight Express 52 Vitesse in stock, at 15050 Biscayne Blvd, North Miami Beach. 833-290-6284.",
   "logo": "midnight.svg",
   "logo_ratio": "7",
   "sub": "High performance center consoles, built in Miami, Florida, and made to order.",
@@ -217,7 +217,8 @@
       "url": "https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/",
       "plan": "assets/img/slip-me52-plan.webp",
       "side": "assets/img/slip-me52-side.webp",
-      "alt": "2026 Midnight Express 52 Vitesse running, seen from high above"
+      "alt": "2026 Midnight Express 52 Vitesse running, seen from high above",
+      "featured": 3
     }
   ],
   "sold": [

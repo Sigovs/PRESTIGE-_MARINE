@@ -56,7 +56,7 @@
 .js .step { opacity: 0; }
 
 .bstage__hull { position: relative; z-index: 1; margin: 0; min-height: 0; height: 100%; display: flex; justify-content: center; align-items: flex-start; --hw: min(24vw, 420px); }
-.bstage__hull img { --hh: calc(var(--hw) * 3.4); width: var(--hw); height: auto; max-width: none; will-change: transform; transform-origin: 50% 45%;
+.bstage__hull img { --hh: calc(var(--hw) * 3.4); width: calc(var(--hw) * var(--boat, 1));   /* --boat: a hull's own size (JS), 1 for most */ height: auto; max-width: none; will-change: transform; transform-origin: 50% 45%;
   transform: translateY(calc(var(--bar-h) + 3vh)); filter: drop-shadow(calc(var(--hh) * .05) calc(var(--hh) * .06) 22px rgba(2, 40, 48, .62)); }
 
 /* ── brands: rows beside one large picture, the row in the middle of the screen owns it ── */
@@ -535,3 +535,48 @@ body { font-family: var(--sans); }
 .absplit__img--film { aspect-ratio: 3 / 2; }
 a.filmgo { color: var(--navy); text-decoration: none; }
 .film__yt { display: block; width: min(100%, calc((100dvh - 96px) * 16 / 9)); aspect-ratio: 16 / 9; margin: auto; border: 0; }
+/* v2 (10 Nov 2026): four boats in the hero row; on phones Midnight Express reads Midnight (its aria-label keeps the name) */
+@media (max-width: 720px) { .pill__more { display: none; } }
+/* v2: four boats on a phone or a tablet stand two by two, all the same width, not three and one */
+@media (max-width: 1023.98px) { .pills--four { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 26rem; } .pills--four .pill { padding-inline: var(--s-2); } }
+/* v2 (10 Nov 2026): In stock now is a rail. It starts at the content's left edge and runs off the right edge of the
+   screen, so the next boat shows in the space beside the last whole card; --bleed is that space (JS measures it) */
+.boats--rail { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: calc((100% - 3 * var(--s-6)) / 4);
+  column-gap: var(--s-6); row-gap: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
+  margin-right: calc(var(--bleed, 0px) * -1); padding-right: var(--bleed, 0px);
+  /* room for a card's hover shadow (24px blur below, lift above): the rail clips what it scrolls, so it is padded and pulled
+     back by the same amount; the cards stay where they were and the snap still lands on the content's edge */
+  --sh: 28px; padding-block: 8px 56px; margin-block: -8px -56px; padding-left: var(--sh); margin-left: calc(var(--sh) * -1); scroll-padding-left: var(--sh); }
+.boats--rail.is-drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.boats--rail.is-drag a { pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .boats--rail { cursor: grab; } }
+.boats--rail::-webkit-scrollbar { display: none; }
+.boats--rail > .boat { scroll-snap-align: start; }
+.boats--rail:focus-visible { outline: 2px solid var(--navy); outline-offset: 6px; }
+.boats__aside { display: flex; align-items: center; gap: var(--s-3); }
+.boats__go { width: var(--btn-h, 52px); padding: 0; justify-content: center; }
+.boats__go[hidden] { display: none; }
+.boats__go .ico { width: 22px; height: 22px; transition: transform .35s var(--ease); }
+.boats__go.is-back .ico { transform: rotate(180deg); }
+/* the next boat must show at every width: four whole cards only where the screen leaves room beside them */
+@media (max-width: 1699.98px) { .boats--rail { grid-auto-columns: calc((100% - 3 * var(--s-6)) / 3.35); } }
+@media (max-width: 1023.98px) { .boats--rail { grid-auto-columns: calc((100% - 2 * var(--s-6)) / 2.3); } }
+@media (max-width: 720px) { .boats--rail { grid-auto-columns: 82%; column-gap: var(--s-4); } }
+@media (prefers-reduced-motion: reduce) { .boats__go .ico { transition: none; } }
+/* the neutral first line of a dropdown reads as a prompt, not as a choice; the open list keeps the ink (10 Nov 2026) */
+.field select:has(> option[value=""]:checked) { color: var(--ink-2); }
+.field select option { color: var(--ink); }
+/* Facebook and Instagram in the contact block: square line buttons at the button height (10 Nov 2026) */
+.social { display: flex; gap: var(--s-3); margin: 0; padding: 0; list-style: none; }
+.social__a { width: 52px; padding: 0; }
+.social__a .ico { width: 22px; height: 22px; }
+.contact__dir { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+.menu__end { display: grid; gap: var(--s-4); justify-items: start; }
+/* home v2: the Instagram row after Recently sold, in its grammar; six small squares, three a row on phones (10 Nov 2026) */
+.igfeed__grid { list-style: none; margin: 0 0 var(--s-5); padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s-2); }
+.igfeed__grid a { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 6px; background: var(--line); }
+.igfeed__grid img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.igfeed__grid a:hover img { transform: scale(1.04); }
+.igfeed__grid a:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+@media (max-width: 1023.98px) { .igfeed__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .igfeed__grid img { transition: none; } .igfeed__grid a:hover img { transform: none; } }

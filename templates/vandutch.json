@@ -2,7 +2,7 @@
   "slug": "vandutch",
   "name": "VanDutch",
   "title": "VanDutch | Prestige Marine, North Miami Beach",
-  "description": "VanDutch at Prestige Marine: the 2021 VanDutch 40.2 and the 2023 VanDutch 48 in stock, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.",
+  "description": "VanDutch at Prestige Marine: the 2021 VanDutch 40.2 and the 2023 VanDutch 48 in stock, at 15050 Biscayne Blvd, North Miami Beach. 833-290-6284.",
   "logo": "vandutch.svg",
   "stock": [
     {
@@ -18,7 +18,8 @@
       "url": "https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/",
       "plan": "assets/img/slip-vd402-plan.webp",
       "side": "assets/img/slip-vd402-side.webp",
-      "alt": "2021 VanDutch 40.2 from above on green water"
+      "alt": "2021 VanDutch 40.2 from above on green water",
+      "featured": 1
     },
     {
       "name": "VanDutch 48",
@@ -33,7 +34,8 @@
       "url": "https://www.prestigemarine.co/boats-for-sale/2023-vandutch-48-north-miami-beach-florida-9561670/",
       "plan": "assets/img/slip-vd48-plan.webp",
       "side": "assets/img/slip-vd48-side.webp",
-      "alt": "2023 VanDutch 48 BRIX from above, Nardo Grey hull"
+      "alt": "2023 VanDutch 48 BRIX from above, Nardo Grey hull",
+      "featured": 2
     },
     {
       "name": "VanDutch 48",
@@ -47,8 +49,8 @@
       "power": "Volvo Penta D11",
       "size": "48′ × 13′2″",
       "url": "https://www.prestigemarine.co/boats-for-sale/2027-vandutch-48-miami-florida-8534412/",
-      "plan": "assets/img/brands/st-vd48n-a.webp",
-      "side": "assets/img/brands/st-vd48n-b.webp",
+      "plan": "assets/img/slip-vd48f-plan.webp",
+      "side": "assets/img/slip-vd48f-side.webp",
       "alt": "2027 VanDutch 48"
     },
     {
@@ -63,8 +65,8 @@
       "power": "Volvo Penta D11, IPS 950",
       "size": "56′ × 14′8″",
       "url": "https://www.prestigemarine.co/boats-for-sale/2027-vandutch-56-miami-florida-8577130/",
-      "plan": "assets/img/brands/st-vd56n-a.webp",
-      "side": "assets/img/brands/st-vd56n-b.webp",
+      "plan": "assets/img/slip-vd56-plan.webp",
+      "side": "assets/img/slip-vd56-side.webp",
       "alt": "2027 VanDutch 56"
     }
   ],

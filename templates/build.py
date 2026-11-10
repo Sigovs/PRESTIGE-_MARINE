@@ -20,6 +20,17 @@ BRANDS = {
     'vandutch': ('VanDutch Yachts', 'brand-vandutch', 'https://www.prestigemarine.co/new-boat-showrooms/vandutch/', 'assets/img/inv-vandutch-48.webp', 'A VanDutch running at speed'),
     'midnight': ('Midnight Express', 'brand-midnight', 'https://www.prestigemarine.co/new-boat-showrooms/midnight-express/', 'assets/img/slip-me52-side.webp', 'A Midnight Express running'),
 }
+# the contact forms' lists: the brands in the hero's order, then selling and anything else
+HERO_ORDER = ['tecnomar', 'midnight', 'vandutch', 'iguana']
+TAIL = ['Brokerage: selling my boat', 'Something else']
+# a neutral first line: shown until a choice is made, not offered in the open list
+PICK = '            <option value="" selected disabled hidden>Please select</option>\n'
+
+
+def brand_options():
+    return [BRANDS[k][0] for k in HERO_ORDER]
+
+
 NAV = [('Inventory', 'inventory.html'),
        ('Sold', 'sold.html'), ('About Us', 'about.html'), ('Contact Us', 'contact.html')]
 e = html.escape
@@ -124,7 +135,7 @@ def view(v, i):
 
 def other(k):
     name, anchor, _url, img, alt = BRANDS[k]
-    href = page_of(k) or f'index_blue.html#{anchor}'
+    href = page_of(k) or f'index_blue_v2.html#{anchor}'
     return f'''        <li><a class="other" href="{href}">
           <span class="other__img"><img src="{img}" loading="lazy" alt="{e(alt)}"></span>
           <span class="other__name">{e(name)}</span>
@@ -159,11 +170,11 @@ def build(d, out):
         'stock_n': 'none' if not n else 'one' if n == 1 else 'two' if n == 2 else 'many',
         'stock': stock, 'sold': sold,
         'others': '\n'.join(other(k) for k in BRANDS if k != slug),
-        'options': '\n'.join(f'            <option>{e(x)}</option>' for x in [f"{b['year']} {b['name']}" for b in d['stock']] + [m['name'] for m in d['range']] + ['Brokerage: selling my boat']),
+        'options': PICK + '\n'.join(f'            <option>{e(x)}</option>' for x in [f"{b['year']} {b['name']}" for b in d['stock']] + [m['name'] for m in d['range']] + ['Brokerage: selling my boat']),
         'brand_links': brand_links(slug),
         'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=\"noopener\""}>{label}</a>' for label, u in NAV),
         'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=\"noopener\""}>{label}</a></li>' for label, u in NAV),
-        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue_v2.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
     }
     for k, v in fill.items():
         t = t.replace('{{' + k + '}}', str(v))
@@ -180,7 +191,7 @@ def build_inventory():
     boats += [(o, o['brand'], '') for o in json.loads((HERE / 'stock-other.json').read_text(encoding='utf-8'))]
     boats.sort(key=lambda x: len_of(x[0]))
     names = list(dict.fromkeys(n for _, n, _ in boats))
-    home = (SITE / 'index_blue.html').read_text(encoding='utf-8')
+    home = (SITE / 'index_blue_v2.html').read_text(encoding='utf-8')
     run = re.search(r'<p class="sold__run">(.*?)</p>', home).group(1)
     sold = f'''      <div class="sold" id="sold">
         <h3 class="sold__h">Recently sold</h3>
@@ -192,13 +203,13 @@ def build_inventory():
     t = (HERE / 'shell.html').read_text(encoding='utf-8').replace('{{main}}', (HERE / 'inventory.html').read_text(encoding='utf-8').rstrip('\n'))
     fill = {
         'title': 'Inventory | Prestige Marine, North Miami Beach',
-        'description': 'All the boats at Prestige Marine, new and pre-owned: Tecnomar for Lamborghini 63, Midnight Express and VanDutch, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.',
+        'description': 'All the boats at Prestige Marine, new and pre-owned: Tecnomar for Lamborghini 63, Midnight Express and VanDutch, at 15050 Biscayne Blvd, North Miami Beach. 833-290-6284.',
         'stock': '\n'.join(boat(b, n) for b, n, _ in boats), 'sold': sold,
-        'options': '\n'.join(f'            <option>{e(x)}</option>' for x in [f"{b['year']} {b['name']}" for b, _, _ in boats] + ['A new boat', 'Brokerage: selling my boat']),
+        'options': PICK + '\n'.join(f'            <option>{e(x)}</option>' for x in [f"{b['year']} {b['name']}" for b, _, _ in boats] + ['Something else']),
         'brand_links': brand_links(None),
         'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a>' for label, u in NAV),
         'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a></li>' for label, u in NAV),
-        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue_v2.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
     }
     for k, v in fill.items():
         t = t.replace('{{' + k + '}}', str(v))
@@ -226,14 +237,14 @@ def build_sold():
     t = (HERE / 'shell.html').read_text(encoding='utf-8').replace('{{main}}', (HERE / 'sold.html').read_text(encoding='utf-8').rstrip('\n'))
     fill = {
         'title': 'Sold | Prestige Marine, North Miami Beach',
-        'description': 'Boats recently sold by Prestige Marine, at 15050 Biscayne Blvd, North Miami Beach. 305-947-1000.',
+        'description': 'Boats recently sold by Prestige Marine, at 15050 Biscayne Blvd, North Miami Beach. 833-290-6284.',
         'filters': '\n'.join(f'          <button type="button" aria-pressed="false" data-inv-brand="{e(n)}">{e(n)}</button>' for n in names),
         'rows': '\n'.join(sold_card(s) for s in boats),
         'options': '\n'.join(f'            <option>{e(x)}</option>' for x in ['A boat like one of these'] + [f"Something like the {s['year']} {s['name']}" for s in boats] + ['Brokerage: selling my boat']),
         'brand_links': brand_links(None),
         'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a>' for label, u in NAV),
         'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a></li>' for label, u in NAV),
-        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue_v2.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
     }
     for k, v in fill.items():
         t = t.replace('{{' + k + '}}', str(v))
@@ -246,13 +257,13 @@ def build_about():
     t = (HERE / 'shell.html').read_text(encoding='utf-8').replace('{{main}}', (HERE / 'about.html').read_text(encoding='utf-8').rstrip('\n'))
     fill = {
         'title': 'About Us | Prestige Marine, North Miami Beach',
-        'description': 'Prestige Marine, a division of the Prestige Imports family: land, air and now sea, from North Miami Beach since 1977. 15050 Biscayne Blvd. 305-947-1000.',
+        'description': 'Prestige Marine, a division of the Prestige Imports family: land, air and now sea, from North Miami Beach since 1977. 15050 Biscayne Blvd. 833-290-6284.',
         'others': '\n'.join(other(k) for k in BRANDS),
-        'options': '\n'.join(f'            <option>{e(x)}</option>' for x in ['A new boat', 'A pre-owned boat', 'Brokerage: selling my boat', 'Something else']),
+        'options': PICK + '\n'.join(f'            <option>{e(x)}</option>' for x in brand_options() + TAIL),
         'brand_links': brand_links(None),
         'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a>' for label, u in NAV),
         'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a></li>' for label, u in NAV),
-        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue_v2.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
     }
     for k, v in fill.items():
         t = t.replace('{{' + k + '}}', str(v))
@@ -265,11 +276,11 @@ def build_simple(name, title, description, options=None):
     t = (HERE / 'shell.html').read_text(encoding='utf-8').replace('{{main}}', (HERE / f'{name}.html').read_text(encoding='utf-8').rstrip('\n'))
     fill = {
         'title': title, 'description': description,
-        'options': '\n'.join(f'            <option>{e(x)}</option>' for x in (options or [])),
+        'options': (PICK if options else '') + '\n'.join(f'            <option>{e(x)}</option>' for x in (options or [])),
         'brand_links': brand_links(None),
         'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a>' for label, u in NAV),
         'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a></li>' for label, u in NAV),
-        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue_v2.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
     }
     for k, v in fill.items():
         t = t.replace('{{' + k + '}}', str(v))
@@ -280,12 +291,12 @@ def build_simple(name, title, description, options=None):
 
 
 def all_stock():
-    names = []
+    # the inventory page's order (by length), so every list reads the same
+    boats = []
     for s in BUILT:
-        j = json.loads((HERE / f'{s}.json').read_text(encoding='utf-8'))
-        names += [f"{x['year']} {x['name']}" for x in j['stock']]
-    names += [f"{x['year']} {x['name']}" for x in json.loads((HERE / 'stock-other.json').read_text(encoding='utf-8'))]
-    return sorted(names)
+        boats += json.loads((HERE / f'{s}.json').read_text(encoding='utf-8'))['stock']
+    boats += json.loads((HERE / 'stock-other.json').read_text(encoding='utf-8'))
+    return [f"{x['year']} {x['name']}" for x in sorted(boats, key=len_of)]
 
 
 def all_cards():
@@ -334,10 +345,13 @@ def build_vdp(x):
         else:
             body = '<ul>' + ''.join(f'<li>{e(i)}</li>' for i in g['items']) + '</ul>'
         return f'        <details class="spec"{o}><summary>{e(g["h"])}<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>{body}</details>'
-    others = [c for c in all_cards() if vdp_of(c[0]['url']) != f"boat-{x['slug']}.html"]
-    others.sort(key=lambda c: (c[1] != x['brand'], abs(len_of(c[0]) - 45)))
+    # Similar boats: the same brand first, then the nearest in length to this one
+    cards = all_cards(); me = f"boat-{x['slug']}.html"
+    mine = next(len_of(c[0]) for c in cards if vdp_of(c[0]['url']) == me)
+    others = [c for c in cards if vdp_of(c[0]['url']) != me]
+    others.sort(key=lambda c: (c[1] != x['brand'], abs(len_of(c[0]) - mine)))
     fill = {
-        'title': e(title), 'description': e(f"{title} at Prestige Marine: {x['price']}, {x['location']}. 15050 Biscayne Blvd, North Miami Beach. 305-947-1000."),
+        'title': e(title), 'description': e(f"{title} at Prestige Marine: {x['price']}, {x['location']}. 15050 Biscayne Blvd, North Miami Beach. 833-290-6284."),
         'hero': x['photos'][0], 'year': x['year'], 'name': e(x['name']), 'brand': e(x['brand']), 'location': e(x['location']), 'price': e(x['price']),
         'tag': tag_html(x['tag']).replace('class="tag ', 'class="tag vdtop__tag ') if x['tag'] else '', 'broker_tel': tel, 'broker_tel_raw': '+1' + tel.replace('-', ''), 'broker_name': e(x['broker'][0]),
         'gallery': gallery, 'count': len(x['photos']), 'photos_note': f'        <p class="vdgal__note">{e(x["photos_note"])}</p>' if x.get('photos_note') else '',
@@ -348,13 +362,41 @@ def build_vdp(x):
         'brand_links': brand_links(None),
         'nav_links': '\n'.join(f'    <a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a>' for label, u in NAV),
         'menu_links': '\n'.join(f'      <li><a href="{u}"{"" if u.endswith(".html") else " rel=" + chr(34) + "noopener" + chr(34)}>{label}</a></li>' for label, u in NAV),
-        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
+        'foot_brands': '\n'.join(f'        <a href="{page_of(k) or "index_blue_v2.html#" + v[1]}">{e(v[0])}</a>' for k, v in BRANDS.items()),
     }
     t = (HERE / 'shell.html').read_text(encoding='utf-8').replace('{{main}}', (HERE / 'vdp.html').read_text(encoding='utf-8').rstrip('\n'))
     for k, v in fill.items():
         t = t.replace('{{' + k + '}}', str(v))
     assert '{{' not in t, t[t.index('{{'):][:40]
     (SITE / f"boat-{x['slug']}.html").write_text(t, encoding='utf-8', newline='\n')
+
+
+def build_home(page='index_blue_v2.html'):
+    """The home's In stock now: every boat in stock, from the same data as the inventory. Boats with "featured" (1, 2, ...)
+    come first in that order, then the rest, newest first; with none featured, one boat per brand leads, newest first."""
+    boats = []
+    for s in BUILT:
+        j = json.loads((HERE / f'{s}.json').read_text(encoding='utf-8'))
+        boats += [(b, j['name']) for b in j['stock']]
+    boats += [(o, o['brand']) for o in json.loads((HERE / 'stock-other.json').read_text(encoding='utf-8'))]
+    newest = lambda x: (-int(x[0]['year']), -len_of(x[0]))
+    feat = sorted([x for x in boats if x[0].get('featured')], key=lambda x: x[0]['featured'])
+    rest = sorted([x for x in boats if not x[0].get('featured')], key=newest)
+    if not feat:   # one per brand first
+        seen, lead = set(), []
+        for x in rest:
+            if x[1] not in seen: seen.add(x[1]); lead.append(x)
+        rest = lead + [x for x in rest if x not in lead]
+    cards = '\n'.join(boat(b, n) for b, n in feat + rest)
+    f = SITE / page; html = f.read_text(encoding='utf-8')
+    new, k = re.subn(r'(<!-- stock: built by templates/build.py[^>]*-->\n).*?(\s*<!-- /stock -->)', lambda m: m.group(1) + cards + '\n' + m.group(2).lstrip('\n'), html, flags=re.S)
+    assert k == 1, 'home stock markers'
+    opts = PICK + '\n'.join(f'            <option>{e(x)}</option>' for x in brand_options() + TAIL)
+    new, k = re.subn(r'(<select id="f-interest" name="interest">\n).*?(\n\s*</select>)', lambda m: m.group(1) + opts + m.group(2), new, flags=re.S)
+    assert k == 1, 'home select'
+    new = re.sub(r'data-count-stock>\d+<', f'data-count-stock>{len(boats)}<', new)
+    f.write_text(new, encoding='utf-8')
+    print('home stock:', len(boats), 'boats,', len(feat), 'featured')
 
 
 if __name__ == '__main__':
@@ -364,9 +406,10 @@ if __name__ == '__main__':
         for s in BUILT:
             build(json.loads((HERE / f'{s}.json').read_text(encoding='utf-8')), SITE / f'brand-{s}.html')
         build_inventory()
+        build_home()
         build_sold()
         build_about()
-        build_simple('contact', 'Contact Us | Prestige Marine, North Miami Beach', 'Prestige Marine, 15050 Biscayne Blvd, North Miami Beach, FL 33181. 305-947-1000. Sea trials and viewings by appointment.', ['A new boat'] + all_stock() + ['Brokerage: selling my boat', 'Something else'])
+        build_simple('contact', 'Contact Us | Prestige Marine, North Miami Beach', 'Prestige Marine, 15050 Biscayne Blvd, North Miami Beach, FL 33181. 833-290-6284. Sea trials and viewings by appointment.', brand_options() + all_stock() + TAIL)
         build_simple('sitemap', 'Sitemap | Prestige Marine', 'Every page of the Prestige Marine site.')
         build_simple('privacy', 'Your Privacy Choices | Prestige Marine', 'Your privacy choices at Prestige Marine.')
         for x in BOATS:

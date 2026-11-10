@@ -402,6 +402,65 @@
         }
         if (sort) sort.addEventListener('change', apply);
         invBox.querySelector('[data-inv-clear]').addEventListener('click', () => { clear(); apply(); });
+        // the search's dropdowns open the header's own panel (white card, soft shadow, 44px rows) instead of the system list
+        const dressed = [...invBox.querySelectorAll('[data-inv-sort], [data-s-year], [data-s-make]')].map((sel, n) => {
+            const label = sel.closest('label'), head = label && label.querySelector('span');
+            const name = (head ? head.textContent : label ? label.firstChild.textContent : '').trim();
+            const box = document.createElement('div'); box.className = 'dsel';
+            const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'dsel__btn';
+            btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', `dsel-${n}`);
+            btn.innerHTML = '<span class="dsel__val"></span><svg class="ico ico--chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+            const list = document.createElement('ul'); list.className = 'dsel__list'; list.id = `dsel-${n}`; list.setAttribute('role', 'listbox');
+            if (name) list.setAttribute('aria-label', name);
+            sel.before(box); box.append(btn, list, sel);
+            sel.classList.add('dsel__native'); sel.tabIndex = -1; sel.setAttribute('aria-hidden', 'true');
+            const sync = () => {
+                const o = sel.options[sel.selectedIndex];
+                btn.querySelector('.dsel__val').textContent = o ? o.text : '';
+                btn.setAttribute('aria-label', `${name}: ${o ? o.text : ''}`);
+            };
+            const items = () => [...list.children];
+            const shut = (focus) => {
+                if (!box.classList.contains('is-open')) return;
+                box.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false');
+                if (focus) btn.focus();
+            };
+            const pick = (li) => {
+                if (sel.value !== li.dataset.v) { sel.value = li.dataset.v; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+                sync(); shut(true);
+            };
+            const open = (at) => {
+                dressed.forEach((d) => d !== api && d.shut());
+                list.innerHTML = [...sel.options].map((o, i) => `<li role="option" tabindex="-1" data-v="${o.value.replace(/"/g, '&quot;')}" aria-selected="${i === sel.selectedIndex}">${o.text.replace(/</g, '&lt;')}</li>`).join('');
+                box.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true');
+                // the panel opens to the left of its field when the right edge of the screen is near
+                box.classList.toggle('dsel--end', box.getBoundingClientRect().left + list.offsetWidth > document.documentElement.clientWidth - 16);
+                const li = items()[at === 'last' ? items().length - 1 : Math.max(0, sel.selectedIndex)]; if (li) li.focus();
+            };
+            btn.addEventListener('click', () => (box.classList.contains('is-open') ? shut() : open()));
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(e.key === 'ArrowUp' && sel.selectedIndex < 0 ? 'last' : undefined); }
+            });
+            list.addEventListener('click', (e) => { const li = e.target.closest('li'); if (li) pick(li); });
+            list.addEventListener('keydown', (e) => {
+                const all = items(), i = all.indexOf(document.activeElement);
+                if (e.key === 'ArrowDown') { e.preventDefault(); (all[i + 1] || all[i]).focus(); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); (all[i - 1] || all[i]).focus(); }
+                else if (e.key === 'Home') { e.preventDefault(); all[0].focus(); }
+                else if (e.key === 'End') { e.preventDefault(); all[all.length - 1].focus(); }
+                else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (all[i]) pick(all[i]); }
+                else if (e.key === 'Escape') { e.preventDefault(); shut(true); }
+                else if (e.key === 'Tab') shut();
+            });
+            const api = { sync, shut, box };
+            sync();
+            return api;
+        });
+        if (dressed.length) {
+            document.addEventListener('click', (e) => dressed.forEach((d) => { if (!d.box.contains(e.target)) d.shut(); }));
+            // a cleared search resets the values underneath: the buttons follow
+            invBox.addEventListener('click', (e) => { if (e.target.closest('[data-s-clear], [data-inv-clear]')) dressed.forEach((d) => d.sync()); });
+        }
         apply();
     }
 

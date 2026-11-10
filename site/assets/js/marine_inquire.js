@@ -90,7 +90,9 @@
         }
         const name = a.dataset.enquire, sel = form.elements.interest;
         if (name && sel) {
-            let opt = [...sel.options].find((o) => o.text === name);
+            // the boat if the list has it, otherwise its brand (the home lists brands only), otherwise the boat is added
+            const opts = [...sel.options];
+            let opt = opts.find((o) => o.text === name) || opts.find((o) => o.text === a.dataset.brand);
             if (!opt) { opt = new Option(name); sel.add(opt, 1); }
             sel.value = opt.value;
         }

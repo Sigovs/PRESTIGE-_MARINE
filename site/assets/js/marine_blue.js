@@ -38,15 +38,15 @@
             kicker: 'The flagship we represent', name: 'Tecnomar for Lamborghini 63', price: 'Request price', status: 'In stock: 2022, Verde Gea, 96 hours',
             facts: [['Lineage', 'Conceived in synergy between Automobili Lamborghini and The Italian Sea Group. Terzo Millennio and Sián FKP 37 are its main inspirations.'],
                 ['Power', 'Two MAN V12 engines, 2,000 hp each.'], ['Build', 'Carbon fibre keeps her among the ultralight boats: 24 tons for 63 feet.'], ['Hard top', 'Inspired by Lamborghini’s roadster models.']],
-            link: 'https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/', enquire: '2022 Tecnomar Lamborghini 63'
+            link: 'https://www.prestigemarine.co/boats-for-sale/2022-tecnomar-lamborghini-63-north-miami-beach-florida-10360903/', enquire: '2022 Tecnomar Lamborghini 63', brand: 'Tecnomar for Lamborghini 63'
         },
         midnight: {
             line: 'Miami-built, family-owned.',
             ft: 52, img: ['assets/img/me52-hull.webp', 324, 1236, 'The 2026 Midnight Express 52 Vitesse from directly above: Grigio Lynx hull, camel seating, carbon hard top, outboards at the stern.'],
             kicker: 'In stock now', name: '2026 Midnight Express 52 Vitesse', price: '$2,500,000', status: 'Available now · as listed 26 Oct 2026',
             facts: [['Bow', 'Custom painted hull in Lamborghini Grigio Lynx, with camel seating.'], ['Hard top', 'Carbon exposed hard top. Midnight Express infusion construction, paired with select carbon fiber sections.'],
-                ['Amidships', 'The first Seakeeper 10, designed for much larger yachts, installed on a Midnight Express.'], ['Stern', 'Mercury Racing 500R outboards, painted the colour of the hull.']],
-            link: 'https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/', enquire: '2026 Midnight Express 52 Vitesse'
+                ['Amidships', 'The first Seakeeper 10, designed for much larger yachts, installed on a Midnight Express.'], ['Stern', 'Mercury Racing 500R outboards, painted the color of the hull.']],
+            link: 'https://www.prestigemarine.co/boats-for-sale/2026-midnight-express-52-vitesse-north-miami-beach-florida-10173015/', enquire: '2026 Midnight Express 52 Vitesse', brand: 'Midnight Express'
         },
         vandutch: {
             line: 'Essential lines, refined power.',
@@ -54,7 +54,17 @@
             kicker: 'In stock now', name: '2021 VanDutch 40.2', price: '$698,500', status: 'As listed 26 Oct 2026 · Miami Beach, Florida',
             facts: [['Hull', 'Super Jet Black, with a Pagani Silver bootstripe.'], ['Power', 'Twin Volvo Penta D6, 440 hp each, with joystick control.'],
                 ['Hours', 'Under 140.'], ['Length × beam', '40′11″ × 11′5″.']],
-            link: 'https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/', enquire: '2021 VanDutch 40.2'
+            link: 'https://www.prestigemarine.co/boats-for-sale/2021-vandutch-402-miami-beach-florida-10308760/', enquire: '2021 VanDutch 40.2', brand: 'VanDutch Yachts'
+        },
+        /* Iguana (Alex, 10 Nov 2026): no boat in stock, so the plate leads to the brand page. The hull is the Bow Rider's
+           top view Alex supplied (the same view as the Iguana Yachts brochure); facts from iguana-yachts.com/models/iguana-bow-rider */
+        iguana: {
+            line: 'From the sea onto the sand.',
+            ft: 30.18, size: 1.2, img: ['assets/img/iguana-bowrider-hull.webp', 773, 1437, 'The Iguana Bow Rider seen from directly above, a rendering: teak deck, sand-colored seats front and rear, one outboard at the stern.'],
+            kicker: 'The amphibious boats we represent', name: 'Iguana Bow Rider', price: 'Request price', status: 'Built in Normandy, France',
+            facts: [['Length × beam', '30′ × 9′2″ (9.20 m × 2.80 m).'], ['Power', 'Up to 600 hp, and up to 45 knots.'],
+                ['On land', 'Its own tracks fold out of the hull: up to 4 mph on sand.'], ['Windshield', 'Full beam, with an open door; seats at the front and the rear.']],
+            view: ['Iguana Yachts', 'brand-iguana.html'], enquire: 'Iguana Yachts'
         }
     };
 
@@ -62,14 +72,16 @@
     const lane = $('[data-lane]');
     const plate = $('[data-plate]');
     const P = (k) => plate.querySelector(`[data-p="${k}"]`);
-    const scale = (b) => { hull.style.setProperty('--nat', `${b.img[2]}px`);  };
+    const scale = (b) => { hull.style.setProperty('--nat', `${b.img[2]}px`); hull.style.setProperty('--boat', b.size || 1); };   // size: a hull drawn larger than the shared width (Iguana: its fins take part of it)
     scale(BOATS.tecnomar);
     let steps = [...plate.querySelectorAll('.step')];
     const railFill = $('[data-rail]'), countEl = $('[data-count]'), countOf = $('[data-count-of]'), railBox = $('[data-rail-box]');
     function fill(b) {
         P('kicker').textContent = b.kicker; P('name').textContent = b.name; P('price').textContent = b.price; P('status').textContent = b.status;
         P('facts').innerHTML = b.facts.map(([k, v]) => `<li class="ice card step"><span class="card__k">${k}</span>${v}</li>`).join('');
-        P('enquire').dataset.enquire = b.enquire;
+        P('enquire').dataset.enquire = b.enquire; P('enquire').dataset.brand = b.brand || b.enquire;
+        const view = P('view');   // a boat with no stock (Iguana) leads to its brand page instead of the inventory
+        if (view) { const [t, h] = b.view || ['View inventory', '#inventory']; view.textContent = t; view.setAttribute('href', h); }
         steps = [...plate.querySelectorAll('.step')];
         if (reduce) steps.forEach((s) => { s.style.opacity = 1; });
     }
@@ -128,7 +140,8 @@
 
     // the plate keeps one size for all three boats: each part is measured with every boat's words, the largest is held
     function holdPlate() {
-        const card = plate.querySelector('.bplate__card'), st = plate.style, all = Object.values(BOATS);
+        const card = plate.querySelector('.bplate__card'), st = plate.style,
+            all = Object.keys(BOATS).filter((k) => document.querySelector(`[data-boat="${k}"]`)).map((k) => BOATS[k]);   // only the boats this page offers
         ['--name-h', '--card-h', '--facts-h'].forEach((k) => st.removeProperty(k));
         let n = 0, c = 0, f = 0;
         all.forEach((b) => { fill(b); n = Math.max(n, P('name').offsetHeight); });
@@ -382,7 +395,7 @@
 
     /* ════════════════════════════════════════════════════════
        The sea shader, from explore/a (the chart's graticule and course left out). The approved azure
-       loop is the surface; a colour ramp holds it saturated (pale shallows become light azure, never
+       loop is the surface; a color ramp holds it saturated (pale shallows become light azure, never
        white); three staggered reads of one tile, cross-faded, make it one continuous sea; every
        [data-pool] gets a deep pool dug under it so white type holds AA; the pointer leaves rings; the
        hull leaves a wake while the page moves.
@@ -668,6 +681,51 @@ void main(){
         mark();
     }
 
+    /* ── In stock now (v2): a rail running off the right edge; the button steps a boat, and from the end back to the first ── */
+    const stock = $('[data-stock-rail]'), stockGo = $('[data-stock-go]');
+    if (stock) {
+        const bleed = () => { stock.style.setProperty('--bleed', '0px'); stock.style.setProperty('--bleed', `${Math.max(0, document.documentElement.clientWidth - stock.getBoundingClientRect().right)}px`); };
+        bleed(); addEventListener('resize', bleed, { passive: true });
+        // a mouse can drag the rail (touch scrolls it natively); a drag never opens the boat under it, and it lands on a card
+        let drag = null;
+        stock.addEventListener('dragstart', (e) => e.preventDefault());
+        stock.addEventListener('pointerdown', (e) => {
+            if (e.pointerType !== 'mouse' || e.button !== 0) return;
+            drag = { x: e.clientX, left: stock.scrollLeft, moved: false };
+        });
+        addEventListener('pointermove', (e) => {
+            if (!drag) return;
+            const dx = e.clientX - drag.x;
+            if (!drag.moved && Math.abs(dx) < 6) return;
+            if (!drag.moved) { drag.moved = true; stock.classList.add('is-drag'); }
+            stock.scrollLeft = drag.left - dx;
+        });
+        const drop = () => {
+            if (!drag) return;
+            const was = drag.moved; drag = null;
+            if (!was) return;
+            stock.classList.remove('is-drag');
+            const pad = parseFloat(getComputedStyle(stock).scrollPaddingLeft) || 0, edge = stock.getBoundingClientRect().left + pad;
+            const near = [...stock.children].reduce((a, c) => (Math.abs(c.getBoundingClientRect().left - edge) < Math.abs(a.getBoundingClientRect().left - edge) ? c : a));
+            stock.scrollTo({ left: stock.scrollLeft + near.getBoundingClientRect().left - edge, behavior: reduce ? 'auto' : 'smooth' });
+            stock.addEventListener('click', (ev) => { ev.preventDefault(); ev.stopPropagation(); }, { capture: true, once: true });
+        };
+        addEventListener('pointerup', drop); addEventListener('pointercancel', drop);
+        stock.setAttribute('data-lenis-prevent-wheel', '');
+        if (stockGo) {
+            stockGo.hidden = false;
+            const atEnd = () => stock.scrollLeft >= stock.scrollWidth - stock.clientWidth - 8;
+            const mark = () => { const back = atEnd(); stockGo.classList.toggle('is-back', back); stockGo.setAttribute('aria-label', back ? 'Back to the first boat' : 'Next boat'); };
+            stock.addEventListener('scroll', mark, { passive: true });
+            stockGo.addEventListener('click', () => {
+                const left = stock.getBoundingClientRect().left + (parseFloat(getComputedStyle(stock).scrollPaddingLeft) || 0);
+                const next = [...stock.children].find((c) => c.getBoundingClientRect().left > left + 12);
+                stock.scrollTo({ left: atEnd() || !next ? 0 : stock.scrollLeft + next.getBoundingClientRect().left - left, behavior: reduce ? 'auto' : 'smooth' });
+            });
+            mark();
+        }
+    }
+
     /* ── the inventory cards rise as their row arrives ── */
     const risers = [...document.querySelectorAll('.boat.rise')];
     if (reduce || !('IntersectionObserver' in window)) risers.forEach((el) => el.classList.add('is-in'));
@@ -772,9 +830,11 @@ void main(){
         const paint = (it) => {
             const r = it.el.getBoundingClientRect(), vh = innerHeight, n = it.words.length;
             // in: from the moment the block's top passes 95% of the screen until it reaches 62%;
-            // out: from the moment its bottom passes 22% of the screen until it reaches the top
+            // out: only once it slides under the header bar, until it reaches the top. (It used to start at 22% of the
+            // screen, so a heading read just below the bar, as after View inventory, had its first word half gone: 10 Nov.)
+            const bar = Math.max(0, hdr ? hdr.getBoundingClientRect().bottom : 0);
             const fin = clamp((vh * (phone.matches ? 0.99 : 0.95) - r.top) / (vh * (phone.matches ? 0.14 : 0.33)), 0, 1);
-            const fout = clamp((vh * 0.22 - r.bottom) / (vh * 0.22), 0, 1);
+            const fout = clamp((bar - r.bottom) / Math.max(48, bar), 0, 1);
             const k = it.kind === 'head' ? 1.1 : 5;   // headings step in a word at a time; paragraphs flow
             it.words.forEach((w, i) => {
                 const a = clamp((fin * (n + k) - i) / k, 0, 1), b = clamp((fout * (n + k) - i) / k, 0, 1);
@@ -841,7 +901,7 @@ void main(){
     document.addEventListener('click', (e) => {
         const a = e.target.closest('[data-enquire]'); if (!a) return;
         const sel = form.elements.interest;
-        const opt = [...sel.options].find((o) => o.text === a.dataset.enquire);
+        const opts = [...sel.options], opt = opts.find((o) => o.text === a.dataset.enquire) || opts.find((o) => o.text === a.dataset.brand);
         if (opt) sel.value = opt.value;
     });
     const rules = {

@@ -263,7 +263,7 @@
      "Joystick engine controls",
      "Custom color (Audi Nardo Grey)",
      "Custom upholstery (Ice white / titanium piping)",
-     "Synthetic teak flooring: (Grey/white caulking)",
+     "Synthetic teak flooring: (Gray/white caulking)",
      "Bimini sunshade extension",
      "Hydraulic swim platform",
      "Refrigerator in deck cockpit table",
@@ -1209,7 +1209,7 @@
   "power": "Twin Volvo IPS D11-950",
   "lead": [
    "New VanDutch 56 recently completed at the factory and ready for delivery to the U.S.",
-   "The lines are essential, almost minimalist, but the boat is rich in content. Starting from the build quality (made in Italy) to the comfort on deck and below deck, not forgetting the performance. As always, each owner has plenty of scope for customisation, starting with the range of fabrics and colours, both for the cushions, for example, and for the hull itself.",
+   "The lines are essential, almost minimalist, but the boat is rich in content. Starting from the build quality (made in Italy) to the comfort on deck and below deck, not forgetting the performance. As always, each owner has plenty of scope for customization, starting with the range of fabrics and colors, both for the cushions, for example, and for the hull itself.",
    "The boats strength is, of course, the deck. This area focuses on comfort and liveability in a versatile way. The backrests of the aft sundeck allow you to make the most of this area and are adjustable to relax even on shorter cruises. The L-shaped sofas in the cockpit overlook a central table and provide an ideal space for breakfast, lunch and dinner on board."
   ],
   "lists": [
@@ -1320,7 +1320,19 @@
    "assets/img/boats/2027-vandutch-56-04.webp",
    "assets/img/boats/2027-vandutch-56-05.webp",
    "assets/img/boats/2027-vandutch-56-06.webp",
-   "assets/img/boats/2027-vandutch-56-07.webp"
+   "assets/img/boats/2027-vandutch-56-07.webp",
+   "assets/img/boats/2027-vandutch-56-08.webp",
+   "assets/img/boats/2027-vandutch-56-09.webp",
+   "assets/img/boats/2027-vandutch-56-10.webp",
+   "assets/img/boats/2027-vandutch-56-11.webp",
+   "assets/img/boats/2027-vandutch-56-12.webp",
+   "assets/img/boats/2027-vandutch-56-13.webp",
+   "assets/img/boats/2027-vandutch-56-14.webp",
+   "assets/img/boats/2027-vandutch-56-15.webp",
+   "assets/img/boats/2027-vandutch-56-16.webp",
+   "assets/img/boats/2027-vandutch-56-17.webp",
+   "assets/img/boats/2027-vandutch-56-18.webp",
+   "assets/img/boats/2027-vandutch-56-19.webp"
   ]
  },
  {
@@ -1456,11 +1468,11 @@
    }
   ],
   "photos": [
-   "assets/img/boats/2027-vandutch-48-00.webp",
+   "assets/img/boats/2027-vandutch-48-04.webp",
    "assets/img/boats/2027-vandutch-48-01.webp",
+   "assets/img/boats/2027-vandutch-48-00.webp",
    "assets/img/boats/2027-vandutch-48-02.webp",
    "assets/img/boats/2027-vandutch-48-03.webp",
-   "assets/img/boats/2027-vandutch-48-04.webp",
    "assets/img/boats/2027-vandutch-48-05.webp",
    "assets/img/boats/2027-vandutch-48-06.webp",
    "assets/img/boats/2027-vandutch-48-07.webp"

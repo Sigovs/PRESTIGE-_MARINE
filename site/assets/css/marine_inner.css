@@ -588,3 +588,23 @@ main > .panel { overflow-x: clip; }
 /* the film moves through bright frames: the shade holds the whole paragraph, whatever passes behind it */
 .chap:has(.abpara) .chap__frame::after { background: linear-gradient(to top, rgba(3, 26, 44, .9) 0, rgba(3, 26, 44, .74) 44%, rgba(3, 26, 44, 0) 78%); }
 @media (max-width: 720px) { .chap:has(.abpara) .chap__frame::after { background: linear-gradient(to top, rgba(3, 26, 44, .92) 0, rgba(3, 26, 44, .76) 60%, rgba(3, 26, 44, 0) 86%); } }
+/* the inventory's dropdowns: the field keeps its look, the list is the header's Brands panel (10 Nov 2026) */
+.dsel { position: relative; display: inline-flex; }
+.isearch .dsel { display: flex; width: 100%; }
+.dsel__native { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+.dsel__btn { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--s-4); width: 100%; min-height: 44px; padding: 0 var(--s-3);
+  border: 0; border-bottom: 1px solid var(--line-2); background: transparent; font: inherit; font-size: var(--t-16); font-weight: 400; color: var(--navy); text-align: left; cursor: pointer;
+  transition: border-color .2s var(--ease); }
+.dsel__btn:hover, .dsel.is-open .dsel__btn { border-bottom-color: var(--navy); }
+.dsel__btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.dsel__val { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dsel.is-open .ico--chev { transform: rotate(180deg); }
+.dsel__list { list-style: none; margin: 0; padding: var(--s-2); position: absolute; z-index: 30; top: calc(100% + var(--s-2)); left: 0; min-width: max(100%, 260px);
+  background: rgba(255, 255, 255, .97); border-radius: 10px; box-shadow: 0 18px 40px -18px rgba(2, 30, 45, .45); color: var(--navy);
+  opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s; }
+.dsel--end .dsel__list { left: auto; right: 0; }
+.dsel.is-open .dsel__list { opacity: 1; visibility: visible; transform: none; }
+.dsel__list li { display: flex; align-items: center; min-height: 44px; padding: 0 var(--s-4); border-radius: 6px; font-size: var(--t-16); font-weight: 500; white-space: nowrap; cursor: pointer; outline: none; }
+.dsel__list li:hover, .dsel__list li:focus { background: var(--mist); }
+.dsel__list li[aria-selected="true"] { font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .dsel__list, .dsel__btn, .dsel .ico--chev { transition: none; } }

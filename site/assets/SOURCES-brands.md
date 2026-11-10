@@ -75,8 +75,8 @@ The brands' own films and pictures, used by Prestige Marine as authorised dealer
 - st-vd48n-b.webp: https://images.boatsgroupwebsites.com/resize/1/44/12/8534412_0_101020221400_1.jpg
 - st-vd56n-a.webp: https://images.boatsgroupwebsites.com/resize/1/71/30/8577130_0_071220221427_6.jpg
 - st-vd56n-b.webp: https://images.boatsgroupwebsites.com/resize/1/71/30/8577130_0_071220221426_0.jpg
-- st-wally-a.webp: https://images.boatsgroupwebsites.com/resize/1/3/45/2012-wally-wallyone-power-9470345-20240716150714358-1_LARGE.jpg
-- st-wally-b.webp: https://images.boatsgroupwebsites.com/resize/1/3/45/2012-wally-wallyone-power-9470345-20240716150724800-1_LARGE.jpg
+- st-wally-a.webp: https://images.boatsgroupwebsites.com/resize/1/3/45/2012-wally-wallyone-power-9470345-20240716150714358-1_XLARGE.jpg (card: slip-wally43-*.webp, 10 Nov 2026)
+- st-wally-b.webp: https://images.boatsgroupwebsites.com/resize/1/3/45/2012-wally-wallyone-power-9470345-20240716150724800-1_XLARGE.jpg (card: slip-wally43-*.webp, 10 Nov 2026)
 - st-riva-a.webp: https://images.boatsgroupwebsites.com/resize/1/12/45/2026-riva-el-iseo-power-10381245-20261028112234802-2.jpg
 - st-riva-b.webp: https://images.boatsgroupwebsites.com/resize/1/12/45/2026-riva-el-iseo-power-10381245-20261028112236096-3.jpg
 - sold-01.webp: https://images.boatsgroupwebsites.com/resize/1/99/69/2022-pardo-yachts-pardo-50-power-8939969-964333169-0-110620241024-22.jpg
@@ -99,3 +99,5 @@ The brands' own films and pictures, used by Prestige Marine as authorised dealer
 - The About film, home and About us: the Prestige Imports film "Tecnomar Dock", embedded from YouTube (ZRMBnz5zAfc) as on the client's current site, not hosted here (Alex, 1 Nov 2026). It carries a Lamborghini Miami mark in the corner.
 - `img/about-film-{home,port,chap}.jpg`: frames of that film at 5.2, 186.8 and 195.6 s from Alex's download, posters for the film's stretches.
 - `video/about-hero-cut.mp4`, `-m.mp4`, `img/about-hero-cut.jpg`: About's first screen, our cut of Alex's `ABOUT US VIDEO.mp4` (Tecnomar Dock) at his request, 1 Nov 2026; no presenter, no sound, 13% cropped off the right and bottom edges, 3% off the left and top, so the Lamborghini Miami corner mark falls outside. Source stretches: 204.29-206.12, 11.35-15.05, 0.04-1.38, 188.39-189.19, 189.81-190.82, 191.56-192.19, 192.27-192.86, 192.94-193.69, 21.35-23.9, 5.71-7.05, 196.85-197.7, 198.99-199.66, 201.78-202.16, 202.87-203.5, 203.58-204.21, 206.2-207.38, 207.46-209.84 s.
+- `img/boats/2027-vandutch-56-*.webp`, `img/slip-vd56-*.webp`: the 2024 VanDutch 56 listing at SI Yachts (siyachts.com, listing 2849066, cdn.yachtbroker.org highdef), at Alex's request 10 Nov 2026; the page says "Photos are not of the actual boat."
+- `img/boats/2027-vandutch-48-*.webp`, `img/slip-vd48f-*.webp`: VanDutch's own VanDutch 48 photos, vandutch.com/pages/vandutch-48 (cdn/shop/files: 0_1-HERO, 1_3-Exterior, 1-Navigation2, 1_10-Navigation, 2-Exterior-Aerials, 2_1-Exterior-Aerials, 1_2-LowerDeck, 1_7-LowerDeck), 10 Nov 2026
